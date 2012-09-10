@@ -1,0 +1,286 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+
+\newtheorem*{vaite}{Väite}
+
+\begin{document}
+
+582206 Laskennan mallit, syksy 2012
+1. Harjoitusten malliratkaisut
+
+\begin{enumerate}
+
+\item
+  \begin{enumerate}
+  \item $\emptyset \subseteq \emptyset$ sillä tyhjä joukko on jokaisen
+    joukon osajoukko
+  \item $\emptyset \notin \emptyset$ sillä tyhjässä joukossa ei ole
+    yhtään alkiota
+  \item $\emptyset \in \{\emptyset\}$
+  \item $\emptyset \subseteq \{\emptyset\}$
+  \item $\{a,b\} \in \{a,b,c,\{a,b\}\}$
+  \item $\{a,b\} \subseteq \{a,b,\{a,b\}\}$ sillä $a$ ja $b$ kuuluvat
+    oikeinpuoleiseen joukkoon
+  \item $\{a,b\} \not\subseteq \mathcal{P}(\{a,b,\{a,b\}\}) =
+    \{\emptyset, \{a\}, \{b\}, \{\{a,b\}\}, \{a, b\}, \{a, \{a, b\}\},
+    \{b, \{a, b\}\}, \{a, b, \{a, b\}\}\}$
+  \item $\{\{a,b\}\} \in \mathcal{P}(\{a,b,\{a,b\}\})$
+  \item $\underbrace{\{a,b,\{a,b\}\} - \{a,b\}}_{\{\{a,b\}\}} \neq \{a, b\}$
+  \end{enumerate}
+
+\item
+  \begin{enumerate}
+  \item
+    \begin{flalign*}
+      (\{1,3,5\} \cup \{3,1\}) \cap \{3,5,7\}
+      &= \{1,3,5\} \cap \{3,5,7\} \\
+      &= \{3,5\}
+    \end{flalign*}
+  \item
+    \begin{flalign*}
+      \bigcup\{\{3\},\{3,5\},\bigcap\{\{5,7\},\{7,9\}\}\}
+      &= \bigcup\{\{3\},\{3,5\},\{5,7\} \cap \{7,9\}\} \\
+      &= \bigcup\{\{3\},\{3,5\},\{7\}\} \\
+      &= \{3\} \cup \{3,5\} \cup \{7\} \\
+      &= \{3,5,7\}
+    \end{flalign*}
+  \item
+    \begin{flalign*}
+      (\{1,2,5\} - \{5,7,9\}) \cup (\{5,7,9\} - \{1,2,5\})
+      &= \{1,2\} \cup \{7,9\} \\
+      &= \{1,2,7,9\}
+    \end{flalign*}
+  \item
+    \begin{flalign*}
+      \mathcal{P}(\{7,8,9\}) - \mathcal{P}(\{7,9\})
+      = \{\{8\}, \{7,8\}, \{8,9\}, \{7,8,9\}\}
+    \end{flalign*}
+    Tulosjoukkoon siis jäävät ne osajoukot joissa esiintyy 8.
+  \item
+    \begin{flalign*}
+      \mathcal{P}(\emptyset) = \{\emptyset\}
+    \end{flalign*}
+  \end{enumerate}
+
+\item
+  \begin{enumerate}
+  \item
+    \begin{flalign*}
+      \{1\} \times \{1,2\} \times \{1,2,3\}
+      &= \{(1,1), (1,2)\} \times \{1,2,3\} \\
+      &= \{(1,2,1), (1,1,2), (1,1,3), (1,2,1), (1,2,2), (1,2,3)\}
+    \end{flalign*}
+  \item
+    \begin{flalign*}
+      \emptyset \times \{1,2\} = \emptyset
+    \end{flalign*}
+    $(a,b) \in \emptyset \times \{1,2\} \Rightarrow a \in \emptyset$
+    ja koska tyhjässä joukossa ei ole yhtään alkiota, on karteesinen
+    tulo tyhjän joukon kanssa aina tyhjä joukko.
+  \item
+    \begin{flalign*}
+      \mathcal{P}(\{1,2\}) \times \{1,2\}
+      &= \{\emptyset, \{1\}, \{2\}, \{1,2\}\} \times \{1,2\} \\
+      &= \left\{(\emptyset, 1), (\emptyset, 2), (\{1\}, 1), (\{1\}, 2),\right.\nonumber\\
+      &\qquad\left.{}(\{2\}, 1), (\{2\}, 2), (\{1,2\}, 1), (\{1,2\}, 2)\right\}
+    \end{flalign*}
+  \item
+    \begin{flalign*}
+      \mathcal{P}(\{\varepsilon\}) = \{\emptyset, \{\varepsilon\}\}
+    \end{flalign*}
+  \end{enumerate}
+
+\item Ovatko seuraavat väittämät tosia? Selitä miksi jos ovat tai
+  eivät ole.
+  \begin{enumerate}
+
+  \item
+    \begin{vaite}
+      $\{\varepsilon\}^{*} = \{\varepsilon\}$
+    \end{vaite}
+    \begin{proof}
+    \begin{flalign*}
+      \{\varepsilon\}^* &= \{w_1w_2 \ldots w_n \mid w_i \in \{\varepsilon\}
+      \text{ kaikilla } 1 \le i \le n\} \\
+      &= \{w_1w_2 \ldots w_n \mid w_i = \varepsilon
+      \text{ kaikilla } 1 \le i \le n \} \\
+      &= \{\varepsilon^k \mid k \ge 1\} \\
+      &= \{\varepsilon\}
+    \end{flalign*}
+    \end{proof}
+
+  \item
+    \begin{vaite}
+      Mielivaltaisella aakkostolla $\Sigma$ ja millä tahansa kielellä
+      $L \subseteq \Sigma^*$, $(L^*)^* = L^*$.
+    \end{vaite}
+    \begin{proof}
+      \begin{description}
+        \item[]
+        \item[$L^* \subseteq (L^*)^*$] \hfill \\
+          Olkoon $w \in L^*$. Nyt $w \in (L^*)^* = \{w_1w_2 \ldots w_n \mid n
+          \ge 0, w_i \in L^* \text{ kaikilla } 1 \le i \le n\}$ asettamalla
+          $n = 1$ ja $w_1 = w$.
+        \item[$(L^*)^* \subseteq L^*$] \hfill \\
+          Olkoon $w \in (L^*)^*$. Tällöin
+          \begin{equation*}
+            w = w_1w_2 \ldots w_n
+          \end{equation*}
+          missä $w_i \in L^*$ jokaisella $1 \le i \le n$. Olkoon $1 \le i
+          \le n$. Nyt
+          \begin{equation*}
+            w_i = w_{i,1}w_{i,2} \ldots w_{i,k_i}
+          \end{equation*}
+          missä $w_{i,j} \in L$ joten
+          \begin{align*}
+            w &= w_1w_2 \ldots w_n \\
+            &= w_{1,1} \ldots w_{1,k_1} \ldots w_{n,k_n}
+          \end{align*}
+          Nyt siis $w \in L^*$ ja siten $(L^*)^* \subseteq L^*$.
+      \end{description}
+      \end{proof}
+
+  \item
+    \begin{vaite}
+      Jos $a \neq b$, niin $\{a,b\}^* = \{a\}^* \circ (\{b\} \circ \{a\}^*)^*$.
+    \end{vaite}
+    \begin{proof}
+      Olkoon $w \in {a,b}^*$. Todistetaan väite induktiolla
+      merkkijonon pituuden $|w|$ suhteen.
+      
+    \end{proof}
+
+  \item
+    \begin{vaite}
+      Jos $\Sigma$ on mielivaltainen aakkosto, $\varepsilon \in L_1
+      \subseteq \Sigma^*$ ja $L_2 \subseteq \Sigma^*$, niin $(L_1
+      \circ \Sigma^* \circ L_2)^* = \Sigma^*$.
+    \end{vaite}
+    \begin{proof}
+      \begin{description}
+        \item[]Merkitään $L = (L_1 \circ \Sigma^* \circ L_2)^*$.
+        \item[$L \subseteq \Sigma^*$:]
+          \hfill \\
+          Olkoon $w \in L$. Nyt $w = l_1vl_2$ jollain $l_1 \in L_1$,
+          $v \in \Sigma^*$ ja $l_2 \in L_2$ ja koska
+          \begin{align*}
+            l_1 \in L_1 \subseteq \Sigma^* &\Rightarrow l_1 \in
+            \Sigma^* \\
+            l_2 \in L_2 \subseteq \Sigma^* &\Rightarrow l_2 \in
+            \Sigma^*
+          \end{align*}
+          niin $w = l_1vl_2 \in \Sigma^* \circ \Sigma^* \circ \Sigma^*
+          = \Sigma^*$. Siis $L \subseteq \Sigma^*$.
+        \item[$\Sigma^* \subseteq L$:]
+          \hfill \\
+          Olkoon $w \in \Sigma^*$. Nyt $w = \varepsilon w \varepsilon$
+          ja koska $\varepsilon \in L_1$ ja $\varepsilon \in L_2$,
+          niin $w \in L$. Siis $\Sigma^* \subseteq L$.
+        \item[]Koska $\Sigma^* \subseteq L$ ja $L \subseteq
+          \Sigma^*$, niin $\Sigma^* = L = (L_1 \circ \Sigma^* \circ
+          L_2)^*$.
+      \end{description}
+    \end{proof}
+
+  \item
+    \begin{vaite}
+      Kaikilla kielillä $L$, $\emptyset \circ L = L \circ \emptyset = \emptyset$.
+    \end{vaite}
+    \begin{proof}
+      Jos $uv \in \emptyset \circ L$, niin $u \in \emptyset$. Koska
+      tyhjässä joukossa ei ole yhtään alkiota, niin myös $\emptyset
+      \circ L$ on tyhjä joukko. Vastaavasti tapauksella $L \circ
+      \emptyset$. Siis $\emptyset \circ L = L \circ \emptyset =
+      \emptyset$.
+    \end{proof}
+  \end{enumerate}
+
+\item
+  Olkoon $\Sigma = \{a,b\}$. Esitä joitakin esimerkkejä
+  merkkijonoista, jotka kuuluvat tai eivät kuulu alla määriteltyihin
+  joukkoihin.
+  \begin{enumerate}
+    \item
+      $\{w \mid w = uu^Ru \text{ jollakin } u \in \Sigma \circ
+      \Sigma\}$
+
+      Joukkoon kuuluvat siis merkkijonot $aaaaaa$, $bbbbbb$, $abbaab$
+      ja $baabba$.
+    \item
+      $\{w \mid ww = www\}$
+
+      Jos $ww = www$, niin $|ww| = |www|$ ja $2|w| = 3|w|$.
+      Tämä pätee vain jos $|w| = 0$, joten $w = \varepsilon$. Joukkoon
+      kuuluu siis vain tyhjä merkkijono.
+    \item
+      $\{w \mid uvw = wvu \text{ joillakin } u,v \in \Sigma^*\}$
+
+      Valitaan $u = v = \varepsilon$. Nyt $uvw = w = wvu$ kaikilla
+      $w$. Joukkoon kuuluvat siis kaikki mahdolliset merkkijonot.
+    \item
+      $\{w \mid www = uu \text{ jollakin } u \in \Sigma^*\}$
+
+      Esimerkiksi $ab$ kuuluu joukkoon, sillä $(ab)(ab)(ab) =
+      (aba)(aba)$. Toisaalta $abbb$ ei kuulu määriteltyyn joukkoon,
+      sillä $(abbb)(abbb)(abbb) = (abbbab)(bbabbb)$ mutta $abbbab \neq
+      bbabbb$. Tämä esimerkki näyttää että kuuluvuusehdoksi ei riitä
+      pituuden parillisuus. 
+  \end{enumerate}
+
+\item
+  Milloin yhtälö $L^+ = L^* - \{\varepsilon\}$ on tosi? Tässä $L^+ =
+  \{l_1l_2 \ldots l_k \mid k \ge 1 \text{ ja } l_i \in L \text{
+    kaikilla } i\}$
+  \begin{vaite}
+    $L^+ = L^* - \{\varepsilon\}$ jos ja vain jos $\varepsilon \notin L$.
+  \end{vaite}
+  \begin{proof}
+      Jos $w \in L$, niin $w \in L^+$. Täten jos $\varepsilon \notin
+      L^+$, niin $\varepsilon \notin L$. Jos $\varepsilon \notin L$,
+      niin ei ole olemassa merkkijonoa $l_1l_2 \ldots l_k =
+      \varepsilon$ missä $l_i \in L$ kaikilla $i$. Täten $\varepsilon
+      \notin L^+$. Muistetaan lisäksi, että $L^* = L^+ \cup
+      \{\varepsilon\}$. Nyt pätee
+      \begin{align*}
+        \varepsilon \notin L &\Leftrightarrow \varepsilon \notin L^+ \\
+        &\Leftrightarrow L^+ = L^+ - \{\varepsilon\} \\
+        &\Leftrightarrow L^+ = (L^+ \cup \{\varepsilon\}) -
+        \{\varepsilon\} \\
+        &\Leftrightarrow L^+ = L^* - \{\varepsilon\}
+      \end{align*}
+      Siis $\varepsilon \notin L \Leftrightarrow L^+ = L^* - \{\varepsilon\}$.
+  \end{proof}
+
+\item
+  Etsi seuraavat ehdot täyttävät merkkijonot.
+  \begin{enumerate}
+    \item Kaksi erillaista viiden mittaista merkkijonoa, joilla
+      täsmälleen samat alimerkkijonot lukuunottamatta sanoja itseään.
+
+      Merkkijonoilla $ababa$ ja $babab$ on alimerkkijonot
+      $\varepsilon$, $a$, $b$, $ab$, $ba$, $aba$, $bab$, $abab$, ja
+      $baba$.
+    \item Merkkijono joka koostuu merkeistä $a$ ja $b$ eikä ole kahden
+      palindromin ketjutus.
+
+      $abaabb$ on halutunlainen, sillä se ei itsessään ole palindromi,
+      ja lisäksi $a(baabb)$, $(ab)aabb$, $aba(abb)$, $(abaa)bb$ ja
+      $(abaab)b$ eivät ole kahden palindromin ketjutuksia.
+    \item Viiden merkin mittainen merkkijono joka sisältää kaikki
+      mahdolliset aakkoston $\{a,b\}$ kahden mittaiset merkkijonot
+      alimerkkijonoinaan.
+
+      Kaikki kahden mittaiset merkkijonot aakkostosta $\{a,b\}$ ovat
+      $aa$, $bb$, $ab$ ja $ba$. Merkkijono $abbaa$ sisältää nämä
+      kaikki.
+  \end{enumerate}
+
+\end{enumerate}
+
+\end{document}
