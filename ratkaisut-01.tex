@@ -104,6 +104,7 @@
         \emptyset \times \{1,2\} = \emptyset
       \end{aligned}
     \end{math}
+
     $(a,b) \in \emptyset \times \{1,2\} \Rightarrow a \in \emptyset$
     ja koska tyhjässä joukossa ei ole yhtään alkiota, on karteesinen
     tulo tyhjän joukon kanssa aina tyhjä joukko.
@@ -216,37 +217,36 @@
 
           \item
             Jos $u_i = b$ jollain $i \in \{1, \ldots, n\}$, jaetaan
-
+%
             \begin{equation*}
               u = u_1 \ldots u_ju_{j+1} \ldots u_n
             \end{equation*}
-
+%
             missä $u_{j+1}$ on ensimmäinen $b$ merkkijonossa $u$. Nyt
-
+%
             \begin{equation*}
               bu_1 \ldots u_j = ba^j \in (\{b\} \circ \{a\}^*)^*
             \end{equation*}
-
-            ja induktio-oletuksen nojalla
-
+%
+            ja induktio-oletuksen nojalla $u_{j+1} \ldots u_n \in A$. Nyt
+            $u_{j+1} \ldots u_n = v_1v_2$ missä
+%
             \begin{equation*}
-              u_{j+1} \ldots u_n \in A
+              v_1 \in \{a\}^* \text{ ja }
+              v_2 \in \{ \{b\} \circ \{a\}^* \}^* \text{.}
             \end{equation*}
+%
+            Tällöin $v_1 = a^k$ jollain $k \ge 1$. Kuitenkin $u_{j+1} =
+            b$, joten $v_1 = \varepsilon$ ja $u_{j+1} \ldots u_n = v_2 \in
+            \{\{b\} \circ \{a\}^*\}^*$. Nyt
+%
+            \begin{align*}
+                          & bu_1 \ldots u_j \in \{b\} \circ \{a\}^* &  \\
+              \text{ ja } & u_{j+1} \ldots u_n \in \{\{b\} \circ \{a\}^*\}^*
+            \end{align*}
+%
+            joten $w = \varepsilon (bu) \in A$.
 
-            Koska $u_{j+1} = b$, niin
-
-            \begin{equation*}
-              u_{j+1} \ldots u_n \in (\{b\} \circ \{a\}^*)^*
-            \end{equation*}
-
-            Nyt siis
-
-            \begin{equation*}
-              u \in (\{b\} \circ \{a\}^*)^* \text{ ja }
-              bu \in (\{b\} \circ \{a\}^*)^*
-            \end{equation*}
-
-            Joten $w = \varepsilon (bu) \in A$.
           \end{itemize}
         \end{itemize}
       \end{description}
