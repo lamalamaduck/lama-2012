@@ -104,6 +104,7 @@
         \emptyset \times \{1,2\} = \emptyset
       \end{aligned}
     \end{math}
+
     $(a,b) \in \emptyset \times \{1,2\} \Rightarrow a \in \emptyset$
     ja koska tyhjässä joukossa ei ole yhtään alkiota, on karteesinen
     tulo tyhjän joukon kanssa aina tyhjä joukko.
@@ -133,11 +134,11 @@
     \begin{math}
       \begin{aligned}[t]
         \{\varepsilon\}^*
-        &= \{w_1w_2 \ldots w_n \mid w_i \in \{\varepsilon\} \text{
-          kaikilla } i \in \{1, \ldots, n\}\}\\
-        &= \{w_1w_2 \ldots w_n \mid w_i = \varepsilon \text{ kaikilla
-        } i \in \{1, \ldots, n\}\}\\
-        &= \{\varepsilon^k \mid k \ge 1\}\\
+        &= \{w_1w_2 \ldots w_n \mid w_i \in \{\varepsilon\}
+           \text{ kaikilla } i \in \{1, \ldots, n\}\}\\
+        &= \{w_1w_2 \ldots w_n \mid w_i = \varepsilon
+           \text{ kaikilla } i \in \{1, \ldots, n\}\}\\
+        &= \{\varepsilon^n \mid n \ge 1\}\\
         &= \{\varepsilon\} \qedhere
       \end{aligned}
     \end{math}
@@ -177,7 +178,7 @@
       \end{description}
 
       On siis osoitettu, että $L^* \subseteq (L^*)^*$ ja $(L^*)^*
-      \subseteq L^*$, \\ joten $(L^*)^* = L^*$.
+      \subseteq L^*$, joten $(L^*)^* = L^*$.
     \end{proof}
 
   \item
@@ -188,86 +189,108 @@
       Olkoon $w \in \{a,b\}^*$ ja merkitään $A = \{a\}^* \circ
       \left(\{b\} \circ \{a\}^*\right)^*$. Todistetaan, että $w \in A$
       induktiolla merkkijonon pituuden $|w|$ suhteen.
+
       \begin{description}
       \item[Alkuaskel]
         $|w| = 0$ eli $w = \varepsilon$. Nyt $\varepsilon =
         \varepsilon\varepsilon \in A$.
+
       \item[Induktioaskel]
         Oletetaan, että $u \in A$ kun $|u| < |w|$.
+
         \begin{itemize}
         \item
           Jos $w = au$ jollain $u \in \{a,b\}^*$, niin
           induktio-oletuksen nojalla $u \in A$ ja $u = u_1u_2$ missä
           $u_1 \in \{a\}^*$ ja $u_2 \in (\{b\} \circ \{a\}^*)^*$.
           Nyt $au_1 \in \{a\}^*$ ja siten $w = (au_1)u_2 \in A$.
+
         \item
           Jos taas $w = bu$ jollain $u \in \{a,b\}^*$, on $u = u_1
           \ldots u_n$.
+
           \begin{itemize}
           \item
             Jos $u_i \neq b$ jokaisella $i \in \{1, \ldots, n\}$,
             niin tällöin $u = a^n$, $bu \in (\{b\} \circ
             \{a\}^*)^*$ ja $w = \varepsilon (bu) \in A$.
+
           \item
             Jos $u_i = b$ jollain $i \in \{1, \ldots, n\}$, jaetaan
+%
             \begin{equation*}
               u = u_1 \ldots u_ju_{j+1} \ldots u_n
             \end{equation*}
+%
             missä $u_{j+1}$ on ensimmäinen $b$ merkkijonossa $u$. Nyt
+%
             \begin{equation*}
               bu_1 \ldots u_j = ba^j \in (\{b\} \circ \{a\}^*)^*
             \end{equation*}
-            ja induktio-oletuksen nojalla
+%
+            ja induktio-oletuksen nojalla $u_{j+1} \ldots u_n \in A$. Nyt
+            $u_{j+1} \ldots u_n = v_1v_2$ missä
+%
             \begin{equation*}
-              u_{j+1} \ldots u_n \in A
+              v_1 \in \{a\}^* \text{ ja }
+              v_2 \in \{ \{b\} \circ \{a\}^* \}^* \text{.}
             \end{equation*}
-            Koska $u_{j+1} = b$, niin
-            \begin{equation*}
-              u_{j+1} \ldots u_n \in (\{b\} \circ \{a\}^*)^*
-            \end{equation*}
-            Nyt siis
-            \begin{equation*}
-              u \in (\{b\} \circ \{a\}^*)^* \text{ ja }
-              bu \in (\{b\} \circ \{a\}^*)^*
-            \end{equation*}
-            Joten $w = \varepsilon (bu) \in A$.
+%
+            Tällöin $v_1 = a^k$ jollain $k \ge 1$. Kuitenkin $u_{j+1} =
+            b$, joten $v_1 = \varepsilon$ ja $u_{j+1} \ldots u_n = v_2 \in
+            \{\{b\} \circ \{a\}^*\}^*$. Nyt
+%
+            \begin{align*}
+                          & bu_1 \ldots u_j \in \{b\} \circ \{a\}^* &  \\
+              \text{ ja } & u_{j+1} \ldots u_n \in \{\{b\} \circ \{a\}^*\}^*
+            \end{align*}
+%
+            joten $w = \varepsilon (bu) \in A$.
+
           \end{itemize}
         \end{itemize}
       \end{description}
+
       Olkoon sitten $w \in A$. Nyt $w = u_1 \ldots u_n$ missä $u_i \in
       \{a, b\}$ kaikilla $i$. Siten $w \in \{a,b\}^*$.
 
-      On siis osoitettu, että $\{a,b\} \subseteq A$ ja $A \subseteq
+      On siis osoitettu, että $\{a,b\}^* \subseteq A$ ja $A \subseteq
       \{a,b\}^*$ joten joukot ovat samat.
     \end{proof}
 
   \item
     \begin{claim}
-      Jos $\Sigma$ on mielivaltainen aakkosto, $\varepsilon \in L_1
-      \subseteq \Sigma^*$ ja $L_2 \subseteq \Sigma^*$, niin $(L_1
-      \circ \Sigma^* \circ L_2)^* = \Sigma^*$.
+      Jos $\Sigma$ on mielivaltainen aakkosto, $\varepsilon \in L_1 \subseteq
+      \Sigma^*$ ja $\varepsilon \in L_2 \subseteq \Sigma^*$, niin $(L_1 \circ
+      \Sigma^* \circ L_2)^* = \Sigma^*$.
     \end{claim}
+
     \begin{proof}
       \begin{description}
       \item[]Merkitään $L = (L_1 \circ \Sigma^* \circ L_2)^*$.
+
       \item[$L \subseteq \Sigma^*$:]
         \hfill \\
         Olkoon $w \in L$. Nyt $w = l_1vl_2$ jollain $l_1 \in L_1$,
         $v \in \Sigma^*$ ja $l_2 \in L_2$ ja koska
+
         \begin{align*}
           l_1 \in L_1 \subseteq \Sigma^* &\Rightarrow l_1 \in
           \Sigma^* \\
           l_2 \in L_2 \subseteq \Sigma^* &\Rightarrow l_2 \in
           \Sigma^*
         \end{align*}
+
         niin $w = l_1vl_2 \in \Sigma^* \circ \Sigma^* \circ \Sigma^*
         = \Sigma^*$. Siis $L \subseteq \Sigma^*$.
+
       \item[$\Sigma^* \subseteq L$:]
         \hfill \\
         Olkoon $w \in \Sigma^*$. Nyt $w = \varepsilon w \varepsilon$
         ja koska $\varepsilon \in L_1$ ja $\varepsilon \in L_2$,
         niin $w \in L$. Siis $\Sigma^* \subseteq L$.
       \end{description}
+
       Koska $\Sigma^* \subseteq L$ ja $L \subseteq \Sigma^*$, niin
       $\Sigma^* = L = (L_1 \circ \Sigma^* \circ L_2)^*$.
     \end{proof}
@@ -276,6 +299,7 @@
     \begin{claim}
       Kaikilla kielillä $L$, $\emptyset \circ L = L \circ \emptyset = \emptyset$.
     \end{claim}
+
     \begin{proof}
       Jos $uv \in \emptyset \circ L$, niin $u \in \emptyset$. Koska
       tyhjässä joukossa ei ole yhtään alkiota, niin myös $\emptyset
@@ -289,6 +313,7 @@
   Olkoon $\Sigma = \{a,b\}$. Esitä joitakin esimerkkejä
   merkkijonoista, jotka kuuluvat tai eivät kuulu alla määriteltyihin
   joukkoihin.
+
   \begin{enumerate}
   \item
     $\{w \mid w = uu^Ru \text{ jollakin } u \in \Sigma \circ
@@ -296,17 +321,20 @@
 
     Joukkoon kuuluvat siis merkkijonot $aaaaaa$, $bbbbbb$, $abbaab$
     ja $baabba$.
+
   \item
     $\{w \mid ww = www\}$
 
     Jos $ww = www$, niin $|ww| = |www|$ ja $2|w| = 3|w|$.
     Tämä pätee vain jos $|w| = 0$, joten $w = \varepsilon$. Joukkoon
     kuuluu siis vain tyhjä merkkijono.
+
   \item
     $\{w \mid uvw = wvu \text{ joillakin } u,v \in \Sigma^*\}$
 
     Valitaan $u = v = \varepsilon$. Nyt $uvw = w = wvu$ kaikilla
     $w$. Joukkoon kuuluvat siis kaikki mahdolliset merkkijonot.
+
   \item
     $\{w \mid www = uu \text{ jollakin } u \in \Sigma^*\}$
 
@@ -329,9 +357,11 @@
   Milloin yhtälö $L^+ = L^* - \{\varepsilon\}$ on tosi? Tässä $L^+ =
   \{l_1l_2 \ldots l_k \mid k \ge 1 \text{ ja } l_i \in L \text{
     kaikilla } i\}$
+
   \begin{claim}
     $L^+ = L^* - \{\varepsilon\}$ jos ja vain jos $\varepsilon \notin L$.
   \end{claim}
+
   \begin{proof}
     Jos $w \in L$, niin $w \in L^+$. Täten jos $\varepsilon \notin
     L^+$, niin $\varepsilon \notin L$. Jos $\varepsilon \notin L$,
@@ -339,6 +369,7 @@
     \varepsilon$ missä $l_i \in L$ kaikilla $i$. Täten $\varepsilon
     \notin L^+$. Muistetaan lisäksi, että $L^* = L^+ \cup
     \{\varepsilon\}$. Nyt pätee
+
     \begin{align*}
       \varepsilon \notin L &\Leftrightarrow \varepsilon \notin L^+ \\
       &\Leftrightarrow L^+ = L^+ - \{\varepsilon\} \\
@@ -346,11 +377,13 @@
       \{\varepsilon\} \\
       &\Leftrightarrow L^+ = L^* - \{\varepsilon\}
     \end{align*}
+
     Siis $\varepsilon \notin L \Leftrightarrow L^+ = L^* - \{\varepsilon\}$.
   \end{proof}
 
 \item
   Etsi seuraavat ehdot täyttävät merkkijonot.
+
   \begin{enumerate}
   \item Kaksi erillaista viiden mittaista merkkijonoa, joilla
     täsmälleen samat alimerkkijonot lukuunottamatta sanoja itseään.
