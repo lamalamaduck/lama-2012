@@ -10,13 +10,21 @@
 
 \newtheorem*{claim}{Väite}
 
+\newenvironment{lalign}%
+{\begin{math}\begin{aligned}[t]}%
+{\end{aligned}\end{math}}
+
 \begin{document}
 
 \subsection*{582206 Laskennan mallit, syksy 2012\\
-1. Harjoitusten malliratkaisut}
+1. Harjoitusten malliratkaisut \\
+{\rm
+\begin{tabular}{ccc}
+Juhana Laurinharju & ja & Jani Rahkola
+\end{tabular}
+}}
 
 \begin{enumerate}
-
 \item
   \begin{enumerate}
   \item $\emptyset \subseteq \emptyset$ sillä tyhjä joukko on jokaisen
@@ -30,14 +38,12 @@
     oikeinpuoleiseen joukkoon
 
   \item
-    \begin{math}
-      \begin{aligned}[t]
-        \{a,b\} \not\subseteq \mathcal{P}(\{a,b,\{a,b\}\}) =
-        \{&\emptyset, \{a\}, \{b\}, \{\{a,b\}\},\\
+    \begin{lalign}
+      \{a,b\} \not\subseteq \mathcal{P}(\{a,b,\{a,b\}\}) =
+      \{&\emptyset, \{a\}, \{b\}, \{\{a,b\}\},\\
         &\{a, b\}, \{a, \{a, b\}\},\\
         &\{b, \{a, b\}\}, \{a, b, \{a, b\}\}\}
-      \end{aligned}
-    \end{math}
+    \end{lalign}
 
   \item $\{\{a,b\}\} \in \mathcal{P}(\{a,b,\{a,b\}\})$
   \item $\{a,b,\{a,b\}\} - \{a,b\}= \{\{a,b\}\} \neq \{a, b\}$
@@ -46,41 +52,33 @@
 \item
   \begin{enumerate}
   \item
-    \begin{math}
-      \begin{aligned}[t]
-        (\{1,3,5\} \cup \{3,1\}) \cap \{3,5,7\}
-        &= \{1,3,5\} \cap \{3,5,7\} \\
-        &= \{3,5\}
-      \end{aligned}
-    \end{math}
+    \begin{lalign}
+      (\{1,3,5\} \cup \{3,1\}) \cap \{3,5,7\}
+      &= \{1,3,5\} \cap \{3,5,7\} \\
+      &= \{3,5\}
+    \end{lalign}
 
   \item
-    \begin{math}
-      \begin{aligned}[t]
-        \bigcup\{\{3\},\{3,5\},\bigcap\{\{5,7\},\{7,9\}\}\}
-        &= \bigcup\{\{3\},\{3,5\},\{5,7\} \cap \{7,9\}\} \\
-        &= \bigcup\{\{3\},\{3,5\},\{7\}\} \\
-        &= \{3\} \cup \{3,5\} \cup \{7\} \\
-        &= \{3,5,7\}
-      \end{aligned}
-    \end{math}
+    \begin{lalign}
+      \bigcup\{\{3\},\{3,5\},\bigcap\{\{5,7\},\{7,9\}\}\}
+      &= \bigcup\{\{3\},\{3,5\},\{5,7\} \cap \{7,9\}\} \\
+      &= \bigcup\{\{3\},\{3,5\},\{7\}\} \\
+      &= \{3\} \cup \{3,5\} \cup \{7\} \\
+      &= \{3,5,7\}
+    \end{lalign}
 
   \item
-    \begin{math}
-      \begin{aligned}[t]
-        (\{1,2,5\} - \{5,7,9\}) \cup (\{5,7,9\} - \{1,2,5\})
-        &= \{1,2\} \cup \{7,9\} \\
-        &= \{1,2,7,9\}
-      \end{aligned}
-    \end{math}
+    \begin{lalign}
+      (\{1,2,5\} - \{5,7,9\}) \cup (\{5,7,9\} - \{1,2,5\})
+      &= \{1,2\} \cup \{7,9\} \\
+      &= \{1,2,7,9\}
+    \end{lalign}
 
   \item
-    \begin{math}
-      \begin{aligned}[t]
-        \mathcal{P}(\{7,8,9\}) - \mathcal{P}(\{7,9\})
-        = \{\{8\}, \{7,8\}, \{8,9\}, \{7,8,9\}\}
-      \end{aligned}
-    \end{math} \\
+    \begin{lalign}
+      \mathcal{P}(\{7,8,9\}) - \mathcal{P}(\{7,9\})
+      = \{\{8\}, \{7,8\}, \{8,9\}, \{7,8,9\}\}
+    \end{lalign}
     Tulosjoukkoon siis jäävät ne osajoukot joissa esiintyy 8.
   \item
     $\mathcal{P}(\emptyset) = \{\emptyset\}$
@@ -89,35 +87,29 @@
 \item
   \begin{enumerate}
   \item
-    \begin{math}
-      \begin{aligned}[t]
-        \{1\} \times \{1,2\} \times \{1,2,3\}
-        &= \{(1,1), (1,2)\} \times \{1,2,3\} \\
-        &= \{(1,2,1), (1,1,2), (1,1,3),\\
-        &\qquad(1,2,1), (1,2,2), (1,2,3)\}
-      \end{aligned}
-    \end{math}
+    \begin{lalign}
+      \{1\} \times \{1,2\} \times \{1,2,3\}
+      &= \{(1,1), (1,2)\} \times \{1,2,3\} \\
+      &= \{(1,2,1), (1,1,2), (1,1,3),\\
+      &\qquad(1,2,1), (1,2,2), (1,2,3)\}
+    \end{lalign}
 
   \item
-    \begin{math}
-      \begin{aligned}[t]
-        \emptyset \times \{1,2\} = \emptyset
-      \end{aligned}
-    \end{math}
+    \begin{lalign}
+      \emptyset \times \{1,2\} = \emptyset
+    \end{lalign}
 
     $(a,b) \in \emptyset \times \{1,2\} \Rightarrow a \in \emptyset$
     ja koska tyhjässä joukossa ei ole yhtään alkiota, on karteesinen
     tulo tyhjän joukon kanssa aina tyhjä joukko.
 
   \item
-    \begin{math}
-      \begin{aligned}[t]
-        \mathcal{P}(\{1,2\}) \times \{1,2\}
-        &= \{\emptyset, \{1\}, \{2\}, \{1,2\}\} \times \{1,2\} \\
-        &= \{(\emptyset, 1), (\emptyset, 2), (\{1\}, 1), (\{1\}, 2),\\
-        &\qquad(\{2\}, 1), (\{2\}, 2), (\{1,2\}, 1), (\{1,2\}, 2)\}
-      \end{aligned}
-    \end{math}
+    \begin{lalign}
+      \mathcal{P}(\{1,2\}) \times \{1,2\}
+      &= \{\emptyset, \{1\}, \{2\}, \{1,2\}\} \times \{1,2\} \\
+      &= \{(\emptyset, 1), (\emptyset, 2), (\{1\}, 1), (\{1\}, 2),\\
+      &\qquad(\{2\}, 1), (\{2\}, 2), (\{1,2\}, 1), (\{1,2\}, 2)\}
+    \end{lalign}
 
   \item
     $\mathcal{P}(\{\varepsilon\}) = \{\emptyset, \{\varepsilon\}\}$
@@ -131,8 +123,7 @@
       $\{\varepsilon\}^{*} = \{\varepsilon\}$
     \end{claim}
     \begin{proof}
-    \begin{math}
-      \begin{aligned}[t]
+      \begin{lalign}
         \{\varepsilon\}^*
         &= \{w_1w_2 \ldots w_n \mid w_i \in \{\varepsilon\}
            \text{ kaikilla } i \in \{1, \ldots, n\}\}\\
@@ -140,8 +131,7 @@
            \text{ kaikilla } i \in \{1, \ldots, n\}\}\\
         &= \{\varepsilon^n \mid n \ge 1\}\\
         &= \{\varepsilon\} \qedhere
-      \end{aligned}
-    \end{math}
+      \end{lalign}
     \end{proof}
 
 \newpage

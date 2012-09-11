@@ -2,38 +2,34 @@
 
 \usepackage[finnish]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=2cm]{geometry}
 \usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
 \usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
 
 \newtheorem*{claim}{Väite}
+\newcommand{\set}[1]{{\left\{ #1 \right\}}}
+
+\newenvironment{automata}[1][2.8]%
+{\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=#1cm,semithick]}%
+{\end{tikzpicture}}
 
 \begin{document}
 
 \subsection*{582206 Laskennan mallit, syksy 2012\\
-2. Harjoitusten malliratkaisut}
+2. Harjoitusten malliratkaisut\\
+{\rm
+\begin{tabular}{ccc}
+Jani Rahkola & ja & Juhana Laurinharju
+\end{tabular}
+}}
 
 \begin{enumerate}
 \item
   Olkoon kahden äärellisen automaatin $M_1$ ja $M_2$ tilat ja
   siirtymät seuraavat.
   
-  \begin{tikzpicture}[auto,node distance=2.8cm]
-    \node[initial,state]   (A)                    {$q_0$};
-    \node[accepting,state] (B) [above right of=A] {$q_1$};
-    \node[state]           (C) [below right of=A] {$q_2$};
-    \node[state]           (D) [below right of=B] {$q_3$};
-
-    \path (A) edge              node {$a$} (B)
-              edge              node {$b$} (C)
-          (B) edge              node {$a$} (D)
-              edge              node {$b$} (A)
-          (C) edge [loop below] node {$a,b$} (C)
-          (D) edge              node {$a,b$} (C);
-  \end{tikzpicture}
-
   \begin{enumerate}
   \item
     Mikä on kunkin automaatin aloitustila?
@@ -46,6 +42,264 @@
   \item
     Hyväksyvätkö automaatit merkkijonon $\varepsilon$?
   \end{enumerate}
+
+  \begin{tabular}{ccc}
+  &
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.0cm,semithick]
+      \node[initial,state]   (A)                    {$q_0$};
+      \node[accepting,state] (B) [above right of=A] {$q_1$};
+      \node[state]           (C) [below right of=A] {$q_2$};
+      \node[state]           (D) [below right of=B] {$q_3$};
+
+      \path (A) edge [bend left]  node {$a$} (B)
+                edge              node {$b$} (C)
+            (B) edge              node {$a$} (D)
+                edge [bend left]  node {$b$} (A)
+            (C) edge [loop below] node {$a,b$} (C)
+            (D) edge              node {$a,b$} (C);
+    \end{tikzpicture}
+    &
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.0cm,semithick]
+      \node[initial,accepting,state]   (A)              {$q_0$};
+      \node[state]                     (B) [right of=A] {$q_1$};
+      \node[state]                     (C) [below of=B] {$q_2$};
+      \node[state]                     (D) [right of=B] {$q_3$};
+
+      \path (A) edge [bend left]   node {$a$}        (B)
+                edge               node [left] {$b$} (C)
+            (B) edge [bend left]   node {$a$}        (D)
+                edge [bend left]   node {$b$}        (A)
+            (C) edge [loop below]  node {$a,b$}      (C)
+            (D) edge               node {$a$}        (C)
+                edge [bend left]   node {$b$}        (B);
+    \end{tikzpicture}
+    \\
+        & $M_1$             & $M_2$ \\
+    (a) & $q_0$             & $q_0$ \\
+    (b) & $\set{q_1}$       & $\set{q_0}$ \\
+    (c) & $q_0q_1q_3q_2q_2$ & $q_0q_1q_3q_1q_0$ \\
+    (d) & ei                & kyllä \\
+    (e) & ei                & kyllä
+
+
+\end{tabular}
+\item Olkoon äärellisen automaatin $M$ formaali kuvaus
+  $(\set{q_1,q_2,q_3,q_4,q_5}, \set{u,d}, \delta, q_3, \set{q_3})$ missä
+  siirtymäfunktion määrittelee taulukko:
+\[
+\begin{array}{c|cc}
+    & u   & d   \\ \hline
+q_1 & q_1 & q_2 \\
+q_2 & q_1 & q_3 \\
+q_3 & q_2 & q_4 \\
+q_4 & q_3 & q_5 \\
+q_5 & q_4 & q_5
+ \end{array} 
+\]
+Piirrä automaatti $M$ (tilat ja siirtymät).
+
+\begin{automata}
+  \node[state]                   (q1)               {$q_1$};
+  \node[state]                   (q2)  [left of=q1] {$q_2$};
+  \node[state,initial above,accepting] (q3)  [left of=q2] {$q_3$};
+  \node[state]                   (q4)  [left of=q3] {$q_4$};
+  \node[state]                   (q5)  [left of=q4] {$q_5$};
+
+
+  \path (q1) edge [loop right] node {$u$} (q1)
+             edge [bend right] node {$d$} (q2)
+        (q2) edge [bend right] node {$u$} (q1)
+             edge [bend right] node {$d$} (q3)
+        (q3) edge [bend right] node {$u$} (q2)
+             edge [bend right] node {$d$} (q4)
+        (q4) edge [bend right] node {$u$} (q3)
+             edge [bend right] node {$d$} (q5)
+        (q5) edge [bend right] node {$u$} (q4)
+             edge [loop left]  node {$d$} (q5);
+
+\end{automata}
+
+\item Minkälaisia merkkijonoja eli sanoja seuraavat äärelliset automaatit hyväksyvät?
+
+\begin{tabular}{cccc}
+(a) & 
+\begin{tabular}{c}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick]
+ %\tikzstyle{every state}=[fill=red,draw=none,text=white]
+
+ \node[initial,state]  (q0)                     {$q_0$};
+ \node[state,accepting](q1) [above right of=q0] {$q_1$};
+ \node[state]          (q2) [below right of=q0] {$q_2$};
+ \node[state]          (q3) [above right of=q2] {$q_3$};
+
+ \path (q0) edge [bend left]  node       {$a$} (q1)
+            edge              node [swap]{$b$} (q2)
+       (q1) edge              node       {$a$} (q3)
+            edge [bend left] node        {$b$} (q0)
+       (q2) edge [loop below] node {$a,b$} ()
+       (q3) edge             node {$a,b$} (q2);
+\end{tikzpicture} 
+\end{tabular}
+& (b) &
+\begin{tabular}{c}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick]
+ %\tikzstyle{every state}=[fill=red,draw=none,text=white]
+
+ \node[initial,state]   (q0)                     {$q_0$};
+ \node[state]           (q1) [above right of=q0] {$q_1$};
+ \node[state,accepting] (q2) [below right of=q0] {$q_2$};
+ \node[state,accepting] (q3) [right of=q1]       {$q_3$};
+ \node[state]           (q4) [right of=q2]       {$q_4$};
+
+ \path (q0) edge              node       {$a$}   (q1)
+            edge              node [swap]{$b$}   (q2)
+       (q1) edge [loop above] node       {$a$}   ()
+            edge              node [swap]{$b$}   (q3)
+       (q2) edge              node [swap]{$a,b$} (q4)
+       (q3) edge              node       {$a,b$} (q4)
+       (q4) edge [loop right] node       {$a,b$} ();    
+\end{tikzpicture}
+\end{tabular}
+\end{tabular}
+
+\begin{tabular}{cccc}
+(c) &
+\begin{tabular}{c}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick]
+ %\tikzstyle{every state}=[fill=red,draw=none,text=white]
+
+ \node[initial,state,accepting]
+              (q0)               {$q_0$};
+ \node[state]           (q1) [right of=q0] {$q_1$};
+ \node[state] (q2) [below of=q1] {$q_2$};
+ \node[state] (q3) [right of=q1] {$q_3$};
+
+ \path (q0) edge [bend left]  node       {$a$}   (q1)
+            edge              node [swap]{$b$}   (q2)
+       (q1) edge [bend left]  node       {$a$}  (q3)
+            edge [bend left]  node       {$b$}   (q0)
+       (q2) edge [loop below] node       {$a,b$} ()
+       (q3) edge              node       {$a$}   (q2)
+       (q3) edge [bend left]  node       {$b$} (q1);
+\end{tikzpicture}
+\end{tabular}
+& (d) &
+\begin{tabular}{c}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick]
+ %\tikzstyle{every state}=[fill=red,draw=none,text=white]
+
+ \node[state] (q0)               {$q_0$};
+ \node[state,initial above,accepting]
+              (q1) [right of=q0] {$q_1$};
+ \node[state] (q2) [below of=q1] {$q_2$};
+ \node[state] (q3) [right of=q1] {$q_3$};
+
+ \path (q0) edge [bend right]  node [swap]{$a$}   (q1)
+            edge              node [swap]{$b$}   (q2)
+       (q1) edge [bend left]  node       {$a$}  (q3)
+            edge [bend right]  node [swap]{$b$}   (q0)
+       (q2) edge [loop below] node       {$a,b$} ()
+       (q3) edge              node       {$a$}   (q2)
+       (q3) edge [bend left]  node       {$b$} (q1);
+\end{tikzpicture}
+\end{tabular}
+\end{tabular}
+
+\begin{tabular}{cccc}
+(e) &
+\begin{tabular}{c}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick]
+ %\tikzstyle{every state}=[fill=red,draw=none,text=white]
+
+ \node[state,initial] (q0)               {$q_0$};
+ \node[state]       (q1) [right of=q0] {$q_1$};
+ \node[state]       (q2) [below of=q0] {$q_2$};
+ \node[state]       (q3) [below of=q2] {$q_3$};
+ \node[state]       (q4) [right of=q1]  {$q_4$};
+ \node              (qx)[below of=q4] {};
+ \node[state,accepting](q5)[below of=qx] {$q_5$};
+ 
+ \path (q0) edge              node [swap] {$a$}   (q2)
+            edge              node        {$b$}   (q1)
+       (q1) edge              node [swap] {$a$}   (q2)
+            edge              node        {$b$}   (q4)
+       (q2) edge              node [swap] {$a$}   (q3)
+            edge [bend right] node [swap] {$b$}   (q1)
+       (q3) edge [loop left]  node        {$a$}   (  )
+       (q3) edge              node [swap] {$b$}   (q5)
+       (q4) edge              node [swap] {$a$}   (q5)
+       (q4) edge [loop above] node        {$b$}   (  )
+       (q5) edge [loop below] node        {$a,b$} (  );
+\end{tikzpicture}
+\end{tabular}
+\end{tabular}
+
+\begin{tabular}{cl}
+  (a) & $\set{a} \circ \set{ba}^* = a(ba)^*$ \\
+  (b) & $\set{a}^* \circ \set{b} = a^*b$ \\
+  (c) & $(\set{a} \circ \set{ab}^* \circ \set{b})^* = (a(ab)^*b)^*$ \\
+  (d) & $\set{ab}^* \cup \set{ba}^* = (ab)^* | (ba)^*$ \\
+  (e) & $\set{a,b}^* \circ \set{aab,bba} \circ \set{a,b}^* = (a|b)^*(aab|bba)(a|b)^*$
+\end{tabular}
+
+\item Piirrä äärelliset automaatit tiloineen ja siirtymänuolineen seuraaville kielille.
+\begin{enumerate}
+\item $L = \set{w \in \set{a, b}^* \mid \mbox{$w$ sisältää ainakin yhden $a$:n}}$
+
+    \begin{automata}
+        \node[initial,state]   (q1)               {$q_1$};
+        \node[accepting,state] (q2) [right of=q1] {$q_2$};
+
+        \path (q1) edge [loop above] node {$b$}   (  )
+                   edge              node {$a$}   (q2)
+              (q2) edge [loop above] node {$a,b$} (  );
+    \end{automata}
+
+\item $L = \set{w \in \set{a, b}^* \mid \mbox{$w$ alkaa $b$ tai $ab$:llä}}$
+
+    \begin{automata}[2]
+        \node[initial,state]   (q1)                     {$q_1$};
+        \node[state]           (q2) [above right of=q1] {$q_2$};
+        \node[accepting,state] (q3) [below right of=q2] {$q_3$};
+        \node[state]           (q4) [above of=q2]       {$q_4$};
+        
+        \path (q1) edge              node {$a$} (q2)
+                   edge              node {$b$} (q3)
+              (q2) edge              node {$b$} (q3)
+                   edge              node {$a$} (q4)
+              (q3) edge [loop right] node {$a,b$} ()
+              (q4) edge [loop above] node {$a,b$} ();
+    \end{automata}
+
+\item $L = \set{w \in \set{a,b}^*  \mid \mbox{$w$ loppuu $aa$:han}}$
+
+    Suunnitellun automaatin olisi tarkoitus "muistaa", ollaanko nähty nolla,
+    yksi vai ainakin kaksi $a$-merkkiä. Luodaan siis automaatille tilat
+    jokaista kolmea vaihtoehtoa varten. Alkutilassa ei olla vielä nähty yhtään
+    $a$:ta. Tilassa $q_a$ ollaan nähty yksi $a$ ja tilassa $q_{aa}$ ollaan
+    nähty ainakin kaksi $a$:ta.
+
+    \begin{automata}
+        \node[initial,state]   (qe)                {$q_\varepsilon$};
+        \node[state]           (qa)  [below of=qe] {$q_a$};
+        \node[accepting,state] (qaa) [right of=qa] {$q_{aa}$};
+
+        \path (qe)  edge [loop above] node        {$b$} (  )
+                    edge [bend left]  node        {$a$} (qa)
+              (qa)  edge [bend left]  node        {$b$} (qe)
+                    edge              node        {$a$} (qaa)
+              (qaa) edge [loop right] node        {$a$} (  )
+                    edge              node [swap] {$b$} (qe);
+    \end{automata}
+\item $L = \set{w \in \set{a,b}^* \mid \mbox{$w$ sisältää merkkijonon $abab$ }}$
+\item $L = \set{w \in \set{a,b}^* \mid \mbox{jokaisen $w$:ssä olevan $a$:n edessa on $b$}}$
+%\item $L = \set{w \in \set{a,b}^* \mid \mbox{ $w$ ei sisällä merkkijonoa $aa$ eikä merkkijonoa $bb$  }}$ 
+%\item $L = \set{w \in \set{a,b}^* \mid \mbox{ $w$ sisältää parittoman määrän kirjainta $a$ ja parillisen määrän kirjainta $b$ }}$
+%\item $L = \set{w \in \set{a,b}^* \mid \mbox{ $w$ sisältää sekä merkkijonon $ab$ että $ba$:n}}$
+\end{enumerate}
+
+
+
 \end{enumerate}
 
 \end{document}
