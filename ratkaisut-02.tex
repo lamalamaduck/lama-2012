@@ -388,22 +388,26 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
       \tikzstyle{every state}=[fill=none,draw=none,text=black,minimum
         size=0.8cm,inner sep=0cm]
       \node[state]                     (r1)                   {$r_1$};
-      \node[state]                     (r2)   [right of=r1]   {$r_2$};
+      \node[state,node distance=1.7cm] (r2)   [right of=r1]   {$r_2$};
       \node[state]                     (dots) [right of=r2]   {$\ldots$};
       \node[state]                     (rn)   [right of=dots] {$r_{n+1}$};
       \node[state,node distance=0.5cm] (sa)   [below of=r1]   {$s_A$};
+      \node[state,node distance=0.5cm] (dsa)[below of=r2] {$\delta_A(s_A, w_1)$};
 
         \path (r1)   edge [bend left] node {$w_1$} (r2)
               (r2)   edge [bend left] node {$w_2$} (dots)
               (dots) edge [bend left] node {$w_n$} (rn);
     \end{automata}
     \end{center}
+    FIXME: tee tästä makro niin voi piirtää vastaavan kuvan myös kahelle
+    muulle jonolle
+
 %
     Automaatti $M_A$ kulkee syötteellä $w$ tilajonon $r$ ja automaatti
     $M_B$ tilajonon $p$ läpi. Siis esimerkiksi automaatti $M_A$
     siirtyy merkillä $w_i$ tilasta $r_i$ tilaan $r_{i+1}$.
 
-    Määritellään myös vastaavasti jono 
+    Määritellään myös vastaavasti jono
 % 
    \begin{equation*}
       q = q_{1} \ldots q_{n+1}
@@ -412,26 +416,68 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
    jonka läpi automaatti $M_{A-B}$ kulkee syötteellä $w$. Nyt siis
 %
     \begin{align*}
-      q_1 &= (s_A, s_B) = (r_1,p_1) \\
-      q_{i+1} &= \delta_{A-B}(q_i, w_i) \\
-             &= \delta_{A-B}((r_i, p_i), w_i) \\
-             &= (\delta_A(r_i, w_i), \delta_B(p_i, w_i)) \\
-             &= (r_{i+1}, p_{i+1}).
+      q_1 &= s_{A-B} = (s_A, s_B) = (r_1,p_1) \\
+      q_{i+1} &= \delta_{A-B}(q_i, w_i).
     \end{align*}
-
-    Tällöin automaatti $M_{A-B}$ hyväksyy merkkijonon $w$ jos ja vain jos
-    $q_{n+1} \in F_{A-B}$.
+%
+    Intuitiivisesti näyttäisi siltä, että $q_i = (r_i,p_i)$, sillä
 %
     \begin{align*}
-      q_{n+1} \in F_{A-B} &\Leftrightarrow (r_{n+1}, p_{n+1}) \in F_{A-B} \\
-      &\Leftrightarrow r_{n+1} \in F_A \text{ ja } p_{n+1} \notin F_B \\
-      &\Leftrightarrow w \in A \text{ ja } w \notin B \\
-      &\Leftrightarrow w \in A - B
+      q_1 &= (r_1, p_1) \\
+      q_2 &= \delta_{A-B}(q_1, w_1) \\
+          &= (\delta_A(r_1, w_1), \delta_B(p_1, w_1) \\
+          &= (r_2, p_2) \\
+      \ldots &
     \end{align*}
 %
-    Siis automaatti $M_{A-B}$ hyväksyy merkkijonon $w$ täsmälleen
-    silloin kun merkkijono $w$ kuuluu kieleen $A - B$. Siis kieli $A -
-    B$ on säännöllinen.
+    Näytetään tämä todeksi induktiolla.
+%
+    \begin{claim}
+      $q_i = (r_i,p_i)$ tai $n+1 < i$
+    \end{claim}
+%
+    \begin{proof}
+      \begin{description} \item[]
+        \item[Alkuaskel] määritelmän nojalla $q_1 = (r_1,p_1)$.
+        \item[Induktioaskel]
+          \begin{description}\item[]
+            \item[Induktio-oletus] $i > n+1$ tai $q_i = (r_1,p_i)$
+            \item[Induktioaskeleen väite] $i+1 > n+1$ tai $q_{i+1} =
+            (r_{i+1}, p_{i+1})$
+
+            \item[Induktioaskeleen todistus] \mbox{} %tyhjä kappale
+
+            Jos $i \ge n+1$, niin $i+1 > n+1$. Tarkastellaan siis tapausta
+            $i < n+1$. Nyt
+%
+            \begin{align*}
+              q_{i+1} &= \delta_{A-B}(q_i, w_i)
+                         &\text{$q_{i+1}$:n määritelmä}\\
+                      &= \delta_{A-B}((r_i, p_i), w_i)
+                         &\text{induktio-oletus} \\
+                      &= (\delta_A(r_i, w_i), \delta_B(p_i, w_i))
+                         &\text{$\delta_{A-B}$:n määritelmä}\\
+                      &= (r_{i+1}, p_{i+1})
+                         &\text{$r_{i+1}$:n ja $p_{i+1}$:n määritelmät.}
+            \end{align*}
+          \end{description}
+      \end{description}
+    \end{proof}
+%
+
+    Automaatti $M_{A-B}$ hyväksyy merkkijonon $w$ jos ja vain jos
+    $q_{n+1} \in F_{A-B}$. Näytetään nyt, että $M_{A-B}$ hyväksyy merkkijonon
+    $w$ täsmälleen silloin kun $w$ kuuluu kieleen $A -B$.
+%
+    \begin{align*}
+      q_{n+1} \in F_{A-B}
+      &\Leftrightarrow (r_{n+1}, p_{n+1}) \in F_{A-B} \\
+      &\Leftrightarrow r_{n+1} \in F_A \text{ ja } p_{n+1} \notin F_B \\
+      &\Leftrightarrow w \in A \text{ ja } w \notin B \\
+      &\Leftrightarrow w \in A - B.
+    \end{align*}
+%
+    Siis kieli $A - B$ on säännöllinen.
   \end{proof}
 
 \end{enumerate}
