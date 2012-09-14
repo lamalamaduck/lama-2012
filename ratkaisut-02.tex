@@ -487,5 +487,143 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
     Siis kieli $A - B$ on säännöllinen.
   \end{proof}
 
+\item
+  Seuraavat kielet koostettu yksinkertaisemmista kielistä
+  säännöllisillä operaatioilla (kaikkia ei vielä todistettu tunnilla).
+  Piirrä jokaisessa kohdassa ensin yksinkertaiset kielet tunnistavat
+  automaatit tiloineen ja siirtymineen ja piirrä sen perusteella
+  lopullinen automaatti (vrt. luentokalvojen yhdisteautomaatti).
+  Kaikissa kohdissa $\Sigma = \set{a,b}$.
+  \begin{enumerate}
+  \item 
+    $\set{w \mid \mbox{$w$ sisältää ainakin kolme $a$:ta ja ainakin
+      kaksi $b$:tä}}$
+
+    Automaatti joka tunnistaa kielen, jossa jokainen merkkijono
+    sisältää ainakin kolme $a$:ta.
+
+    \begin{center}
+    \begin{automata}[1.7]
+      \node[initial,state]   (qe)                  {$q_{\varepsilon}$};
+      \node[state]           (qa)   [right of=qe]  {$q_{a}$};
+      \node[state]           (qaa)  [right of=qa]  {$q_{aa}$};
+      \node[accepting,state] (qaaa) [right of=qaa] {$q_{aaa}$};
+
+      \path (qe)   edge              node {$a$}   (qa) 
+                   edge [loop above] node {$b$}   ()
+            (qa)   edge              node {$a$}   (qaa)
+                   edge [loop above] node {$b$}   ()
+            (qaa)  edge              node {$a$}   (qaaa)
+                   edge [loop above] node {$b$}   ()
+            (qaaa) edge [loop above] node {$a,b$} ();
+    \end{automata}
+    \end{center}
+
+    Lisäksi toinen automaatti joka tunnistaa kielen, jossa jokainen
+    merkkijono sisältää ainakin kaksi $b$:tä.
+
+    \begin{center}
+    \begin{automata}[1.7]
+      \node[initial,state]   (qe)                  {$q_{\varepsilon}$};
+      \node[state]           (qb)   [right of=qe]  {$q_{b}$};
+      \node[accepting,state] (qbb)  [right of=qb]  {$q_{bb}$};
+
+      \path (qe)  edge              node {$b$}   (qb) 
+                  edge [loop above] node {$a$}   ()
+            (qb)  edge              node {$b$}   (qbb)
+                  edge [loop above] node {$a$}   ()
+            (qbb) edge [loop above] node {$a,b$} ();
+    \end{automata}
+    \end{center}
+
+    Muodostetaan näistä automaateista leikkausautomaatti. Automaatti
+    pitää samanaikaisesti kirjaa siitä, missä tilassa kumpikin
+    automaatti tällä hetkellä menee ja hyväksyy silloin, kun kumpikin
+    alkuperäisistä automaateista hyväksyy.
+
+    Leikkausautomaatin tilat ovat nyt siis jälleen pareja, mutta nyt
+    hyväksyviä tiloja ovat vain sellaiset parit $(q_a, q_b)$ missä
+    $q_a$ on ensimmäisen automaatin hyväksyvä tila ja $q_b$ on toisen
+    automaatin hyväksyvä tila.
+
+    Tilannetta voi havainnollistaa piirtämällä toisen alkuperäisistä automaateista
+    vaakasuunnassa ja toisen pystysuunnassa. Leikkausautomaatin voi
+    piirtää nyt hilaksi näiden viereen.
+
+    \begin{automata}[2.6]
+      \node[initial above,state, node distance=2cm]   (qeb)  [left of=qee] {$q_{\varepsilon}$};
+      \node[state]           (qb)   [below of=qeb] {$q_{b}$};
+      \node[accepting,state] (qbb)  [below of=qb] {$q_{bb}$};
+
+      \path (qeb) edge              node {$b$}   (qb) 
+                  edge [loop left] node {$a$}   ()
+            (qb)  edge              node {$b$}   (qbb)
+                  edge [loop left] node {$a$}   ()
+            (qbb) edge [loop left] node {$a,b$} ();
+
+
+      \node[initial,state]   (qea)  [above of=qee] {$q_{\varepsilon}$};
+      \node[state]           (qa)   [right of=qea]  {$q_{a}$};
+      \node[state]           (qaa)  [right of=qa]  {$q_{aa}$};
+      \node[accepting,state] (qaaa) [right of=qaa] {$q_{aaa}$};
+
+      \path (qea)  edge              node {$a$}   (qa) 
+                   edge [loop above] node {$b$}   ()
+            (qa)   edge              node {$a$}   (qaa)
+                   edge [loop above] node {$b$}   ()
+            (qaa)  edge              node {$a$}   (qaaa)
+                   edge [loop above] node {$b$}   ()
+            (qaaa) edge [loop above] node {$a,b$} ();
+
+
+      \node[initial above,state]   (qee)                 {$(q_\varepsilon, q_\varepsilon)$};
+      \node[state]           (qae)     [right of=qee]     {$(q_\varepsilon, q_a)$};
+      \node[state]           (qaae)    [right of=qae] {$(q_\varepsilon, q_{aa})$};
+      \node[state]           (qaaae)   [right of=qaae] {$(q_\varepsilon, q_{aaa})$};
+      \node[state]           (qeb)     [below of=qee]     {$(q_b, q_\varepsilon)$};
+      \node[state]           (qab)    [right of=qeb]    {$(q_b, q_a)$};
+      \node[state]           (qaab)   [right of=qab]   {$(q_b, q_{aa})$};
+      \node[state]           (qaaab)  [right of=qaab]  {$(q_b, q_{aaa})$};
+      \node[state]           (qebb)    [below of=qeb]    {$(q_{bb}, q_\varepsilon)$};
+      \node[state]           (qabb)   [right of=qebb]   {$(q_{bb}, q_a)$};
+      \node[state]           (qaabb)  [right of=qabb]  {$(q_{bb}, q_{aa})$};
+      \node[accepting,state] (qaaabb) [right of=qaabb] {$(q_{bb}, q_{aaa})$};
+
+      \path (qee) edge node {$a$} (qae)
+            (qae) edge node {$a$} (qaae)
+            (qaae) edge node {$a$} (qaaae)
+            (qeb) edge node {$a$} (qab)
+            (qab) edge node {$a$} (qaab)
+            (qaab) edge node {$a$} (qaaab)
+            (qebb) edge node {$a$} (qabb)
+            (qabb) edge node {$a$} (qaabb)
+            (qaabb) edge node {$a$} (qaaabb)
+            (qee) edge node {$b$} (qeb)
+            (qeb) edge node {$b$} (qebb)
+            (qae) edge node {$b$} (qab)
+            (qab) edge node {$b$} (qabb)
+            (qaae) edge node {$b$} (qaab)
+            (qaab) edge node {$b$} (qaabb)
+            (qaaae) edge node {$b$} (qaaab)
+            (qaaab) edge node {$b$} (qaaabb)
+
+            (qebb) edge [loop below] node {$b$} ()
+            (qabb) edge [loop below] node {$b$} ()
+            (qaabb) edge [loop below] node {$b$} ()
+            (qaaae) edge [loop right] node {$a$} ()
+            (qaaab) edge [loop right] node {$a$} ()
+            (qaaabb) edge [loop right] node {$a,b$} ();
+    \end{automata}
+
+  \item
+    $\set{w \mid \mbox{$w$:n pituus on parillinen sisältäen parittoman määrän $a$:ta} }$
+  \item 
+    $\set{w \mid \mbox{$w$:ssä olevin $a$-merkkien määrä ei ole kaksi} }$
+  \item 
+    $\set{w \mid \mbox{$w$ ei sisällä alimerkkijonoja $ab$ ja $ba$} }$
+  \item
+    $\set{w \mid \mbox{$w$ on mikä tahansa muu merkkijono kuin $a$ tai $b$} }$ 
+  \end{enumerate}
+
 \end{enumerate}
 \end{document}
