@@ -620,6 +620,39 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
 
   \item
     $\set{w \mid \mbox{$w$:n pituus on parillinen sisältäen parittoman määrän $a$:ta} }$
+
+    \begin{automata}
+      \node[initial above, state] (q00a) {$(q_{0}, q_{0a})$};
+      \node[accepting,state] (q01a)[below of=q00a]{$(q_{0}, q_{1a})$};
+      \node[state] (q10a)[right of=q00a]{$(q_{1}, q_{0a})$};
+      \node[state] (q11a)[right of=q01a]{$(q_{1}, q_{1a})$};
+
+      \path (q00a) edge [bend left=15] node {$a$} (q11a)
+            (q00a) edge  node {$b$} (q10a)
+            (q01a) edge [bend left=15] node {$a$} (q10a)
+            (q01a) edge [bend right=40] node [swap] {$b$} (q11a)
+            (q10a) edge [bend left=15] node {$a$} (q01a)
+            (q10a) edge [bend right=40] node [swap] {$b$} (q00a)
+            (q11a) edge [bend left=15] node {$a$} (q00a)
+            (q11a) edge  node {$b$} (q01a) ;
+
+      \node[state, initial, accepting] (q0) [above of=q00a] {$q_{0}$};
+      \node[state]          (q1) [right of=q0]   {$q_{1}$};
+
+
+      \path (q0) edge [bend left] node {$a,b$} (q1)
+            (q1) edge [bend left] node {$a,b$} (q0) ;
+
+      \node[state, initial above] (q0a) [left of=q00a] {$q_{0a}$};
+      \node[state, accepting]          (q1a) [below of=q0a] {$q_{1a}$};
+
+
+      \path (q0a) edge [loop left] node {$b$} (q0a)
+            (q1a) edge [loop left] node {$b$} (q1a)
+            (q0a) edge [bend left] node {$a$} (q1a)
+            (q1a) edge [bend left] node {$a$} (q0a) ;
+
+    \end{automata}
   \item 
     $\set{w \mid \mbox{$w$:ssä olevin $a$-merkkien määrä ei ole kaksi} }$
   \item 
