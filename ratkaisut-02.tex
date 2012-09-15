@@ -22,7 +22,7 @@
       \node[state,node distance=0.5cm] (sa)   [below of=r1]   {$#3$};
       \node[state,node distance=0.5cm] (dsa)  [below of=r2]   {$#4$};
 
-        \path (r1)   edge [bend left] node {$#1_1$} (r2)
+        \path (r1)   edge [bend left=20] node {$#1_1$} (r2)
               (r2)   edge [bend left] node {$#1_2$} (dots)
               (dots) edge [bend left] node {$#1_n$} (rn);
     \end{automata}%
@@ -136,6 +136,8 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
              edge [loop left]  node {$d$} (q5);
 
 \end{automata}
+
+\newpage
 
 \item Minkälaisia merkkijonoja eli sanoja seuraavat äärelliset automaatit hyväksyvät?
 
@@ -252,18 +254,24 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
 \end{tabular}
 \end{tabular}
 
-\begin{tabular}{cl}
-  (a) & $\set{a} \circ \set{ba}^* = a(ba)^*$ \\
-  (b) & $\set{a}^* \circ \set{b} = a^*b$ \\
-  (c) & $(\set{a} \circ \set{ab}^* \circ \set{b})^* = (a(ab)^*b)^*$ \\
-  (d) & $\set{ab}^* \cup \set{ba}^* = (ab)^* | (ba)^*$ \\
-  (e) & $\set{a,b}^* \circ \set{aab,bba} \circ \set{a,b}^* = (a|b)^*(aab|bba)(a|b)^*$
+\begin{tabular}{cll}
+  (a) & $\set{a} \circ \set{ba}^* = a(ba)^*$ & \\
+  (b) & $\set{a}^* \circ \set{b} = a^*b$ & \\
+  (c) & $(\set{a} \circ \set{ab}^* \circ \set{b})^* = (a(ab)^*b)^*$ &
+      sisältää saman määrän $a$:ta ja $b$:tä ja missään kohdassa ei ole ollut
+      enempää $b$:tä kuin $a$:ta eikä missään kohdassa ole siihen mennessä
+      ollut kolmea $a$:ta enempää kuin $b$:tä\\
+  (d) & $\set{ab,ba}^* = (ab|ba)^*$ & muodostettu laittamalla merkkijonoja
+      $ab$ ja $ba$ peräkkäin mielivaltaisesti\\
+  (e) & $\set{a,b}^* \circ \set{aab,bba} \circ \set{a,b}^* =
+      (a|b)^*(aab|bba)(a|b)^*$ & sisältää merkkijonon $aab$ tai $bba$
 \end{tabular}
 
 \item Piirrä äärelliset automaatit tiloineen ja siirtymänuolineen seuraaville kielille.
 \begin{enumerate}
 \item $L = \set{w \in \set{a, b}^* \mid \mbox{$w$ sisältää ainakin yhden $a$:n}}$
 
+    \begin{center}
     \begin{automata}
         \node[initial,state]   (q1)               {$q_1$};
         \node[accepting,state] (q2) [right of=q1] {$q_2$};
@@ -272,9 +280,11 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
                    edge              node {$a$}   (q2)
               (q2) edge [loop above] node {$a,b$} (  );
     \end{automata}
+    \end{center}
 
 \item $L = \set{w \in \set{a, b}^* \mid \mbox{$w$ alkaa $b$ tai $ab$:llä}}$
 
+    \begin{center}
     \begin{automata}[2]
         \node[initial,state]   (q1)                     {$q_1$};
         \node[state]           (q2) [above right of=q1] {$q_2$};
@@ -288,6 +298,7 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
               (q3) edge [loop right] node {$a,b$} ()
               (q4) edge [loop above] node {$a,b$} ();
     \end{automata}
+    \end{center}
 
 \item $L = \set{w \in \set{a,b}^*  \mid \mbox{$w$ loppuu $aa$:han}}$
 
@@ -297,6 +308,7 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
     $a$:ta. Tilassa $q_a$ ollaan nähty yksi $a$ ja tilassa $q_{aa}$ ollaan
     nähty ainakin kaksi $a$:ta.
 
+    \begin{center}
     \begin{automata}
         \node[initial,state]   (qe)                {$q_\varepsilon$};
         \node[state]           (qa)  [below of=qe] {$q_a$};
@@ -309,11 +321,13 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
               (qaa) edge [loop right] node        {$a$} (  )
                     edge              node [swap] {$b$} (qe);
     \end{automata}
+    \end{center}
 
 \item
   $L = \set{w \in \set{a,b}^* \mid \mbox{$w$ sisältää merkkijonon
     $abab$ }}$
 
+  \begin{center}
   \begin{automata}
     \node[initial,state]   (qe)                    {$q_\varepsilon$};
     \node[state]           (qa)    [right of=qe]   {$q_a$};
@@ -331,11 +345,13 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
                   edge              node        {$b$}   (qabab)
           (qabab) edge [loop above] node        {$a,b$} ();
   \end{automata}
+  \end{center}
 
 \item
   $L = \set{w \in \set{a,b}^* \mid \mbox{jokaisen $w$:ssä olevan $a$:n
     edessa on $b$}}$
   
+  \begin{center}
   \begin{automata}
     \node[initial,accepting,state] (q1)                     {$q_1$};
     \node[accepting,state]         (q2) [above right of=q1] {$q_2$};
@@ -347,8 +363,11 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
                edge [loop right] node        {$b$}   ()
           (q3) edge [loop right] node        {$a,b$} ();
   \end{automata}
+  \end{center}
 
 \end{enumerate}
+
+\newpage
 
 \item
   Olkoon kielet $A$ ja $B$ säännöllisiä. Todista että joukkoerotus $A
@@ -372,7 +391,22 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
       } q_B \notin F_B} = F_A \times (Q_B - F_B)
   \end{align*}
 %
-  FIXME: Motivaatio
+
+  Konstruktio on hyvin samanlainen kuin yhdisteautomaatillakin. Automaatti
+  simuloi samanaikaisesti molempia alkuperäisiä automaatteja, joten
+  tilajoukkona on $Q_A \times Q_B$ joka siis sisältää kaikki parit $(q_A,
+  q_B)$, missä $q_A$ on ensimmäisen automaatin tila ja $q_B$ toisen
+  automaatin tila.
+
+  Tilasiirtymä pitää nyt määritellä pareilta pareille. Määritellään se niin,
+  että parin ensimmäisessä tilassa siirrytään ensimmäisen automaatin
+  tilasiirtymäfunktiota noudattaen ja toisessa tilassa toisen automaatin
+  tilasiirtymäfunktiota noudattaen.
+
+  Hyväksyviä tiloja ovat nyt sellaiset tilaparit $(q_A, q_B)$ joissa
+  ensimmäisen automaatin tila $q_A$ on ensimmäisen automaatin hyväksyvä ja
+  toinen tila $q_B$ ei ole toisen automaatin hyväksyvä tila.
+
 %
   \begin{claim}
     Yllä määritelty automaatti $M_{A-B}$ tunnistaa kielen $A - B$.
@@ -380,13 +414,7 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
   \end{claim}
 %
   \begin{proof}
-    Olkoon $w \in \Sigma^*$. Nyt
-%
-    \begin{equation*}
-      w = w_1 \ldots w_n.
-    \end{equation*}
-%
-    Määritellään tilajonot
+    Olkoon $w \in \Sigma^*$. Nyt $w = w_1 \ldots w_n$. Määritellään tilajonot
 %
     \begin{align*}
       r &= r_1 \ldots r_{n+1} \text{ ja } \\
@@ -445,10 +473,10 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
 %
     \begin{proof}
       \begin{description} \item[]
-        \item[Alkuaskel] määritelmän nojalla $q_1 = (r_1,p_1)$.
+        \item[Alkuaskel] Määritelmän nojalla $q_1 = (r_1,p_1)$.
         \item[Induktioaskel]
           \begin{description}\item[]
-            \item[Induktio-oletus] $i > n+1$ tai $q_i = (r_1,p_i)$
+            \item[Induktio-oletus] $i > n+1$ tai $q_i = (r_i,p_i)$
             \item[Induktioaskeleen väite] $i+1 > n+1$ tai $q_{i+1} =
             (r_{i+1}, p_{i+1})$
 
@@ -478,10 +506,14 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
 %
     \begin{align*}
       q_{n+1} \in F_{A-B}
-      &\Leftrightarrow (r_{n+1}, p_{n+1}) \in F_{A-B} \\
-      &\Leftrightarrow r_{n+1} \in F_A \text{ ja } p_{n+1} \notin F_B \\
-      &\Leftrightarrow w \in A \text{ ja } w \notin B \\
-      &\Leftrightarrow w \in A - B.
+      &\Leftrightarrow (r_{n+1}, p_{n+1}) \in F_{A-B}
+        & \text{ äskeinen induktio}\\
+      &\Leftrightarrow r_{n+1} \in F_A \text{ ja } p_{n+1} \notin F_B
+        & F_{A-B} \text{:n määritelmä}\\
+      &\Leftrightarrow w \in A \text{ ja } w \notin B
+        & F_A \text{ tunnistaa kielen $A$ ja $F_B$ $B$:n} \\
+      &\Leftrightarrow w \in A - B
+        & \text{ joukkoerotuksen $A-B$ määritelmä.}
     \end{align*}
 %
     Siis kieli $A - B$ on säännöllinen.
@@ -588,7 +620,7 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
             (qaabb) edge [loop below] node {$b$} ()
             (qaaae) edge [loop right] node {$a$} ()
             (qaaab) edge [loop right] node {$a$} ()
-            (qaaabb) edge [loop right] node {$a,b$} ();
+            (qaaabb) edge [out=330, in=300,looseness=8] node {$a,b$} (qaaabb);
 
 
       \node[initial above,state, node distance=2cm]   (qeb)  [left of=qee] {$q_{\varepsilon}$};
@@ -621,6 +653,7 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
   \item
     $\set{w \mid \mbox{$w$:n pituus on parillinen sisältäen parittoman määrän $a$:ta} }$
 
+    \begin{center}
     \begin{automata}
       \node[initial above, state] (q00a) {$(q_{0}, q_{0a})$};
       \node[accepting,state] (q01a)[below of=q00a]{$(q_{0}, q_{1a})$};
@@ -643,7 +676,7 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
       \path (q0) edge [bend left] node {$a,b$} (q1)
             (q1) edge [bend left] node {$a,b$} (q0) ;
 
-      \node[state, initial above] (q0a) [left of=q00a] {$q_{0a}$};
+      \node[state, initial above, node distance=2cm] (q0a) [left of=q00a] {$q_{0a}$};
       \node[state, accepting]          (q1a) [below of=q0a] {$q_{1a}$};
 
 
@@ -653,12 +686,241 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
             (q1a) edge [bend left] node {$a$} (q0a) ;
 
     \end{automata}
-  \item 
+    \end{center}
+
+  \item
     $\set{w \mid \mbox{$w$:ssä olevin $a$-merkkien määrä ei ole kaksi} }$
-  \item 
+
+    Tehdään ensin automaatti, joka hyväksyy vain merkkijonot joissa on tasan
+    kaksi $a$:ta.
+
+    \begin{automata}
+      \node[state, initial]   (q0a)                {$q_{0a}$};
+      \node[state]            (q1a) [right of=q0a] {$q_{1a}$};
+      \node[state, accepting] (q2a) [right of=q1a] {$q_{2a}$};
+      \node[state]            (q3a) [right of=q2a] {$q_{3a}$};
+
+
+      \path (q0a) edge [loop above] node {$b$} (q0a)
+            (q1a) edge [loop above] node {$b$} (q1a)
+            (q2a) edge [loop above] node {$b$} (q2a)
+            (q3a) edge [loop above] node {$b$} (q3a)
+            (q0a) edge              node {$a$} (q1a)
+            (q1a) edge              node {$a$} (q2a)
+            (q2a) edge              node {$a$} (q3a)
+            (q3a) edge [loop above] node {$a$} (q3a) ;
+
+    \end{automata}
+
+    Nyt tästä saadaan merkkijono joka hyväksyy kaikki merkkijonot joissa ei
+    ole tasan kahta $a$-merkkiä vaihtamalla hyväksyvät ja hylkäävät tilat
+    keskenään.
+
+    \begin{automata}
+      \node[state, initial, accepting]   (q0a)                {$q_{0a}$};
+      \node[state, accepting]            (q1a) [right of=q0a] {$q_{1a}$};
+      \node[state] (q2a) [right of=q1a] {$q_{2a}$};
+      \node[state, accepting]            (q3a) [right of=q2a] {$q_{3a}$};
+
+
+      \path (q0a) edge [loop above] node {$b$} (q0a)
+            (q1a) edge [loop above] node {$b$} (q1a)
+            (q2a) edge [loop above] node {$b$} (q2a)
+            (q3a) edge [loop above] node {$b$} (q3a)
+            (q0a) edge              node {$a$} (q1a)
+            (q1a) edge              node {$a$} (q2a)
+            (q2a) edge              node {$a$} (q3a)
+            (q3a) edge [loop above] node {$a$} (q3a) ;
+
+    \end{automata}
+
+  \item
     $\set{w \mid \mbox{$w$ ei sisällä alimerkkijonoja $ab$ ja $ba$} }$
+
+    Muodostetaan ensin automaatti joka tunnistaa merkkijonon, joka sisältää
+    sekä merkkijonon $ab$ että $ba$. Tehdään tämä kuten aikaisemmissakin
+    kohdissa.
+
+    \begin{center}
+    \begin{automata}
+      \node[state,initial above] (qe_e)     {$(q_{e}, q_{e})$};
+      \node[state] (qe_b)  [below of=qe_e]  {$(q_{e}, q_{b})$};
+      \node[state] (qe_ba) [below of=qe_b]  {$(q_{e}, q_{ba})$};
+      \node[state] (qa_e)  [right of=qe_e]  {$(q_{a}, q_{e})$};
+      \node[state] (qab_e) [right of=qa_e]  {$(q_{ab}, q_{e})$};
+      \node[state] (qa_b)  [right of=qe_b]  {$(q_{a}, q_{b})$};
+      \node[state] (qab_b) [right of=qa_b]  {$(q_{ab}, q_{b})$};
+      \node[state] (qa_ba) [right of=qe_ba] {$(q_{a}, q_{ba})$};
+      \node[accepting,state] (qab_ba)[right of=qa_ba] {$(q_{ab}, q_{ba})$};
+
+      \path (qe_e)   edge              node {$a$} (qa_e)
+            (qe_b)   edge              node {$a$} (qa_ba)
+            (qe_ba)  edge              node {$a$} (qa_ba)
+            (qe_e)   edge              node {$b$} (qe_b)
+            (qe_b)   edge [in=20, out=50, looseness=8] node {$b$} (qe_b)
+            (qe_ba)  edge [loop below] node {$b$} (qe_ba)
+            (qa_e)   edge [loop above] node {$a$} (qa_e)
+            (qa_b)   edge              node {$a$} (qa_ba)
+            (qa_ba)  edge [loop below] node {$a$} (qa_ba)
+            (qa_e)   edge              node {$b$} (qab_b)
+            (qa_b)   edge              node {$b$} (qab_b)
+            (qa_ba)  edge              node {$b$} (qab_ba)
+            (qab_e)  edge [loop above] node {$a$} (qab_e)
+            (qab_b)  edge              node {$a$} (qab_ba)
+            (qab_e)  edge              node {$b$} (qab_b)
+            (qab_b)  edge [loop right] node {$b$} (qab_b)
+            (qab_ba) edge [loop below] node {$a,b$} (qab_ba);
+
+
+      \node[state, initial] (qe_) [above of=qe_e] {$q_{e}$};
+      \node[state]          (qa)  [right of=qe_]   {$q_{a}$};
+      \node[accepting,state]          (qab) [right of=qa]   {$q_{ab}$};
+
+      \path (qe_) edge              node {$a$} (qa)
+            (qe_) edge [loop above] node {$b$} (qe_)
+            (qa)  edge [loop above] node {$a$} (qa)
+            (qa)  edge              node {$b$} (qab)
+            (qab) edge [loop above] node {$a,b$} (qab) ;
+
+      \node[state, initial above,node distance=2cm] (qe) [left of=qe_e]  {$q_{e}$};
+      \node[state]          (qb)  [below of=qe]  {$q_{b}$};
+      \node[accepting,state]          (qba) [below of=qb]  {$q_{ba}$};
+
+      \path (qe)  edge [loop left] node {$a$} (qe)
+            (qe)  edge             node {$b$} (qb)
+            (qb)  edge             node {$a$} (qba)
+            (qb)  edge [loop left] node {$b$} (qb)
+            (qba) edge [loop left] node {$a,b$} (qba);
+    \end{automata}
+    \end{center}
+
+    Muodostetaan nyt tästä automaatista käänteisen kielen tunnistava
+    automaatti kuten äskeise\-ssä kohdassa. Vaihdetaan siis hyväksyvät ja
+    hylkäävät tilat keskenään.
+
+    \begin{center}
+    \begin{automata}
+      \node[accepting,state,initial above] (qe_e)     {$(q_{e}, q_{e})$};
+      \node[accepting,state] (qe_b)  [below of=qe_e]  {$(q_{e}, q_{b})$};
+      \node[accepting,state] (qe_ba) [below of=qe_b]  {$(q_{e}, q_{ba})$};
+      \node[accepting,state] (qa_e)  [right of=qe_e]  {$(q_{a}, q_{e})$};
+      \node[accepting,state] (qab_e) [right of=qa_e]  {$(q_{ab}, q_{e})$};
+      \node[accepting,state] (qa_b)  [right of=qe_b]  {$(q_{a}, q_{b})$};
+      \node[accepting,state] (qab_b) [right of=qa_b]  {$(q_{ab}, q_{b})$};
+      \node[accepting,state] (qa_ba) [right of=qe_ba] {$(q_{a}, q_{ba})$};
+      \node[state] (qab_ba)[right of=qa_ba] {$(q_{ab}, q_{ba})$};
+
+      \path (qe_e)   edge              node {$a$} (qa_e)
+            (qe_b)   edge              node {$a$} (qa_ba)
+            (qe_ba)  edge              node {$a$} (qa_ba)
+            (qe_e)   edge              node {$b$} (qe_b)
+            (qe_b)   edge [in=20, out=50, looseness=8] node {$b$} (qe_b)
+            (qe_ba)  edge [loop below] node {$b$} (qe_ba)
+            (qa_e)   edge [loop above] node {$a$} (qa_e)
+            (qa_b)   edge              node {$a$} (qa_ba)
+            (qa_ba)  edge [loop below] node {$a$} (qa_ba)
+            (qa_e)   edge              node {$b$} (qab_b)
+            (qa_b)   edge              node {$b$} (qab_b)
+            (qa_ba)  edge              node {$b$} (qab_ba)
+            (qab_e)  edge [loop above] node {$a$} (qab_e)
+            (qab_b)  edge              node {$a$} (qab_ba)
+            (qab_e)  edge              node {$b$} (qab_b)
+            (qab_b)  edge [loop right] node {$b$} (qab_b)
+            (qab_ba) edge [loop below] node {$a,b$} (qab_ba);
+    \end{automata}
+    \end{center}
+
   \item
     $\set{w \mid \mbox{$w$ on mikä tahansa muu merkkijono kuin $a$ tai $b$} }$ 
+
+    \begin{center}
+    \begin{automata}
+      \node[initial above, state] (qee){$(q_{e}, q_{e})$};
+      \node[state] (qeb)[below of=qee]{$(q_{e}, q_{b})$};
+      \node[state] (qex)[below of=qeb]{$(q_{e}, q_{x})$};
+      \node[state] (qae)[right of=qee]{$(q_{a}, q_{e})$};
+      \node[state] (qxe)[right of=qae]{$(q_{x}, q_{e})$};
+      \node[accepting,state] (qab)[right of=qeb]{$(q_{a}, q_{b})$};
+      \node[state] (qxb)[right of=qab]{$(q_{x}, q_{b})$};
+      \node[state] (qax)[right of=qex]{$(q_{a}, q_{x})$};
+      \node[state] (qxx)[right of=qax]{$(q_{x}, q_{x})$};
+
+      \path (qee) edge              node {$a$} (qax)
+            (qeb) edge              node [swap] {$a$} (qax)
+            (qex) edge              node {$a$} (qax)
+            (qee) edge              node {$b$} (qxb)
+            (qeb) edge              node {$b$} (qxx)
+            (qex) edge [bend right] node [swap] {$b$} (qxx)
+            (qae) edge              node {$a$} (qxx)
+            (qae) edge              node {$b$} (qxb)
+            (qab) edge [bend right=10] node {$a,b$} (qxx)
+            (qax) edge              node {$a,b$} (qxx)
+            (qxe) edge [bend left]  node {$a$} (qxx)
+            (qxe) edge              node {$b$} (qxb)
+            (qxb) edge              node {$a,b$} (qxx)
+            (qxx) edge [loop below] node {$a,b$} (qxx);
+
+
+      \node[state, initial] (qe_) [above of=qee] {$q_{e}$};
+      \node[accepting,state] (qa) [right of=qe_] {$q_{a}$};
+      \node[state] (qx_) [right of=qa] {$q_{x}$};
+
+
+      \path (qe_) edge              node {$a$} (qa)
+            (qe_) edge [bend left]  node {$b$} (qx_)
+            (qa)  edge              node {$a,b$} (qx_)
+            (qx_) edge [loop above] node {$a,b$} (qx_);
+
+      \node[state, initial] (qe) [left of=qee] {$q_{e}$};
+      \node[accepting,state] (qb) [below of=qe] {$q_{b}$};
+      \node[state] (qx) [below of=qb] {$q_{x}$};
+
+
+      \path (qe) edge [bend right] node [swap] {$a$} (qx)
+            (qe) edge              node {$b$} (qb)
+            (qb) edge              node {$a,b$} (qx)
+            (qx) edge [loop left] node {$a,b$} (qx);
+
+    \end{automata}
+    \end{center}
+
+    Nyt voidaan huomata, että hyväksyvään tilaan ei voi mitenkään päästä.
+    Tämä johtuu siitä, ettei ole olemassa merkkijonoa, joka olisi
+    samanaikaisesti $a$ ja $b$. Kieli on siis tyhjä.
+
+    Muodostetaan jälleen komplementtikielen automaatti, jonka pitäisi siis
+    hyväksyä kaikki merkkijonot, jotka eivät ole pelkkä $a$ tai pelkkä $b$.
+    Automaatin tulisi siis hyväksyä kaikki merkkijonot.
+
+    \begin{center}
+    \begin{automata}
+      \node[accepting,initial above, state] (qee){$(q_{e}, q_{e})$};
+      \node[accepting,state] (qeb)[below of=qee]{$(q_{e}, q_{b})$};
+      \node[accepting,state] (qex)[below of=qeb]{$(q_{e}, q_{x})$};
+      \node[accepting,state] (qae)[right of=qee]{$(q_{a}, q_{e})$};
+      \node[accepting,state] (qxe)[right of=qae]{$(q_{x}, q_{e})$};
+      \node[state] (qab)[right of=qeb]{$(q_{a}, q_{b})$};
+      \node[accepting,state] (qxb)[right of=qab]{$(q_{x}, q_{b})$};
+      \node[accepting,state] (qax)[right of=qex]{$(q_{a}, q_{x})$};
+      \node[accepting,state] (qxx)[right of=qax]{$(q_{x}, q_{x})$};
+
+      \path (qee) edge              node {$a$} (qax)
+            (qeb) edge              node [swap] {$a$} (qax)
+            (qex) edge              node {$a$} (qax)
+            (qee) edge              node {$b$} (qxb)
+            (qeb) edge              node {$b$} (qxx)
+            (qex) edge [bend right] node [swap] {$b$} (qxx)
+            (qae) edge              node {$a$} (qxx)
+            (qae) edge              node {$b$} (qxb)
+            (qab) edge [bend right=10] node {$a,b$} (qxx)
+            (qax) edge              node {$a,b$} (qxx)
+            (qxe) edge [bend left]  node {$a$} (qxx)
+            (qxe) edge              node {$b$} (qxb)
+            (qxb) edge              node {$a,b$} (qxx)
+            (qxx) edge [loop below] node {$a,b$} (qxx);
+    \end{automata}
+    \end{center}
+
   \end{enumerate}
 
 \end{enumerate}
