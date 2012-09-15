@@ -551,30 +551,6 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
     piirtää nyt hilaksi näiden viereen.
 
     \begin{automata}[2.6]
-      \node[initial above,state, node distance=2cm]   (qeb)  [left of=qee] {$q_{\varepsilon}$};
-      \node[state]           (qb)   [below of=qeb] {$q_{b}$};
-      \node[accepting,state] (qbb)  [below of=qb] {$q_{bb}$};
-
-      \path (qeb) edge              node {$b$}   (qb) 
-                  edge [loop left] node {$a$}   ()
-            (qb)  edge              node {$b$}   (qbb)
-                  edge [loop left] node {$a$}   ()
-            (qbb) edge [loop left] node {$a,b$} ();
-
-
-      \node[initial,state]   (qea)  [above of=qee] {$q_{\varepsilon}$};
-      \node[state]           (qa)   [right of=qea]  {$q_{a}$};
-      \node[state]           (qaa)  [right of=qa]  {$q_{aa}$};
-      \node[accepting,state] (qaaa) [right of=qaa] {$q_{aaa}$};
-
-      \path (qea)  edge              node {$a$}   (qa) 
-                   edge [loop above] node {$b$}   ()
-            (qa)   edge              node {$a$}   (qaa)
-                   edge [loop above] node {$b$}   ()
-            (qaa)  edge              node {$a$}   (qaaa)
-                   edge [loop above] node {$b$}   ()
-            (qaaa) edge [loop above] node {$a,b$} ();
-
 
       \node[initial above,state]   (qee)                 {$(q_\varepsilon, q_\varepsilon)$};
       \node[state]           (qae)     [right of=qee]     {$(q_\varepsilon, q_a)$};
@@ -613,6 +589,33 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
             (qaaae) edge [loop right] node {$a$} ()
             (qaaab) edge [loop right] node {$a$} ()
             (qaaabb) edge [loop right] node {$a,b$} ();
+
+
+      \node[initial above,state, node distance=2cm]   (qeb)  [left of=qee] {$q_{\varepsilon}$};
+      \node[state]           (qb)   [below of=qeb] {$q_{b}$};
+      \node[accepting,state] (qbb)  [below of=qb] {$q_{bb}$};
+
+      \path (qeb) edge              node {$b$}   (qb) 
+                  edge [loop left] node {$a$}   ()
+            (qb)  edge              node {$b$}   (qbb)
+                  edge [loop left] node {$a$}   ()
+            (qbb) edge [loop left] node {$a,b$} ();
+
+
+      \node[initial,state]   (qea)  [above of=qee] {$q_{\varepsilon}$};
+      \node[state]           (qa)   [right of=qea]  {$q_{a}$};
+      \node[state]           (qaa)  [right of=qa]  {$q_{aa}$};
+      \node[accepting,state] (qaaa) [right of=qaa] {$q_{aaa}$};
+
+      \path (qea)  edge              node {$a$}   (qa) 
+                   edge [loop above] node {$b$}   ()
+            (qa)   edge              node {$a$}   (qaa)
+                   edge [loop above] node {$b$}   ()
+            (qaa)  edge              node {$a$}   (qaaa)
+                   edge [loop above] node {$b$}   ()
+            (qaaa) edge [loop above] node {$a,b$} ();
+
+
     \end{automata}
 
   \item
