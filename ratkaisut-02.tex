@@ -254,18 +254,37 @@ Piirrä automaatti $M$ (tilat ja siirtymät).
 \end{tabular}
 \end{tabular}
 
-\begin{tabular}{cll}
-  (a) & $\set{a} \circ \set{ba}^* = a(ba)^*$ & \\
-  (b) & $\set{a}^* \circ \set{b} = a^*b$ & \\
-  (c) & $(\set{a} \circ \set{ab}^* \circ \set{b})^* = (a(ab)^*b)^*$ &
-      sisältää saman määrän $a$:ta ja $b$:tä ja missään kohdassa ei ole ollut
-      enempää $b$:tä kuin $a$:ta eikä missään kohdassa ole siihen mennessä
-      ollut kolmea $a$:ta enempää kuin $b$:tä\\
-  (d) & $\set{ab,ba}^* = (ab|ba)^*$ & muodostettu laittamalla merkkijonoja
-      $ab$ ja $ba$ peräkkäin mielivaltaisesti\\
-  (e) & $\set{a,b}^* \circ \set{aab,bba} \circ \set{a,b}^* =
-      (a|b)^*(aab|bba)(a|b)^*$ & sisältää merkkijonon $aab$ tai $bba$
-\end{tabular}
+\begin{enumerate}
+  \item $a,aba,ababa,abababa,\ldots = \set{a} \circ \set{ba}^* = a(ba)^*$
+  \item Merkkijonot joiden alussa on mielivaltainen määrä $a$-merkkiä ja
+    lopuksi yksi $b$.
+    %
+    \begin{equation*}
+      \set{a}^* \circ \set{b} = a^*b
+    \end{equation*}
+
+  \item Sisältää saman määrän $a$:ta ja $b$:tä eikä missään kohdassa ei ole
+    ollut siihen mennessä enempää $b$:tä kuin $a$:ta eikä missään kohdassa
+    ole ollut siihen mennessä kolmea $a$:ta enem\-män kuin $b$:tä.
+%
+    \begin{equation*}
+      (\set{a} \circ \set{ab}^* \circ \set{b})^* = (a(ab)^*b)^*
+    \end{equation*}
+
+  \item Muodostettu laittamalla merkkijonoja $ab$ ja $ba$ peräkkäin
+    mielivaltaisesti.
+%
+    \begin{equation*}
+      \set{ab,ba}^* = (ab|ba)^*
+    \end{equation*}
+
+  \item Sisältää merkkijonon $aab$ tai $bba$.
+
+  \begin{equation*}
+    \set{a,b}^* \circ \set{aab,bba} \circ \set{a,b}^* =
+    (a|b)^*(aab|bba)(a|b)^*
+  \end{equation*}
+\end{enumerate}
 
 \item Piirrä äärelliset automaatit tiloineen ja siirtymänuolineen seuraaville kielille.
 \begin{enumerate}
