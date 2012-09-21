@@ -41,68 +41,57 @@
 
 \begin{enumerate}
 \item
-\begin{tabular}[t]{p{6cm}c}
-\multirow{2}{7cm}{%
-Olkoon $N_1$ ja $N_2$ epädeterministiset automaatit jotka on kuvattu oikealla.
-Tunnistavatko automaatit seuraavat sanat? 
-\begin{enumerate}
-\item $a$
-\item $aa$
-\item $aab$
-\item $\varepsilon$
-\item $ab$
-\item $abab$
-\item $aba$
-\item $abaa$
-\end{enumerate}
-} 
+  Olkoon $N_1$ ja $N_2$ epädeterministiset automaatit jotka on kuvattu
+  alla. Tunnistavatko automaatit seuraavat sanat?
 
-&
-
-\begin{tabular}{cm{4cm}}
-$N_1:$ &
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,semithick]
- %\tikzstyle{every state}=[fill=red,draw=none,text=white]
-
- \node[state,initial,accepting] (q0)               {$q_0$};
- \node[state]                   (q1) [right of=q0] {$q_1$};
-
- \path (q0) edge [loop above]  node      {$a$}   ()
-            edge               node     {$a$}  (q1)
-       (q1) edge  [loop right]       node       {$b$}  ();
-\end{tikzpicture} 
-\end{tabular}
-
-\\[2cm]
-
- & 
-\begin{tabular}{cm{4cm}}
-$N_2:$ &
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,semithick]
- %\tikzstyle{every state}=[fill=red,draw=none,text=white]
-
- \node[state,initial,accepting]	(q0)               {$q_0$};
- \node[state]   				(q1) [right of=q0] {$q_1$};
- \node[state,accepting]         (q2) [right of=q1] {$q_2$};
- \node[state,accepting]         (q3) [below of=q1] {$q_3$};
- 
- \path (q0) edge   				node		{$a$}  	(q1)
-       (q1) edge   				node 		{$b$}  	(q2)
-            edge   				node 		{$b$} 	(q3)
-       (q2)	edge [bend left]	node    	{$a$}	(q1)       
-       (q3) edge				node [swap]	{$a$}	(q2);        
-\end{tikzpicture}
-\end{tabular}
-\end{tabular}
+  \begin{center}
+    \begin{tabular}{cc}
+      \begin{tabular}{l|c|c}
+        & $N_1$ & $N_2$ \\
+        \hline
+        $a$ & kyllä & ei \\
+        $aa$ & kyllä & ei \\
+        $aab$ & ei & ei \\
+        $\varepsilon$ & kyllä & kyllä \\
+        $ab$ & ei & kyllä \\
+        $abab$ & ei & kyllä \\
+        $aba$ & ei & kyllä \\
+        $abaa$ & ei & ei
+      \end{tabular}
+      &
+      \begin{tabular}{cc}
+        $N_1$: & $N_2$: \\
+        \begin{automata}[2]
+          \node[state,initial above,accepting] (q0)               {$q_0$};
+          \node[state]                         (q1) [below of=q0] {$q_1$};
+          
+          \path (q0) edge [loop right] node {$a$} ()
+          edge              node {$a$} (q1)
+          (q1) edge [loop right] node {$b$} ();
+        \end{automata}
+        &
+        \begin{automata}[2]
+          \node[state,initial,accepting] (q0)               {$q_0$};
+          \node[state]                   (q1) [right of=q0] {$q_1$};
+          \node[state,accepting]         (q2) [right of=q1] {$q_2$};
+          \node[state,accepting]         (q3) [below of=q1] {$q_3$};
+          
+          \path (q0) edge             node        {$a$} (q1)
+          (q1) edge             node        {$b$} (q2)
+          edge             node        {$b$} (q3)
+          (q2) edge [bend left] node        {$a$} (q1)
+          (q3) edge             node [swap] {$a$} (q2);
+        \end{automata}
+      \end{tabular}
+    \end{tabular}
+  \end{center}
 
 \item
   Minkälaisia sanoja seuraavat äärelliset epädeterministiset
   automaatit hyväksyvät?
   \begin{enumerate}
   \item \hfill \\
-    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,semithick]
-      %\tikzstyle{every state}=[fill=red,draw=none,text=white]
-
+    \begin{automata}[2]
       \node[state,initial,accepting] (q0)               {$q_0$};
       \node[state]                   (q1) [right of=q0] {$q_1$};
       \node[state] (q2) [below of=q0] {$q_2$};
@@ -111,12 +100,15 @@ $N_2:$ &
       edge               node [swap]{$b$}  (q1)
       (q1) edge               node       {$a$}  (q2)
       (q2) edge               node       {$a$} (q0);
-    \end{tikzpicture}
+    \end{automata}
+
+    Sanoissa saavat vuorotella ja toistua merkkijono $baa$ ja jokin
+    pelkästään $a$:sta koostuva merkkijono. Automaatin määrittelemä
+    säännöllinen kieli on siis $(\set{a} \cup \set{baa})^*$ joka
+    voidaan kuvata myös säännöllisellä lausekkeella $(a | baa)^*$.
 
   \item \hfill \\
-    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,semithick]
-      %\tikzstyle{every state}=[fill=red,draw=none,text=white]
-
+    \begin{automata}[2]
       \node[state,initial]   (q0)               {$q_0$};
       \node[state]           (q1) [right of=q0] {$q_1$};
       \node[state]           (q2) [right of=q1] {$q_2$};
@@ -127,7 +119,45 @@ $N_2:$ &
       (q2) edge               node       {$a$} (q3)
       edge  [bend right] node [swap]{$a$} (q0)
       (q3) edge  [bend left]  node       {$a$} (q0);
-    \end{tikzpicture}
+    \end{automata}
+
+    Rakennetaan automaattia vastaava deterministine automaatti.
+
+    \begin{automata}[2.5]
+      \tikzstyle{every state}=[shape=rectangle,rounded corners];
+      \node[initial below,state] (q0)                   {$\set{q_0}$};
+      \node[state]           (q1)     [right of=q0] {$\set{q_1}$};
+      \node[state]           (q2)     [right of=q1] {$\set{q_2}$};
+      \node[accepting,state] (q03)    [right of=q2] {$\set{q_0,q_3}$};
+      \node[state]           (q01)    [below of=q03] {$\set{q_0,q_1}$};
+      \node[state]           (q12)    [left of=q01] {$\set{q_1,q_2}$};
+      \node[state]           (q02)    [left of=q12] {$\set{q_0,q_2}$};
+      \node[accepting,state] (q013)   [left of=q02] {$\set{q_0,q_1,q_3}$};
+      \node[state]           (q012)   [left of=q013] {$\set{q_0,q_1,q_2}$};
+      \node[accepting,state] (q0123) [above of=q012] {$\set{q_9,q_1,q_2,q_3}$};
+
+      \node[accepting,state] (q3)     [above of=q0] {$\set{q_3}$};
+      \node[state]           (qe)     [left of=q3] {$\emptyset$};
+      \node[accepting,state] (q13)    [below of=q02] {$\set{q_1,q_3}$};
+      \node[accepting,state] (q23)    [above of=q03] {$\set{q_2,q_3}$};
+      \node[accepting,state] (q023)   [below of=q013] {$\set{q_0,q_2,q_3}$};
+      \node[accepting,state] (q123)   [below of=q023] {$\set{q_1,q_2,q_3}$};
+
+      \path (q0) edge node {$a$} (q1)
+            (q1) edge node {$a$} (q2)
+            (q2) edge node {$a$} (q03)
+            (q03) edge node {$a$} (q01)
+            (q01) edge node {$a$} (q12)
+            (q12) edge node {$a$} (q02)
+            (q02) edge node {$a$} (q013)
+            (q013) edge node {$a$} (q012)
+            (q012) edge node {$a$} (q0123)
+            (q3) edge node {$a$} (q0)
+            (q23) edge node {$a$} (q03)
+            (q13) edge node {$a$} (q02)
+            (q023) edge node {$a$} (q013)
+            (q123) edge node {$a$} (q023);
+    \end{automata}
   \end{enumerate}
 
 \item
