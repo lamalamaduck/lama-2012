@@ -160,6 +160,14 @@
     \end{automata}
   \end{enumerate}
 
+  \begin{enumerate}
+      \item Jokaisen $b$:n jälkeen on ainakin kaksi $a$:ta. $(a^* \cup
+          baa)^*$
+      \item Kaikki $a$:sta muodostetus merkkijonot, joiden pituus on kolme,
+          kuusi, seitsemän tai vähintään yhdeksän. \set{a^3, a^6, a^7} \cup
+          \set{a^k \mid k \ge 9}
+  \end{enumerate}
+
 \item
   Piirrä epädeterministiset automaatit tiloineen ja siirtymänuolineen
   seuraaville kielille.
@@ -173,6 +181,25 @@
   \item
     $L = \set{w \in \set{a,b}^* \mid \mbox{$w$:n ensimmäinen ja
       viimeinen kirjain ovat samat}}$
+  \end{enumerate}
+
+  \begin{enumerate}
+    \item
+
+        \begin{tabular}{c}
+          \begin{automata}
+            \node[initial, state, accepting] (q1)               {$q_1$};
+            \node[state, accepting]          (q2) [right of=q1] {$q_2$};
+            \node[state, accepting]          (q3) [right of=q2] {$q_3$};
+          
+            \path (q1) edge node {$a$} (q2)
+                  (q2) edge node {$a$}(q3)
+          
+                  (q1) edge [loop above] node {$b$} (q1)
+                  (q2) edge [loop above] node {$b$} (q2)
+                  (q3) edge [loop above] node {$b$} (q3);
+          \end{automata}
+      \end{tabular}
   \end{enumerate}
 
 \item
