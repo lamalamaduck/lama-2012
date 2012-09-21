@@ -102,10 +102,9 @@
       (q2) edge               node       {$a$} (q0);
     \end{automata}
 
-    Sanoissa saavat vuorotella ja toistua merkkijono $baa$ ja jokin
-    pelkästään $a$:sta koostuva merkkijono. Automaatin määrittelemä
-    säännöllinen kieli on siis $(\set{a} \cup \set{baa})^*$ joka
-    voidaan kuvata myös säännöllisellä lausekkeella $(a | baa)^*$.
+    Jokaisen $b$:n jälkeen on ainakin kaksi $a$:ta. Automaatin määrittelemä
+    säännöllinen kieli on siis $(\set{a} \cup \set{baa})^*$ joka voidaan
+    kuvata myös säännöllisellä lausekkeella $(a | baa)^*$.
 
   \item \hfill \\
     \begin{automata}[2]
@@ -158,14 +157,15 @@
             (q023) edge node {$a$} (q013)
             (q123) edge node {$a$} (q023);
     \end{automata}
-  \end{enumerate}
 
-  \begin{enumerate}
-      \item Jokaisen $b$:n jälkeen on ainakin kaksi $a$:ta. $(a^* \cup
-          baa)^*$
-      \item Kaikki $a$:sta muodostetus merkkijonot, joiden pituus on kolme,
-          kuusi, seitsemän tai vähintään yhdeksän. \set{a^3, a^6, a^7} \cup
-          \set{a^k \mid k \ge 9}
+    Deterministisestä automaatista voidaan huomata, että automaatti hyväksyy
+    kaikki merkkijonot, joissa on kolme, kuusi, seitsemän tai vähintään
+    yhdeksän $a$:ta.
+
+    Säännöllisenä lausekkeena kielen voi kirjoittaa esimerkiksi
+    $aaa(aaa|aaaa)^*$ (muodostettu vastaamaan epädeterminististä automaattia)
+    tai $(a^3|a^6|a^7|a^9a^*)$ (muodostettu deterministisen automaatin
+    antamasta lukumääräintuitiosta)
   \end{enumerate}
 
 \item
@@ -184,22 +184,58 @@
   \end{enumerate}
 
   \begin{enumerate}
-    \item
+    \item \mbox{}
 
-        \begin{tabular}{c}
-          \begin{automata}
-            \node[initial, state, accepting] (q1)               {$q_1$};
-            \node[state, accepting]          (q2) [right of=q1] {$q_2$};
-            \node[state, accepting]          (q3) [right of=q2] {$q_3$};
-          
-            \path (q1) edge node {$a$} (q2)
-                  (q2) edge node {$a$}(q3)
-          
-                  (q1) edge [loop above] node {$b$} (q1)
-                  (q2) edge [loop above] node {$b$} (q2)
-                  (q3) edge [loop above] node {$b$} (q3);
-          \end{automata}
-      \end{tabular}
+      \begin{automata}
+        \node[initial, state, accepting] (q1)               {$q_1$};
+        \node[state, accepting]          (q2) [right of=q1] {$q_2$};
+        \node[state, accepting]          (q3) [right of=q2] {$q_3$};
+
+        \path (q1) edge node {$a$} (q2)
+              (q2) edge node {$a$}(q3)
+
+              (q1) edge [loop above] node {$b$} (q1)
+              (q2) edge [loop above] node {$b$} (q2)
+              (q3) edge [loop above] node {$b$} (q3);
+      \end{automata}
+
+    \item \mbox{}
+
+      \begin{automata}
+        \node[initial, accepting, state] (q0)               {$q_0$};
+        \node[accepting, state]          (q1) [right of=q0] {$q_1$};
+        \node[state]                     (q2) [right of=q1] {$q_2$};
+        \node[state]                     (q3) [right of=q2] {$q_3$};
+
+        \path (q0) edge [loop above] node {$b$} (q0)
+              (q1) edge [loop above] node {$a$} (q1)
+              (q2) edge [loop above] node {$b$} (q2)
+              (q3) edge [loop above] node {$a$} (q3)
+
+              (q0) edge node {$a$} (q1)
+              (q1) edge node {$b$} (q2)
+              (q2) edge node {$a$} (q3)
+              (q3) edge [bend left] node {$b$} (q0) ;
+      \end{automata}
+
+    \item \mbox{}
+
+      \begin{automata}
+        \node[initial, state]   (q0)                            {$q_0$};
+        \node[state, accepting] (q1) [right of=q0]              {$q_1$};
+        \node[state]            (q2) [right of=q0, above of=q0] {$q_2$};
+        \node[state]            (q3) [right of=q0, below of=q0] {$q_3$};
+        \node[state, accepting] (q4) [right of=q2]              {$q_4$};
+        \node[state, accepting] (q5) [right of=q3]              {$q_5$};
+
+        \path (q0) edge              node {$a,b$} (q1)
+              (q0) edge              node {$a$}   (q2)
+              (q0) edge              node {$b$}   (q3)
+              (q2) edge [loop above] node {$a,b$} (q2)
+              (q2) edge              node {$a$}   (q4)
+              (q3) edge [loop below] node {$a,b$} (q3)
+              (q3) edge              node {$b$}   (q5);
+      \end{automata}
   \end{enumerate}
 
 \item
@@ -237,6 +273,38 @@
       (q3) edge				node [swap]	{$a,b$}	(q2)
       edge [loop right]   node    {$b$} ();        
     \end{tikzpicture}
+    \\
+    \begin{automata}[2.5]
+          \tikzstyle{every state}=[shape=rectangle,rounded corners];
+          \node[accepting, initial above, state] (q1) {$\set{q_1}$};
+          \node[state]       (q2)  [below of=q1, left of=q1] {$\set{q_2}$};
+          \node[state]       (q)   [above of=q2] {$\emptyset$};
+          \node[accepting, state] (q12) [below of=q1] {$\set{q_1,q_2}$};
+    
+          \path (q1)  edge              node {$a$}   (q12)
+                (q1)  edge [bend left=10]  node {$b$}   (q2)
+                (q2)  edge              node {$a$}   (q)
+                (q2)  edge [bend left=10]  node {$b$}   (q1)
+                (q)   edge [loop above] node {$a,b$} (q)
+                (q12) edge [loop right] node {$a,b$} (q12);
+    \end{automata}
+    &
+    \begin{automata}
+      \tikzstyle{every state}=[shape=rectangle,rounded corners];
+      \node[initial above, accepting, state] (q12) {$\set{q_1,q_2}$};
+      \node[accepting, state] (q123) [right of=q12]
+           {$\set{q_1,q_2,q_3}$};
+      \node[state] (q) [below of=q12]{$\emptyset$};
+      \node[state] (q23) [right of=q123]{$\set{q_2,q_3}$};
+
+      \path (q12)  edge              node {$a$}   (q123)
+            (q12)  edge              node {$b$}   (q)
+            (q)    edge [loop right] node {$a,b$} (q)
+            (q123) edge [loop above] node {$a$}   (q123)
+            (q123) edge              node {$b$}   (q23)
+            (q23)  edge [loop above] node {$b$}   (q23)
+            (q23)  edge [bend left]  node {$a$}   (q12) ;
+    \end{automata}
   \end{tabular}
 
 \item 
