@@ -246,6 +246,38 @@
   on säännöllinen (vihje: käytä epädeterministisyyttä apuna). Tee myös
   pienet esimerkit.
 
+  FIXME: tähän kuvat automaateista, joissa on yksi hyväksyvä tila, sen
+  käänteiskielen automaatti ja toinen esimerkki kahden hyväksyvän tilan
+  automaatista, jota kääntäessä käy ilmi että tarvitaan ylimääräinen tila
+  ennen kuin automaatin voi kääntää.
+
+  Olkoon $M = (Q,\Sigma,\delta,s,F)$ kielen $A$ tunnistava deterministinen
+  automaatti. Muodostetaan nyt yllä olevien esimerkkien motivoimana automaatti
+  $M^\mathcal{R}$ käänteiskielelle $A^\mathcal{R}$.
+
+  \begin{align*}
+    Q^\mathcal{R} &= Q \cup \set{x}\textrm{, missä } \notin Q
+                  & \textrm{uusi alkutila} \\
+    \Sigma^\mathcal{R} &= \Sigma \cup \set{\epsilon}
+                  & M^\mathcal{R} \textrm{ epädeterministinen} \\
+    \delta^\mathcal{R}(q_i, \sigma)
+                  &= \set{q_j \in Q \mid \delta(q_j, \sigma) = q_i}
+                  & \textrm{kaikki $M$:n tilat, joista pääsee}
+                  \textrm{ $\sigma$:lla nykyiseen tilaan}\\
+    \delta^\mathcal{R}(x,\epsilon) &= F
+                  & \textrm{uudesta alkutilasta pääsee suoraan}
+                    \textrm{ $M$:n kaikkiin lopputiloihin} \\
+    \delta^\mathcal{R}(x, \sigma) &= \emptyset
+                  & \textrm{uudesta alkutilasta ei ole siirtymiä $\Sigma$:n }
+                    \textrm{merkeillä} \\
+    F^\mathcal{R} &= \set{s} & M^\mathcal{R} \textrm{:n ainoa hyväksyvä tila }
+                  \textrm{on $M$:n alkutila}
+  \end{align*}
+
+  Nyt ollaan siis muodostettu automaatti, joka aloittaa alkuperäisen
+  automaatin hyväksyvistä tiloista, lopettaa alkuperäisen automaatin
+  alkutilaan ja kääntää kaikki nuolet ympäri.
+
 \item
   Muunna seuraavat epädeterministiset automaatit deterministisiksi
   käyttämällä lauseen 1.39 todistusta apuna.
