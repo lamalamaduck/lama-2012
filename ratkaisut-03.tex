@@ -96,16 +96,15 @@
       \node[state]                   (q1) [right of=q0] {$q_1$};
       \node[state] (q2) [below of=q0] {$q_2$};
 
-      \path (q0) edge [loop above]  node      {$a$}   ()
-      edge               node [swap]{$b$}  (q1)
-      (q1) edge               node       {$a$}  (q2)
-      (q2) edge               node       {$a$} (q0);
+      \path (q0) edge [loop above] node {$a$}   ()
+                 edge              node [swap]{$b$}  (q1)
+            (q1) edge              node {$a$}  (q2)
+            (q2) edge              node {$a$} (q0);
     \end{automata}
 
-    Sanoissa saavat vuorotella ja toistua merkkijono $baa$ ja jokin
-    pelkästään $a$:sta koostuva merkkijono. Automaatin määrittelemä
-    säännöllinen kieli on siis $(\set{a} \cup \set{baa})^*$ joka
-    voidaan kuvata myös säännöllisellä lausekkeella $(a | baa)^*$.
+    Jokaisen $b$:n jälkeen on ainakin kaksi $a$:ta. Automaatin määrittelemä
+    säännöllinen kieli on siis $(\set{a} \cup \set{baa})^*$ joka voidaan
+    kuvata myös säännöllisellä lausekkeella $(a | baa)^*$.
 
   \item \hfill \\
     \begin{automata}[2]
@@ -115,13 +114,13 @@
       \node[state,accepting] (q3) [right of=q2] {$q_3$};
 
       \path (q0) edge               node      {$a$}   (q1)
-      (q1) edge               node       {$a$}  (q2)
-      (q2) edge               node       {$a$} (q3)
-      edge  [bend right] node [swap]{$a$} (q0)
-      (q3) edge  [bend left]  node       {$a$} (q0);
+            (q1) edge               node       {$a$}  (q2)
+            (q2) edge               node       {$a$} (q3)
+                 edge  [bend right] node [swap]{$a$} (q0)
+            (q3) edge  [bend left]  node       {$a$} (q0);
     \end{automata}
 
-    Rakennetaan automaattia vastaava deterministine automaatti.
+    Rakennetaan automaattia vastaava deterministinen automaatti.
 
     \begin{automata}[2.5]
       \tikzstyle{every state}=[shape=rectangle,rounded corners];
@@ -143,21 +142,30 @@
       \node[accepting,state] (q023)   [below of=q013] {$\set{q_0,q_2,q_3}$};
       \node[accepting,state] (q123)   [below of=q023] {$\set{q_1,q_2,q_3}$};
 
-      \path (q0) edge node {$a$} (q1)
-            (q1) edge node {$a$} (q2)
-            (q2) edge node {$a$} (q03)
-            (q03) edge node {$a$} (q01)
-            (q01) edge node {$a$} (q12)
-            (q12) edge node {$a$} (q02)
-            (q02) edge node {$a$} (q013)
+      \path (q0)   edge node {$a$} (q1)
+            (q1)   edge node {$a$} (q2)
+            (q2)   edge node {$a$} (q03)
+            (q03)  edge node {$a$} (q01)
+            (q01)  edge node {$a$} (q12)
+            (q12)  edge node {$a$} (q02)
+            (q02)  edge node {$a$} (q013)
             (q013) edge node {$a$} (q012)
             (q012) edge node {$a$} (q0123)
-            (q3) edge node {$a$} (q0)
-            (q23) edge node {$a$} (q03)
-            (q13) edge node {$a$} (q02)
+            (q3)   edge node {$a$} (q0)
+            (q23)  edge node {$a$} (q03)
+            (q13)  edge node {$a$} (q02)
             (q023) edge node {$a$} (q013)
             (q123) edge node {$a$} (q023);
     \end{automata}
+
+    Deterministisestä automaatista voidaan huomata, että automaatti hyväksyy
+    kaikki merkkijonot, joissa on kolme, kuusi, seitsemän tai vähintään
+    yhdeksän $a$:ta.
+
+    Säännöllisenä lausekkeena kielen voi kirjoittaa esimerkiksi
+    $aaa(aaa|aaaa)^*$ (muodostettu vastaamaan epädeterminististä automaattia)
+    tai $(a^3|a^6|a^7|a^9a^*)$ (muodostettu deterministisen automaatin
+    antamasta lukumääräintuitiosta)
   \end{enumerate}
 
 \item
@@ -175,13 +183,243 @@
       viimeinen kirjain ovat samat}}$
   \end{enumerate}
 
+  \begin{enumerate}
+    \item \mbox{}
+
+      \begin{center}
+        \begin{automata}[2.2]
+          \node[initial, state, accepting] (q1)               {$q_1$};
+          \node[state, accepting]          (q2) [right of=q1] {$q_2$};
+          \node[state, accepting]          (q3) [right of=q2] {$q_3$};
+
+          \path (q1) edge node {$a$} (q2)
+          (q2) edge node {$a$}(q3)
+
+          (q1) edge [loop above] node {$b$} (q1)
+          (q2) edge [loop above] node {$b$} (q2)
+          (q3) edge [loop above] node {$b$} (q3);
+        \end{automata}
+      \end{center}
+
+    \item \mbox{}
+
+      \begin{center}
+        \begin{automata}[2.2]
+          \node[initial, accepting, state] (q0)               {$q_0$};
+          \node[accepting, state]          (q1) [right of=q0] {$q_1$};
+          \node[state]                     (q2) [right of=q1] {$q_2$};
+          \node[state]                     (q3) [right of=q2] {$q_3$};
+
+          \path (q0) edge [loop above] node {$b$} (q0)
+          (q1) edge [loop above] node {$a$} (q1)
+          (q2) edge [loop above] node {$b$} (q2)
+          (q3) edge [loop above] node {$a$} (q3)
+
+          (q0) edge node {$a$} (q1)
+          (q1) edge node {$b$} (q2)
+          (q2) edge node {$a$} (q3)
+          (q3) edge [bend left] node {$b$} (q0) ;
+        \end{automata}
+      \end{center}
+
+    \item \mbox{}
+
+      \begin{center}
+        \begin{automata}[2.2]
+          \node[initial, state]   (q0)                            {$q_0$};
+          \node[state, accepting] (q1) [right of=q0]              {$q_1$};
+          \node[state]            (q2) [right of=q0, above of=q0] {$q_2$};
+          \node[state]            (q3) [right of=q0, below of=q0] {$q_3$};
+          \node[state, accepting] (q4) [right of=q2]              {$q_4$};
+          \node[state, accepting] (q5) [right of=q3]              {$q_5$};
+
+          \path (q0) edge              node {$a,b$} (q1)
+          (q0) edge              node {$a$}   (q2)
+          (q0) edge              node {$b$}   (q3)
+          (q2) edge [loop above] node {$a,b$} (q2)
+          (q2) edge              node {$a$}   (q4)
+          (q3) edge [loop below] node {$a,b$} (q3)
+          (q3) edge              node {$b$}   (q5);
+        \end{automata}
+      \end{center}
+  \end{enumerate}
+
 \item
   Merkkinon $w=w_1 w_2 \dots w_n$ \textit{käänteismerkkijono} on
   $w^{{\cal R}}=w_n w_{n-1}\dots w_1$. Olkoon kielen $A$
   \textit{käänteiskieli} $A^{{\cal R}} = \set{w^{{\cal R}}\mid w \in
     A}$. Näytä että jos $A$ on säännöllinen niin myös $A^{{\cal R}}$
-  on säännöllinen (vihje: käytä epädeterministisyyttä apuna). Tee myös
+  on sään\-nöl\-li\-nen (vihje: käytä epädeterministisyyttä apuna). Tee myös
   pienet esimerkit.
+
+  Muodostetaan ensin pari esimerkkiä. Tässä automaatti, joka tunnistaa kaikki
+  merkkijonot, jotka alkavat joko $aab$:llä tai $bba$:lla.
+
+  \begin{center}
+    \begin{automata}[2.2]
+      \node[initial, state] (q0)                          {$q_0$};
+      \node[state]        (q1) [right of=q0]{$q_1$};
+      \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
+      \node[state]        (q3) [right of=q2]              {$q_3$};
+      \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
+      \node[state]        (q5) [right of=q4]              {$q_5$};
+      \node[accepting,state]   (q6) [right of=q3, below of=q3] {$q_6$};
+
+      \path (q0) edge node {$a$} (q2)
+      (q0) edge node {$b$} (q4)
+      (q4) edge node {$b$} (q5)
+      (q2) edge node {$a$} (q3)
+      (q3) edge node {$b$} (q6)
+      (q5) edge node {$a$} (q6)
+
+      (q2) edge node {$b$} (q1)
+      (q4) edge node {$a$} (q1)
+      (q3) edge node {$a$} (q1)
+      (q5) edge node {$b$} (q1)
+
+      (q6) edge [loop right] node {$a,b$} (q6)
+      (q1) edge [loop right] node {$a,b$} (q1) ;
+    \end{automata}
+  \end{center}
+
+  Tälle voidaan nyt helposti muodostaa käänteiskielen automaatti asettamalla
+  lopputila alkutilaksi, alkutila lopputilaksi ja kääntämällä kaikki nuolet
+  ympäri.
+
+  \begin{center}
+    \begin{automata}[2.2]
+      \node[accepting, state] (q0)                          {$q_0$};
+      \node[state]        (q1) [right of=q0]{$q_1$};
+      \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
+      \node[state]        (q3) [right of=q2]              {$q_3$};
+      \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
+      \node[state]        (q5) [right of=q4]              {$q_5$};
+      \node[initial above,state]   (q6) [right of=q3, below of=q3] {$q_6$};
+
+      \path (q2) edge node {$a$} (q0)
+      (q4) edge node {$b$} (q0)
+      (q5) edge node {$b$} (q4)
+      (q3) edge node {$a$} (q2)
+      (q6) edge node {$b$} (q3)
+      (q6) edge node {$a$} (q5)
+
+      (q1) edge node {$b$} (q2)
+      (q1) edge node {$a$} (q4)
+      (q1) edge node {$a$} (q3)
+      (q1) edge node {$b$} (q5)
+
+      (q6) edge [loop right] node {$a,b$} (q6)
+      (q1) edge [loop right] node {$a,b$} (q1) ;
+    \end{automata} 
+  \end{center}
+
+  Ja näin saatiin epädeterministinen automaatti, joka tunnistaa kaikki
+  merkkijonot jotka loppuvat joko $baa$ tai $abb$.
+
+  Alkuperäinen automaatti oltaisiin kuitenkin voitu muodostaa myös
+  seuraavasti:
+
+  \begin{center}
+    \begin{automata}[2.2]
+      \node[initial, state] (q0)                          {$q_0$};
+      \node[state]        (q1) [right of=q0]{$q_1$};
+      \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
+      \node[state]        (q3) [right of=q2]              {$q_3$};
+      \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
+      \node[state]        (q5) [right of=q4]              {$q_5$};
+      \node[accepting,state]   (q6) [right of=q5] {$q_6$};
+      \node[accepting,state]   (q7) [right of=q3] {$q_7$};
+
+      \path (q0) edge node {$a$} (q2)
+      (q0) edge node {$b$} (q4)
+      (q4) edge node {$b$} (q5)
+      (q2) edge node {$a$} (q3)
+      (q3) edge node {$b$} (q7)
+      (q5) edge node {$a$} (q6)
+
+      (q2) edge node {$b$} (q1)
+      (q4) edge node {$a$} (q1)
+      (q3) edge node {$a$} (q1)
+      (q5) edge node {$b$} (q1)
+
+      (q6) edge [loop below] node {$a,b$} (q6)
+      (q7) edge [loop above] node {$a,b$} (q7)
+      (q1) edge [loop right] node {$a,b$} (q1) ;
+    \end{automata}
+  \end{center}
+
+  Nyt voidaan huomata, että automaattia kääntäessä tarvittaisiin kaksi
+  aloitustilaa, sillä alkuperäisessä automaatissa on useampia hyväksyviä
+  tiloja.
+
+  Ongelma voidaan korjata lisäämällä käänteiskielen automaattiin uusi
+  aloitustilan, josta tulee $\varepsilon$-siirtymät jokaiseen haluttuun
+  aloitustilaan.
+
+  \begin{center}
+    \begin{automata}[2.2]
+      \node[accepting, state] (q0)                          {$q_0$};
+      \node[state]        (q1) [right of=q0]{$q_1$};
+      \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
+      \node[state]        (q3) [right of=q2]              {$q_3$};
+      \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
+      \node[state]        (q5) [right of=q4]              {$q_5$};
+      \node[state]   (q6) [right of=q5] {$q_6$};
+      \node[state]   (q7) [right of=q3] {$q_7$};
+      \node[state, initial right] (q8) [right of=q7, below of=q7] {$x$};
+
+      \path (q2) edge node {$a$} (q0)
+      (q4) edge node {$b$} (q0)
+      (q5) edge node {$b$} (q4)
+      (q3) edge node {$a$} (q2)
+      (q7) edge node {$b$} (q3)
+      (q6) edge node {$a$} (q5)
+
+      (q1) edge node {$b$} (q2)
+      (q1) edge node {$a$} (q4)
+      (q1) edge node {$a$} (q3)
+      (q1) edge node {$b$} (q5)
+
+      (q7) edge [loop above] node {$a,b$} (q7)
+      (q6) edge [loop below] node {$a,b$} (q6)
+      (q1) edge [loop right] node {$a,b$} (q1) 
+
+      (q8) edge node {$\varepsilon$} (q7)
+      (q8) edge node {$\varepsilon$} (q6);
+
+    \end{automata}
+  \end{center}
+
+  Kun nyt ollaan saatu intuitio siitä miten kääntäminen pitäisi tehdä,
+  voidaan tämä vielä kirjoittaa formaalisti.
+
+  Olkoon $M = (Q,\Sigma,\delta,s,F)$ kielen $A$ tunnistava deterministinen
+  automaatti. Muodostetaan nyt yllä olevien esimerkkien motivoimana
+  epädeterministinen automaatti $M^\mathcal{R}$ käänteiskielelle
+  $A^\mathcal{R}$.
+
+  \begin{align*}
+    Q^\mathcal{R} &= Q \cup \set{x}\textrm{, missä } \notin Q
+                  & \textrm{uusi alkutila} \\
+    \Sigma^\mathcal{R} &= \Sigma \cup \set{\epsilon}
+                  & M^\mathcal{R} \textrm{ epädeterministinen} \\
+    \delta^\mathcal{R}(q_i, \sigma)
+                  &= \set{q_j \in Q \mid \delta(q_j, \sigma) = q_i}
+                  & \textrm{kaikki $M$:n tilat, joista pääsee}
+                  \textrm{ $\sigma$:lla nykyiseen tilaan}\\
+    \delta^\mathcal{R}(x,\epsilon) &= F
+                  & \textrm{uudesta alkutilasta pääsee suoraan}
+                    \textrm{ $M$:n kaikkiin lopputiloihin} \\
+    \delta^\mathcal{R}(x, \sigma) &= \emptyset
+                  & \textrm{uudesta alkutilasta ei ole siirtymiä $\Sigma$:n }
+                    \textrm{merkeillä} \\
+    F^\mathcal{R} &= \set{s} & M^\mathcal{R} \textrm{:n ainoa hyväksyvä tila }
+                  \textrm{on $M$:n alkutila}
+  \end{align*}
+
+  Nyt ollaan siis muodostettu automaatti, joka aloittaa alkuperäisen
+  automaatin hyväksyvistä tiloista, lopettaa alkuperäisen automaatin
+  alkutilaan ja kääntää kaikki nuolet ympäri.
 
 \item
   Muunna seuraavat epädeterministiset automaatit deterministisiksi
@@ -210,6 +448,38 @@
       (q3) edge				node [swap]	{$a,b$}	(q2)
       edge [loop right]   node    {$b$} ();        
     \end{tikzpicture}
+    \\
+    \begin{automata}[2.5]
+          \tikzstyle{every state}=[shape=rectangle,rounded corners];
+          \node[accepting, initial above, state] (q1) {$\set{q_1}$};
+          \node[state]       (q2)  [below of=q1, left of=q1] {$\set{q_2}$};
+          \node[state]       (q)   [above of=q2] {$\emptyset$};
+          \node[accepting, state] (q12) [below of=q1] {$\set{q_1,q_2}$};
+    
+          \path (q1)  edge              node {$a$}   (q12)
+                (q1)  edge [bend left=10]  node {$b$}   (q2)
+                (q2)  edge              node {$a$}   (q)
+                (q2)  edge [bend left=10]  node {$b$}   (q1)
+                (q)   edge [loop above] node {$a,b$} (q)
+                (q12) edge [loop right] node {$a,b$} (q12);
+    \end{automata}
+    &
+    \begin{automata}
+      \tikzstyle{every state}=[shape=rectangle,rounded corners];
+      \node[initial above, accepting, state] (q12) {$\set{q_1,q_2}$};
+      \node[accepting, state] (q123) [right of=q12]
+           {$\set{q_1,q_2,q_3}$};
+      \node[state] (q) [below of=q12]{$\emptyset$};
+      \node[state] (q23) [right of=q123]{$\set{q_2,q_3}$};
+
+      \path (q12)  edge              node {$a$}   (q123)
+            (q12)  edge              node {$b$}   (q)
+            (q)    edge [loop right] node {$a,b$} (q)
+            (q123) edge [loop above] node {$a$}   (q123)
+            (q123) edge              node {$b$}   (q23)
+            (q23)  edge [loop above] node {$b$}   (q23)
+            (q23)  edge [bend left]  node {$a$}   (q12) ;
+    \end{automata}
   \end{tabular}
 
 \item 
