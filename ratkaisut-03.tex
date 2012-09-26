@@ -4,9 +4,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage[margin=2cm]{geometry}
 \usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
+\usepackage{microtype}
 \usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
+
+\setenumerate{listparindent=\parindent}
 
 \newtheorem*{claim}{Väite}
 
@@ -249,11 +252,11 @@
   $w^{{\cal R}}=w_n w_{n-1}\dots w_1$. Olkoon kielen $A$
   \textit{käänteiskieli} $A^{{\cal R}} = \set{w^{{\cal R}}\mid w \in
     A}$. Näytä että jos $A$ on säännöllinen niin myös $A^{{\cal R}}$
-  on sään\-nöl\-li\-nen (vihje: käytä epädeterministisyyttä apuna). Tee myös
-  pienet esimerkit.
+  on sään\-nöl\-li\-nen (vihje: käytä epädeterministisyyttä apuna).
+  Tee myös pienet esimerkit.
 
-  Muodostetaan ensin pari esimerkkiä. Tässä automaatti, joka tunnistaa kaikki
-  merkkijonot, jotka alkavat joko $aab$:llä tai $bba$:lla.
+  Muodostetaan ensin pari esimerkkiä. Tässä automaatti, joka tunnistaa
+  kaikki merkkijonot, jotka alkavat joko $aab$:llä tai $bba$:lla.
 
   \begin{center}
     \begin{automata}[2.2]
@@ -349,12 +352,12 @@
   \end{center}
 
   Nyt voidaan huomata, että automaattia kääntäessä tarvittaisiin kaksi
-  aloitustilaa, sillä alkuperäisessä automaatissa on useampia hyväksyviä
-  tiloja.
+  aloitustilaa, sillä alkuperäisessä automaatissa on useampia
+  hyväksyviä tiloja.
 
   Ongelma voidaan korjata lisäämällä käänteiskielen automaattiin uusi
-  aloitustilan, josta tulee $\varepsilon$-siirtymät jokaiseen haluttuun
-  aloitustilaan.
+  aloitustilan, josta tulee $\varepsilon$-siirtymät jokaiseen
+  haluttuun aloitustilaan.
 
   \begin{center}
     \begin{automata}[2.2]
