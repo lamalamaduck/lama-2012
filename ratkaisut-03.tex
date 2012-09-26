@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt,draft]{article}
+\documentclass[a4paper,11pt]{article}
 
 \usepackage[finnish]{babel}
 \usepackage[utf8]{inputenc}
@@ -166,14 +166,13 @@
             (q123) edge node {$a$} (q023);
     \end{automata}
 
-    Deterministisestä automaatista voidaan huomata, että automaatti hyväksyy
-    kaikki merkkijonot, joissa on kolme, kuusi, seitsemän tai vähintään
-    yhdeksän $a$:ta.
-
-    Säännöllisenä lausekkeena kielen voi kirjoittaa esimerkiksi
-    $aaa(aaa|aaaa)^*$ (muodostettu vastaamaan epädeterminististä automaattia)
-    tai $(a^3|a^6|a^7|a^9a^*)$ (muodostettu deterministisen automaatin
-    antamasta lukumääräintuitiosta)
+    De\-ter\-mi\-nis\-ti\-ses\-tä automaatista voidaan huomata, et\-tä
+    automaatti hy\-väk\-syy kaikki merkkijonot, joissa on kolme,
+    kuusi, seitsemän tai vähintään yhdeksän $a$:ta. Säännöllisenä
+    lausekkeena kielen voi kirjoittaa esimerkiksi $aaa(aaa|aaaa)^*$
+    (muodostettu vastaamaan e\-pä\-de\-ter\-mi\-nis\-tis\-tä
+    automaattia) tai $(a^3|a^6|a^7|a^9a^*)$ (muodostettu
+    deterministisen automaatin antamasta lukumääräintuitiosta)
   \end{enumerate}
 
 \item
@@ -486,7 +485,7 @@
       mille $|w| < n$.
     \end{claim}
     \begin{proof}
-      \hfill \\
+      \hfill
       \begin{description}
         \item[``$\Leftarrow$''] \hfill \\
           Koska on olemassa $w \in A$, ei $A$ ole tyhjä.
@@ -506,6 +505,7 @@
               Edellisen kohdan tuloksena saatua tilajonoa vastaa jokin
               merkkijono $u \in A$ jolla on haluttu ominaisuus.
           \end{itemize}
+
           Koska $A \neq \emptyset$, niin löytyy $w \in A, w = w_1w_2
           \ldots w_k$, ja olkoon $M = (Q, \Sigma, \delta, s, F)$.
           Määritellään tilajono $\bar{q} = q_1q_2 \ldots q_{k+1}$
@@ -520,23 +520,26 @@
             Jos $|w| \ge n$, niin lokeroperiaatteen nojalla löytyy
             $q_i = q_j$ jollain $i,j \in \set{1 \ldots n}$, $i < j$.
             Siis tilajonosta $\bar{q}$ löytyy silmukka.
-            
-            \begin{automata}
+%
+            \begin{centerautomata}
+              \tikzstyle{every state}=[minimum size=1.5cm,node distance=3cm]
               \node[state] (qi-1) {$q_{i-1}$};
               \node[state] (qij) [right of=qi-1] {$q_i = q_j$};
               \node[state] (qj+1) [right of=qij] {$q_{j+1}$};
 
-              \path (qi-1) edge node {$w_{i-1}$} (qij)
-                    (qij) edge [loop above] node {$w_i \dots w_{j-1}$} (qij)
-                          edge node {$w_i$} (qj+1);
-            \end{automata}
-
-            FIXME kuva silmukasta
-
+              \path ++ (-2,0) edge node {$w_{i-2}$} (qi-1)
+                    (qi-1)    edge node {$w_{i-1}$} (qij)
+                    (qij)     edge [dashed,loop above]%
+                              node {$w_i \dots w_{j-1}$} (qij)
+                              edge node {$w_i$} (qj+1)
+                    (qj+1)    edge node {$w_{i+1}$} ++ (2,0);
+            \end{centerautomata}
+%
             Erityisesti
             \begin{alignat*}{3}
               & \delta(q_{i-1}, w_{i-1}) && = q_i && = q_j \\
-              \textrm{ja}\quad & \delta(q_i, u_j) && = \delta(q_j, u_j) && = q_{j+1}
+              \text{ja}\quad & \delta(q_i, u_j)
+              && = \delta(q_j, u_j) && = q_{j+1} \text{.}
             \end{alignat*}
             %
             Tällöin merkkijono
@@ -573,11 +576,27 @@
       \end{description}
     \end{proof}
   \item
+    Määritellään seuraavaa todistusta varten $\delta$-funktion
+    yleistys $\delta^* : Q \times \Sigma^* \to Q$
+%
+    \begin{equation*}
+      \delta^*(q,w_1 \dots w_n) =
+      \begin{cases}
+        \delta(q,\varepsilon) & \text{kun } n = 0 \\
+        \delta(q,w_1) & \text{kun } n = 1 \\
+        \delta(\delta^*(q,w_1 \ldots w_{n-1}), w_n) & \text{kun } n > 1
+      \end{cases}
+    \end{equation*}
+%
+    Funktio $\delta^*$ ottaa siis tilan ja merkkijonon, ja palauttaa
+    sen tilan johon automaatti päätyy kun se käy merkkijonon läpi
+    merkki kerrallaan.
+
     \begin{claim}
       Todista että $A$ on ääretön jos ja vain jos $\exists w \in A$
       mille $n \le |w| < 2n$
     \end{claim}
-    \begin{proof} \hfill \\
+    \begin{proof} \hfill
       \begin{description}
         \item[``$\Leftarrow$''] \hfill \\
           Idea:
@@ -650,12 +669,11 @@
           \end{claim}
 
           \begin{proof}
-            \hfill \\
+            \hfill
           \begin{description}
             \item[Alkuaskel: $m = 1$]
               Tilajonon määritelmän nojalla $\delta^*(q_i, b^1) = q_j$.
-
-            \item[Induktioaskel]\hfill\\
+            \item[Induktioaskel]\hfill
               \begin{description}
                 \item[Induktio-oletus] $\delta^*(q_i, b^m) = q_j$
                 \item[Induktioaskeleen väite] $\delta^*(q_i, b^{m+1}) = q_j$
@@ -671,7 +689,6 @@
                                            & = q_j
                                            & \textrm{induktio-oletus}
                   \end{align*}
-
               \end{description}
           \end{description}
           \end{proof}
