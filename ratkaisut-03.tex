@@ -12,6 +12,7 @@
 
 \newcommand{\set}[1]{{\left\{ #1 \right\}}}
 \newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
 \newcommand{\stateseq}[5]{{%
 \begin{automata}[1.3]
       \tikzstyle{every state}=[fill=none,draw=none,text=black,minimum
@@ -612,83 +613,103 @@
           \end{align*}
 
           Nyt näyttäisi siltä, että voimme toistaa merkkijonoa $b$
-          miten monta kertaa haluamme, ja saamme aina jonkin
-          automaatin $M$ hyväksymän, ja siten kieleen $A$ kuuluvan
-          merkkijonon. Automaatti $M$ hyväksyy merkkijonon $ab^mc$,
-          missä merkkijonoa $b$ on siis toistettu $m$ kertaa, jos
-          $\delta^*(s, ab^mc) \in F$. Nyt
+          mielivaltaisen monta kertaa ja saamme aina jonkin automaatin $M$
+          hyväksymän merkkijonon joka siis kuuluu kieleen $A$.
+
+          Automaatti $M$ hyväksyy merkkijonon $ab^mc$ jos $\delta^*(s, ab^mc)
+          \in F$. Näytetään tämä todeksi. Ensinnäkin $a$:n, $b$:n ja $c$:n
+          määritelmistä seuraa heti, että
+          %
           \begin{align*}
-            \delta^*(s, ab^mc) & = \delta^*(\delta^*(s,a), b^mc) \\
-            & = \delta^*(q_i, b^mc) \\
-            & = \delta^*(\delta^*(q_i,b^m), c)
-          \end{align*}
-          \begin{align*}
-            \intertext{Tiedetään, että}
-            \delta^*(q_j,c) & = q_{k+1} \textrm{.}
-            \intertext{Nyt jos}
-            \delta^*(q_i, b^m) & = q_j
-            \intertext{niin}
-            \delta^*(q_1, ab^mc) & = q_{k+1} \in F \textrm{.}
+\delta^*(s, ab^mc) & = \delta^*(\delta^*(s,a), b^mc) \\
+                   & = \delta^*(q_i, b^mc) \\
+                   & = \delta^*(\delta^*(q_i,b^m), c)
+              \intertext{ja}
+\delta^*(q_j,c)    & = q_{k+1} \textrm{.}
           \end{align*}
 
-          Enää tarvitsee siis näyttää, että kaikilla $m \in
-          \mathbb{N}$ pätee $\delta^*(q_i, b^m) = q_j$. Todistetaan
-          tämä induktiolla.
+          Ainoa puuttuva palanen on näyttää, että $\delta^*(q_i, b^m) = q_j$.
+          Jos tämä pitää paikkansa niin $\delta^*(q_1, ab^mc) = q_{k+1}
+          \in F$. Todistetaan tämä induktiolla.
 
           \begin{claim}
-            Kaikilla $m \in \mathbb{N}$ pätee $\delta^*(q_i, b^m) = q_j$.
+            Kaikilla $m \in \Nat$ pätee $\delta^*(q_i, b^m) = q_j$.
           \end{claim}
 
           \begin{proof}
             \hfill \\
           \begin{description}
             \item[Alkuaskel: $m = 1$]
-              Tilajonon määritelmän nojalla $\delta^*(q_i, b^1) =
-              q_j$.
+              Tilajonon määritelmän nojalla $\delta^*(q_i, b^1) = q_j$.
+
             \item[Induktioaskel]\hfill\\
               \begin{description}
                 \item[Induktio-oletus] $\delta^*(q_i, b^m) = q_j$
-                \item[Induktioaskeleen väite] $\delta^*(q_i, b^{m+1})
-                  = q_j$
+                \item[Induktioaskeleen väite] $\delta^*(q_i, b^{m+1}) = q_j$
                 \item[Induktioaskeleen todistus]
                   \begin{align*}
                     \delta^*(q_i, b^{m+1}) & = \delta^*(q_i, bb^m) \\
-                    & = \delta^*(\delta^*(q_i,b),b^m)
-                    & \delta^* \textrm{:n määritelmä} \\
-                    & = \delta^*(q_j,b^m) & \textrm{alkuaskel} \\
-                    & = \delta^*(q_i,b^m) & q_i = q_j \\
-                    & = q_j & \textrm{induktio-oletus}
+                                           & = \delta^*(\delta^*(q_i,b),b^m)
+                                           & \delta^* \textrm{:n määritelmä} \\
+                                           & = \delta^*(q_j,b^m)
+                                           & \textrm{alkuaskel} \\
+                                           & = \delta^*(q_i,b^m)
+                                           & q_i = q_j \\
+                                           & = q_j
+                                           & \textrm{induktio-oletus}
                   \end{align*}
+
               \end{description}
           \end{description}
           \end{proof}
+
           Nyt kaikilla $m \in \mathbb{N}$ pätee
           \begin{align*}
             \delta^*(q_1, ab^mc) & = \delta^*(\delta^*(q_1,a),b^mc)
-            & \delta^* \textrm{:n määritelmä} \\
-            & = \delta^*(q_i,b^mc) & a \textrm{:n määritelmä}\\
-            & = \delta^*(\delta^*(q_i,b^m),c)
-            & \delta^* \textrm{:n määritelmä} \\
-            & = \delta^*(q_j,c) & \textrm{äskeinen induktiotoditus}\\
-            & = q_{k+1} \in F
-            & c \textrm{:n ja } \bar{q} \textrm{:n määritelmät}
+                                 & \delta^* \textrm{:n määritelmä} \\
+                                 & = \delta^*(q_i,b^mc)
+                                 & a \textrm{:n määritelmä}\\
+                                 & = \delta^*(\delta^*(q_i,b^m),c)
+                                 & \delta^* \textrm{:n määritelmä} \\
+                                 & = \delta^*(q_j,c)
+                                 & \textrm{äskeinen induktiotoditus}\\
+                                 & = q_{k+1} \in F
+                                 & c \textrm{:n ja }
+                                   \bar{q} \textrm{:n määritelmät}
           \end{align*}
+
+          Siis voidaan muodostaa erilaiset merkkijonot
+          %
+          \begin{equation*}
+            ac, abc, ab^2c, \dots
+          \end{equation*}
+          %
+          joista jokainen kuuluu kieleen $A$, joten $A$ on ääretön.
+
+
         \item[``$\Rightarrow$''] \hfill \\
-          Olkoon $M = (Q, \Sigma, \delta, s, F)$ ja $A$ automaatin $M$
-          tunnistama ääretön säännöllinen kieli. Koska korkeintaan $n$:n
-          mittaisia merkkijonoja on vain äärellinen määrä, löytyy
-          merkkijono $w \in A$ jolla $|w| \ge n$. Nyt $w = w_1 \ldots
-          w_k$ jollain $k \ge n$.
+          Olkoon $M = (Q, \Sigma, \delta, s, F)$ deterministinen äärellinen
+          automaatti ja $A$ automaatin $M$ tunnistama ääretön säännöllinen
+          kieli. Koska korkeintaan $n$:n mittaisia merkkijonoja on vain
+          äärellinen määrä, löytyy merkkijono
+          \begin{equation*}
+              w = w_1 w_2 \dots w_k \in A \textrm{ missä } k \ge n.
+          \end{equation*}
 
-          Jos $k < 2n$, $w$ on haettu merkkijono. Voidaan siis
-          tarkastella tapausta, missä $k \ge 2n$.
+          Jos $k < 2n$, niin $w$ on haettu merkkijono. Tarkastellaan vielä
+          tapausta, missä $k \ge 2n$.
 
-          Olkoon $q_1 \ldots q_{k+1}$ tilajono, jonka automaatti $M$
-          käy läpi syötteellä $w$. Lokeroperiaatteen nojalla löytyy
-          ainakin yksi $(i, j)$ pari, missä $i,j \in {1 \ldots n}$ ja
-          $i < j$. Valitaan näistä $(i, j)$ pareista sellainen, jolla
-          erotus $j - i$ on pienin. Erityisesti tilajonosta löytyy nyt
-          sykli $q_i \dots q_j$ missä $q_i = q_j$.
+          Olkoon $q_1 \ldots q_{k+1}$ tilajono, jonka automaatti $M$ käy läpi
+          syötteellä $w$. Etsitään tilajonon lyhin sykli. Lokeroperiaatteen
+          nojalla löytyy ainakin yksi $(i, j)$ pari, jolla
+          %
+          \begin{equation*}
+              i,j \in {1 \ldots n} \textrm{ ja } i < j.
+          \end{equation*}
+          %
+          Valitaan näistä $(i, j)$ pareista sellainen, jolla erotus $j - i$ on
+          pienin. Erityisesti tilajonosta löytyy nyt sykli $q_i \dots q_j$
+          missä $q_i = q_j$ ja joka on pituudeltaan mahdollisimman lyhyt.
 
           Merkkijono $w$ voidaan nyt jakaa kolmeen osaan. Sykliä
           edeltävään, sykliin ja sykliä seuraavaan osaan seuraavasti:
@@ -699,32 +720,42 @@
                 \underbrace{(w_j \dots w_k)}_\textrm{loppuosa}
           \end{equation*}
 
-          a) kohdan nojalla merkkijonosta $w_1 \ldots w_{i-1}$
+          Kohdan a) nojalla alkuosasta $w_1 \ldots w_{i-1}$
           voidaan muodostaa merkkijono $a$, jolla
+          %
           \begin{equation*}
             |a| < n \textrm{ ja } \delta^*(q_1,a) = q_i \textrm{.}
           \end{equation*}
+          %
           Vastaavasti voidaan muodostaa merkkijono $c$, jolla
+          %
           \begin{equation*}
             |c| < n \textrm{ ja } \delta^*(q_j,c) = q_{k+1} \textrm{.}
           \end{equation*}
 
           Lisäksi voidaan määritellä valittua lyhintä silmukkaa
-          vastaava merkkijono $b = w_i \dots w_{j-1}$. Nyt $|b| \le
-          n$, sillä jos $|b| > n$, niin
+          vastaava merkkijono
+          %
+          \begin{equation*}
+              b = w_i \dots w_{j-1}.
+          \end{equation*}
+          %
+          Nyt $|b| \le n$, sillä jos $|b| > n$, niin
+          %
           \begin{align*}
-          |q_i \dots q_{j-1}| & = j - (i - 1) \\
-          & = j - i + 1 \\
-          & = |b| > n
+              |q_i \dots q_{j-1}| & = j - (i - 1) \\
+                                  & = j - i + 1 \\
+                                  & = |b| > n
           \end{align*}
+          %
           joten lokeroperiaatteen nojalla on olemassa $i', j' \in
           \set{1 \dots n}$ joilla $i' < j'$ ja $q_{i'} = q_{j'}$. Nyt
-          $j' - i' < j - i$ mikä on ristiriita parin $(i, j)$ valinnan
+          $j' - i' < j - i$ mikä on ristiriidassa parin $(i, j)$ valinnan
           kanssa.
 
-          Nyt merkkijono $ab^kc \in A$ kaikilla $k \in \mathbb{N}$.
+          Nyt merkkijono $ab^kc \in A$ kaikilla $k \in \Nat$.
           Haluaisimme lisäksi, että $n \le |ab^kc| < 2n$ jollain $k
-          \in \mathbb{N}$. Tulisi siis päteä, että
+          \in \Nat$. Haluttaisiin siis sellainen $k \in \Nat$, jolla pätisi
           %
           \begin{equation*}
           \begin{array}{@{}r@{}rcl|l}
@@ -738,7 +769,14 @@
           \end{array}
           \end{equation*}
 
-          Koskaa pätee, että
+          Valinta
+          \begin{equation*}
+              k = \ceil{\frac{n - |ac|}{|b|}}
+          \end{equation*}
+          %
+          vaikuttaisi turvalliselta valinnalta. Tarkistetaan vielä että se
+          toteuttaa molemmat epä\-yh\-tä\-löt.
+          %
           \begin{align*}
             \frac{n - |ac|}{|b|} & \le \ceil{\frac{n - |ac|}{|b|}} \\
             \intertext{ja}\quad
@@ -746,9 +784,9 @@
             & < \frac{n - |ac|}{|b|} + 1 \\
             & = \frac{n - |ac| + |b|}{|b|} \\
             & \le \frac{n - |ac| + n}{|b|} \\
-            & = \frac{2n - |ac|}{|b|}
+            & = \frac{2n - |ac|}{|b|}.
           \end{align*}
-          niin voidaan valita $k = \ceil{\frac{n - |ac|}{|b|}}$. Nyt
+          Voidaan siis valita $k = \ceil{\frac{n - |ac|}{|b|}}$. Nyt
           siis $ab^kc \in A$ ja $n \le ab^kc < 2n$ kuten haluttiin.
       \end{description} 
     \end{proof}
