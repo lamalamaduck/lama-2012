@@ -521,6 +521,16 @@
             $q_i = q_j$ jollain $i,j \in \set{1 \ldots n}$, $i < j$.
             Siis tilajonosta $\bar{q}$ löytyy silmukka.
             
+            \begin{automata}
+              \node[state] (qi-1) {$q_{i-1}$};
+              \node[state] (qij) [right of=qi-1] {$q_i = q_j$};
+              \node[state] (qj+1) [right of=qij] {$q_{j+1}$};
+
+              \path (qi-1) edge node {$w_{i-1}$} (qij)
+                    (qij) edge [loop above] node {$w_i \dots w_{j-1}$} (qij)
+                          edge node {$w_i$} (qj+1);
+            \end{automata}
+
             FIXME kuva silmukasta
 
             Erityisesti
