@@ -15,6 +15,7 @@
 
 \newcommand{\set}[1]{{\left\{ #1 \right\}}}
 \newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
 \newcommand{\stateseq}[5]{{%
 \begin{automata}[1.3]
       \tikzstyle{every state}=[fill=none,draw=none,text=black,minimum
@@ -35,6 +36,10 @@
 \newenvironment{automata}[1][2.8]%
 {\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=#1cm,semithick]}%
 {\end{tikzpicture}}
+
+\newenvironment{centerautomata}[1][2.2]%
+{\begin{center}\begin{automata}[#1]}%
+{\end{automata} \end{center}}
 
 \begin{document}
 
@@ -189,62 +194,56 @@
   \begin{enumerate}
     \item \mbox{}
 
-      \begin{center}
-        \begin{automata}[2.2]
-          \node[initial, state, accepting] (q1)               {$q_1$};
-          \node[state, accepting]          (q2) [right of=q1] {$q_2$};
-          \node[state, accepting]          (q3) [right of=q2] {$q_3$};
+      \begin{centerautomata}
+        \node[initial, state, accepting] (q1)               {$q_1$};
+        \node[state, accepting]          (q2) [right of=q1] {$q_2$};
+        \node[state, accepting]          (q3) [right of=q2] {$q_3$};
 
-          \path (q1) edge node {$a$} (q2)
-          (q2) edge node {$a$}(q3)
+        \path (q1) edge node {$a$} (q2)
+        (q2) edge node {$a$}(q3)
 
-          (q1) edge [loop above] node {$b$} (q1)
-          (q2) edge [loop above] node {$b$} (q2)
-          (q3) edge [loop above] node {$b$} (q3);
-        \end{automata}
-      \end{center}
+        (q1) edge [loop above] node {$b$} (q1)
+        (q2) edge [loop above] node {$b$} (q2)
+        (q3) edge [loop above] node {$b$} (q3);
+      \end{centerautomata}
 
     \item \mbox{}
 
-      \begin{center}
-        \begin{automata}[2.2]
-          \node[initial, accepting, state] (q0)               {$q_0$};
-          \node[accepting, state]          (q1) [right of=q0] {$q_1$};
-          \node[state]                     (q2) [right of=q1] {$q_2$};
-          \node[state]                     (q3) [right of=q2] {$q_3$};
+      \begin{centerautomata}
+        \node[initial, accepting, state] (q0)               {$q_0$};
+        \node[accepting, state]          (q1) [right of=q0] {$q_1$};
+        \node[state]                     (q2) [right of=q1] {$q_2$};
+        \node[state]                     (q3) [right of=q2] {$q_3$};
 
-          \path (q0) edge [loop above] node {$b$} (q0)
-          (q1) edge [loop above] node {$a$} (q1)
-          (q2) edge [loop above] node {$b$} (q2)
-          (q3) edge [loop above] node {$a$} (q3)
+        \path (q0) edge [loop above] node {$b$} (q0)
+        (q1) edge [loop above] node {$a$} (q1)
+        (q2) edge [loop above] node {$b$} (q2)
+        (q3) edge [loop above] node {$a$} (q3)
 
-          (q0) edge node {$a$} (q1)
-          (q1) edge node {$b$} (q2)
-          (q2) edge node {$a$} (q3)
-          (q3) edge [bend left] node {$b$} (q0) ;
-        \end{automata}
-      \end{center}
+        (q0) edge node {$a$} (q1)
+        (q1) edge node {$b$} (q2)
+        (q2) edge node {$a$} (q3)
+        (q3) edge [bend left] node {$b$} (q0) ;
+      \end{centerautomata}
 
     \item \mbox{}
 
-      \begin{center}
-        \begin{automata}[2.2]
-          \node[initial, state]   (q0)                            {$q_0$};
-          \node[state, accepting] (q1) [right of=q0]              {$q_1$};
-          \node[state]            (q2) [right of=q0, above of=q0] {$q_2$};
-          \node[state]            (q3) [right of=q0, below of=q0] {$q_3$};
-          \node[state, accepting] (q4) [right of=q2]              {$q_4$};
-          \node[state, accepting] (q5) [right of=q3]              {$q_5$};
+      \begin{centerautomata}
+        \node[initial, state]   (q0)                            {$q_0$};
+        \node[state, accepting] (q1) [right of=q0]              {$q_1$};
+        \node[state]            (q2) [right of=q0, above of=q0] {$q_2$};
+        \node[state]            (q3) [right of=q0, below of=q0] {$q_3$};
+        \node[state, accepting] (q4) [right of=q2]              {$q_4$};
+        \node[state, accepting] (q5) [right of=q3]              {$q_5$};
 
-          \path (q0) edge              node {$a,b$} (q1)
-          (q0) edge              node {$a$}   (q2)
-          (q0) edge              node {$b$}   (q3)
-          (q2) edge [loop above] node {$a,b$} (q2)
-          (q2) edge              node {$a$}   (q4)
-          (q3) edge [loop below] node {$a,b$} (q3)
-          (q3) edge              node {$b$}   (q5);
-        \end{automata}
-      \end{center}
+        \path (q0) edge              node {$a,b$} (q1)
+              (q0) edge              node {$a$}   (q2)
+              (q0) edge              node {$b$}   (q3)
+              (q2) edge [loop above] node {$a,b$} (q2)
+              (q2) edge              node {$a$}   (q4)
+              (q3) edge [loop below] node {$a,b$} (q3)
+              (q3) edge              node {$b$}   (q5) ;
+      \end{centerautomata}
   \end{enumerate}
 
 \item
@@ -258,63 +257,59 @@
   Muodostetaan ensin pari esimerkkiä. Tässä automaatti, joka tunnistaa
   kaikki merkkijonot, jotka alkavat joko $aab$:llä tai $bba$:lla.
 
-  \begin{center}
-    \begin{automata}[2.2]
-      \node[initial, state] (q0)                          {$q_0$};
-      \node[state]        (q1) [right of=q0]{$q_1$};
-      \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
-      \node[state]        (q3) [right of=q2]              {$q_3$};
-      \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
-      \node[state]        (q5) [right of=q4]              {$q_5$};
-      \node[accepting,state]   (q6) [right of=q3, below of=q3] {$q_6$};
+  \begin{centerautomata}
+    \node[initial, state] (q0)                          {$q_0$};
+    \node[state]        (q1) [right of=q0]{$q_1$};
+    \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
+    \node[state]        (q3) [right of=q2]              {$q_3$};
+    \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
+    \node[state]        (q5) [right of=q4]              {$q_5$};
+    \node[accepting,state]   (q6) [right of=q3, below of=q3] {$q_6$};
 
-      \path (q0) edge node {$a$} (q2)
-      (q0) edge node {$b$} (q4)
-      (q4) edge node {$b$} (q5)
-      (q2) edge node {$a$} (q3)
-      (q3) edge node {$b$} (q6)
-      (q5) edge node {$a$} (q6)
+    \path (q0) edge node {$a$} (q2)
+          (q0) edge node {$b$} (q4)
+          (q4) edge node {$b$} (q5)
+          (q2) edge node {$a$} (q3)
+          (q3) edge node {$b$} (q6)
+          (q5) edge node {$a$} (q6)
 
-      (q2) edge node {$b$} (q1)
-      (q4) edge node {$a$} (q1)
-      (q3) edge node {$a$} (q1)
-      (q5) edge node {$b$} (q1)
+          (q2) edge node {$b$} (q1)
+          (q4) edge node {$a$} (q1)
+          (q3) edge node {$a$} (q1)
+          (q5) edge node {$b$} (q1)
 
-      (q6) edge [loop right] node {$a,b$} (q6)
-      (q1) edge [loop right] node {$a,b$} (q1) ;
-    \end{automata}
-  \end{center}
+          (q6) edge [loop right] node {$a,b$} (q6)
+          (q1) edge [loop right] node {$a,b$} (q1) ;
+  \end{centerautomata}
 
   Tälle voidaan nyt helposti muodostaa käänteiskielen automaatti asettamalla
   lopputila alkutilaksi, alkutila lopputilaksi ja kääntämällä kaikki nuolet
   ympäri.
 
-  \begin{center}
-    \begin{automata}[2.2]
-      \node[accepting, state] (q0)                          {$q_0$};
-      \node[state]        (q1) [right of=q0]{$q_1$};
-      \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
-      \node[state]        (q3) [right of=q2]              {$q_3$};
-      \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
-      \node[state]        (q5) [right of=q4]              {$q_5$};
-      \node[initial above,state]   (q6) [right of=q3, below of=q3] {$q_6$};
+  \begin{centerautomata}
+    \node[accepting, state] (q0)                          {$q_0$};
+    \node[state]        (q1) [right of=q0]{$q_1$};
+    \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
+    \node[state]        (q3) [right of=q2]              {$q_3$};
+    \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
+    \node[state]        (q5) [right of=q4]              {$q_5$};
+    \node[initial above,state]   (q6) [right of=q3, below of=q3] {$q_6$};
 
-      \path (q2) edge node {$a$} (q0)
-      (q4) edge node {$b$} (q0)
-      (q5) edge node {$b$} (q4)
-      (q3) edge node {$a$} (q2)
-      (q6) edge node {$b$} (q3)
-      (q6) edge node {$a$} (q5)
+    \path (q2) edge node {$a$} (q0)
+          (q4) edge node {$b$} (q0)
+          (q5) edge node {$b$} (q4)
+          (q3) edge node {$a$} (q2)
+          (q6) edge node {$b$} (q3)
+          (q6) edge node {$a$} (q5)
 
-      (q1) edge node {$b$} (q2)
-      (q1) edge node {$a$} (q4)
-      (q1) edge node {$a$} (q3)
-      (q1) edge node {$b$} (q5)
+          (q1) edge node {$b$} (q2)
+          (q1) edge node {$a$} (q4)
+          (q1) edge node {$a$} (q3)
+          (q1) edge node {$b$} (q5)
 
-      (q6) edge [loop right] node {$a,b$} (q6)
-      (q1) edge [loop right] node {$a,b$} (q1) ;
-    \end{automata} 
-  \end{center}
+          (q6) edge [loop right] node {$a,b$} (q6)
+          (q1) edge [loop right] node {$a,b$} (q1) ;
+  \end{centerautomata} 
 
   Ja näin saatiin epädeterministinen automaatti, joka tunnistaa kaikki
   merkkijonot jotka loppuvat joko $baa$ tai $abb$.
@@ -322,34 +317,32 @@
   Alkuperäinen automaatti oltaisiin kuitenkin voitu muodostaa myös
   seuraavasti:
 
-  \begin{center}
-    \begin{automata}[2.2]
-      \node[initial, state] (q0)                          {$q_0$};
-      \node[state]        (q1) [right of=q0]{$q_1$};
-      \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
-      \node[state]        (q3) [right of=q2]              {$q_3$};
-      \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
-      \node[state]        (q5) [right of=q4]              {$q_5$};
-      \node[accepting,state]   (q6) [right of=q5] {$q_6$};
-      \node[accepting,state]   (q7) [right of=q3] {$q_7$};
+  \begin{centerautomata}
+    \node[initial, state] (q0)                          {$q_0$};
+    \node[state]        (q1) [right of=q0]{$q_1$};
+    \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
+    \node[state]        (q3) [right of=q2]              {$q_3$};
+    \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
+    \node[state]        (q5) [right of=q4]              {$q_5$};
+    \node[accepting,state]   (q6) [right of=q5] {$q_6$};
+    \node[accepting,state]   (q7) [right of=q3] {$q_7$};
 
-      \path (q0) edge node {$a$} (q2)
-      (q0) edge node {$b$} (q4)
-      (q4) edge node {$b$} (q5)
-      (q2) edge node {$a$} (q3)
-      (q3) edge node {$b$} (q7)
-      (q5) edge node {$a$} (q6)
+    \path (q0) edge node {$a$} (q2)
+          (q0) edge node {$b$} (q4)
+          (q4) edge node {$b$} (q5)
+          (q2) edge node {$a$} (q3)
+          (q3) edge node {$b$} (q7)
+          (q5) edge node {$a$} (q6)
 
-      (q2) edge node {$b$} (q1)
-      (q4) edge node {$a$} (q1)
-      (q3) edge node {$a$} (q1)
-      (q5) edge node {$b$} (q1)
+          (q2) edge node {$b$} (q1)
+          (q4) edge node {$a$} (q1)
+          (q3) edge node {$a$} (q1)
+          (q5) edge node {$b$} (q1)
 
-      (q6) edge [loop below] node {$a,b$} (q6)
-      (q7) edge [loop above] node {$a,b$} (q7)
-      (q1) edge [loop right] node {$a,b$} (q1) ;
-    \end{automata}
-  \end{center}
+          (q6) edge [loop below] node {$a,b$} (q6)
+          (q7) edge [loop above] node {$a,b$} (q7)
+          (q1) edge [loop right] node {$a,b$} (q1) ;
+  \end{centerautomata}
 
   Nyt voidaan huomata, että automaattia kääntäessä tarvittaisiin kaksi
   aloitustilaa, sillä alkuperäisessä automaatissa on useampia
@@ -359,39 +352,37 @@
   aloitustilan, josta tulee $\varepsilon$-siirtymät jokaiseen
   haluttuun aloitustilaan.
 
-  \begin{center}
-    \begin{automata}[2.2]
-      \node[accepting, state] (q0)                          {$q_0$};
-      \node[state]        (q1) [right of=q0]{$q_1$};
-      \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
-      \node[state]        (q3) [right of=q2]              {$q_3$};
-      \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
-      \node[state]        (q5) [right of=q4]              {$q_5$};
-      \node[state]   (q6) [right of=q5] {$q_6$};
-      \node[state]   (q7) [right of=q3] {$q_7$};
-      \node[state, initial right] (q8) [right of=q7, below of=q7] {$x$};
+  \begin{centerautomata}
+    \node[accepting, state] (q0)                          {$q_0$};
+    \node[state]        (q1) [right of=q0]{$q_1$};
+    \node[state]        (q2) [right of=q0, above of=q0] {$q_2$};
+    \node[state]        (q3) [right of=q2]              {$q_3$};
+    \node[state]        (q4) [right of=q0, below of=q0] {$q_4$};
+    \node[state]        (q5) [right of=q4]              {$q_5$};
+    \node[state]   (q6) [right of=q5] {$q_6$};
+    \node[state]   (q7) [right of=q3] {$q_7$};
+    \node[state, initial right] (q8) [right of=q7, below of=q7] {$x$};
 
-      \path (q2) edge node {$a$} (q0)
-      (q4) edge node {$b$} (q0)
-      (q5) edge node {$b$} (q4)
-      (q3) edge node {$a$} (q2)
-      (q7) edge node {$b$} (q3)
-      (q6) edge node {$a$} (q5)
+    \path (q2) edge node {$a$} (q0)
+          (q4) edge node {$b$} (q0)
+          (q5) edge node {$b$} (q4)
+          (q3) edge node {$a$} (q2)
+          (q7) edge node {$b$} (q3)
+          (q6) edge node {$a$} (q5)
 
-      (q1) edge node {$b$} (q2)
-      (q1) edge node {$a$} (q4)
-      (q1) edge node {$a$} (q3)
-      (q1) edge node {$b$} (q5)
+          (q1) edge node {$b$} (q2)
+          (q1) edge node {$a$} (q4)
+          (q1) edge node {$a$} (q3)
+          (q1) edge node {$b$} (q5)
 
-      (q7) edge [loop above] node {$a,b$} (q7)
-      (q6) edge [loop below] node {$a,b$} (q6)
-      (q1) edge [loop right] node {$a,b$} (q1) 
+          (q7) edge [loop above] node {$a,b$} (q7)
+          (q6) edge [loop below] node {$a,b$} (q6)
+          (q1) edge [loop right] node {$a,b$} (q1) 
 
-      (q8) edge node {$\varepsilon$} (q7)
-      (q8) edge node {$\varepsilon$} (q6);
+          (q8) edge node {$\varepsilon$} (q7)
+          (q8) edge node {$\varepsilon$} (q6);
 
-    \end{automata}
-  \end{center}
+  \end{centerautomata}
 
   Kun nyt ollaan saatu intuitio siitä miten kääntäminen pitäisi tehdä,
   voidaan tämä vielä kirjoittaa formaalisti.
@@ -434,9 +425,9 @@
       \node[state,initial,accepting] (q1)               {$q_1$};
       \node[state]                   (q2) [below of=q1] {$q_2$};
 
-      \path (q1) edge [loop right]  node      {$a$}   ()
-      edge  [bend left]       node     {$a,b$}  (q2)
-      (q2) edge  [bend left]       node       {$b$}  (q1);
+      \path (q1) edge [loop right] node      {$a$}   ()
+                 edge [bend left]  node     {$a,b$}  (q2)
+            (q2) edge [bend left]  node       {$b$}  (q1);
     \end{tikzpicture} 
     & 
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.2cm,semithick]
@@ -445,11 +436,11 @@
       \node[state,accepting]	(q2) [right of=q1] {$q_2$};
       \node[state]   		(q3) [below of=q1] {$q_3$};
       
-      \path (q1) edge   				node [swap]	{$a$}  	(q3)
-      edge [bend left] 	node 		{$\varepsilon$} 	(q2)
-      (q2)	edge [bend left]	node [swap]   	{$a$}	(q1)       
-      (q3) edge				node [swap]	{$a,b$}	(q2)
-      edge [loop right]   node    {$b$} ();        
+      \path (q1) edge              node [swap]	{$a$}  	(q3)
+                 edge [bend left]  node {$\varepsilon$} 	(q2)
+            (q2) edge [bend left]  node [swap]   	{$a$}	(q1)
+            (q3) edge              node [swap]	{$a,b$}	(q2)
+                 edge [loop right] node {$b$} ();
     \end{tikzpicture}
     \\
     \begin{automata}[2.5]
@@ -585,7 +576,11 @@
               täyttävä merkkijono.
             \item Nyt erityisesti $|w| \ge n$.
             \item Muodostetaan jälleen merkkijonolla $w$ automaatin
-              läpikäymä tilajono $\bar{q} = q_1 \ldots q_{k+1}$ missä
+              läpikäymä tilajono
+              \begin{equation*}
+                \bar{q} = q_1 \ldots q_{k+1}
+              \end{equation*}
+              missä
               $k+1 \ge n$.
             \item Nyt erityisesti $k > n$, joten tilajonossa on
               silmukka.
@@ -621,83 +616,103 @@
           \end{align*}
 
           Nyt näyttäisi siltä, että voimme toistaa merkkijonoa $b$
-          miten monta kertaa haluamme, ja saamme aina jonkin
-          automaatin $M$ hyväksymän, ja siten kieleen $A$ kuuluvan
-          merkkijonon. Automaatti $M$ hyväksyy merkkijonon $ab^mc$,
-          missä merkkijonoa $b$ on siis toistettu $m$ kertaa, jos
-          $\delta^*(s, ab^mc) \in F$. Nyt
+          mielivaltaisen monta kertaa ja saamme aina jonkin automaatin $M$
+          hyväksymän merkkijonon joka siis kuuluu kieleen $A$.
+
+          Automaatti $M$ hyväksyy merkkijonon $ab^mc$ jos $\delta^*(s, ab^mc)
+          \in F$. Näytetään tämä todeksi. Ensinnäkin $a$:n, $b$:n ja $c$:n
+          määritelmistä seuraa heti, että
+          %
           \begin{align*}
-            \delta^*(s, ab^mc) & = \delta^*(\delta^*(s,a), b^mc) \\
-            & = \delta^*(q_i, b^mc) \\
-            & = \delta^*(\delta^*(q_i,b^m), c)
-          \end{align*}
-          \begin{align*}
-            \intertext{Tiedetään, että}
-            \delta^*(q_j,c) & = q_{k+1} \textrm{.}
-            \intertext{Nyt jos}
-            \delta^*(q_i, b^m) & = q_j
-            \intertext{niin}
-            \delta^*(q_1, ab^mc) & = q_{k+1} \in F \textrm{.}
+\delta^*(s, ab^mc) & = \delta^*(\delta^*(s,a), b^mc) \\
+                   & = \delta^*(q_i, b^mc) \\
+                   & = \delta^*(\delta^*(q_i,b^m), c)
+              \intertext{ja}
+\delta^*(q_j,c)    & = q_{k+1} \textrm{.}
           \end{align*}
 
-          Enää tarvitsee siis näyttää, että kaikilla $m \in
-          \mathbb{N}$ pätee $\delta^*(q_i, b^m) = q_j$. Todistetaan
-          tämä induktiolla.
+          Ainoa puuttuva palanen on näyttää, että $\delta^*(q_i, b^m) = q_j$.
+          Jos tämä pitää paikkansa niin $\delta^*(q_1, ab^mc) = q_{k+1}
+          \in F$. Todistetaan tämä induktiolla.
 
           \begin{claim}
-            Kaikilla $m \in \mathbb{N}$ pätee $\delta^*(q_i, b^m) = q_j$.
+            Kaikilla $m \in \Nat$ pätee $\delta^*(q_i, b^m) = q_j$.
           \end{claim}
 
           \begin{proof}
             \hfill \\
           \begin{description}
             \item[Alkuaskel: $m = 1$]
-              Tilajonon määritelmän nojalla $\delta^*(q_i, b^1) =
-              q_j$.
+              Tilajonon määritelmän nojalla $\delta^*(q_i, b^1) = q_j$.
+
             \item[Induktioaskel]\hfill\\
               \begin{description}
                 \item[Induktio-oletus] $\delta^*(q_i, b^m) = q_j$
-                \item[Induktioaskeleen väite] $\delta^*(q_i, b^{m+1})
-                  = q_j$
+                \item[Induktioaskeleen väite] $\delta^*(q_i, b^{m+1}) = q_j$
                 \item[Induktioaskeleen todistus]
                   \begin{align*}
                     \delta^*(q_i, b^{m+1}) & = \delta^*(q_i, bb^m) \\
-                    & = \delta^*(\delta^*(q_i,b),b^m)
-                    & \delta^* \textrm{:n määritelmä} \\
-                    & = \delta^*(q_j,b^m) & \textrm{alkuaskel} \\
-                    & = \delta^*(q_i,b^m) & q_i = q_j \\
-                    & = q_j & \textrm{induktio-oletus}
+                                           & = \delta^*(\delta^*(q_i,b),b^m)
+                                           & \delta^* \textrm{:n määritelmä} \\
+                                           & = \delta^*(q_j,b^m)
+                                           & \textrm{alkuaskel} \\
+                                           & = \delta^*(q_i,b^m)
+                                           & q_i = q_j \\
+                                           & = q_j
+                                           & \textrm{induktio-oletus}
                   \end{align*}
+
               \end{description}
           \end{description}
           \end{proof}
+
           Nyt kaikilla $m \in \mathbb{N}$ pätee
           \begin{align*}
             \delta^*(q_1, ab^mc) & = \delta^*(\delta^*(q_1,a),b^mc)
-            & \delta^* \textrm{:n määritelmä} \\
-            & = \delta^*(q_i,b^mc) & a \textrm{:n määritelmä}\\
-            & = \delta^*(\delta^*(q_i,b^m),c)
-            & \delta^* \textrm{:n määritelmä} \\
-            & = \delta^*(q_j,c) & \textrm{äskeinen induktiotoditus}\\
-            & = q_{k+1} \in F
-            & c \textrm{:n ja } \bar{q} \textrm{:n määritelmät}
+                                 & \delta^* \textrm{:n määritelmä} \\
+                                 & = \delta^*(q_i,b^mc)
+                                 & a \textrm{:n määritelmä}\\
+                                 & = \delta^*(\delta^*(q_i,b^m),c)
+                                 & \delta^* \textrm{:n määritelmä} \\
+                                 & = \delta^*(q_j,c)
+                                 & \textrm{äskeinen induktiotoditus}\\
+                                 & = q_{k+1} \in F
+                                 & c \textrm{:n ja }
+                                   \bar{q} \textrm{:n määritelmät}
           \end{align*}
+
+          Siis voidaan muodostaa erilaiset merkkijonot
+          %
+          \begin{equation*}
+            ac, abc, ab^2c, \dots
+          \end{equation*}
+          %
+          joista jokainen kuuluu kieleen $A$, joten $A$ on ääretön.
+
+
         \item[``$\Rightarrow$''] \hfill \\
-          Olkoon $M = (Q, \Sigma, \delta, s, F)$ ja $A$ automaatin $M$
-          tunnistama ääretön säännöllinen kieli. Koska korkeintaan $n$:n
-          mittaisia merkkijonoja on vain äärellinen määrä, löytyy
-          merkkijono $w \in A$ jolla $|w| \ge n$. Nyt $w = w_1 \ldots
-          w_k$ jollain $k \ge n$.
+          Olkoon $M = (Q, \Sigma, \delta, s, F)$ deterministinen äärellinen
+          automaatti ja $A$ automaatin $M$ tunnistama ääretön säännöllinen
+          kieli. Koska korkeintaan $n$:n mittaisia merkkijonoja on vain
+          äärellinen määrä, löytyy merkkijono
+          \begin{equation*}
+              w = w_1 w_2 \dots w_k \in A \textrm{ missä } k \ge n.
+          \end{equation*}
 
-          Jos $k < 2n$, $w$ on haettu merkkijono. Voidaan siis
-          tarkastella tapausta, missä $k \ge 2n$.
+          Jos $k < 2n$, niin $w$ on haettu merkkijono. Tarkastellaan vielä
+          tapausta, missä $k \ge 2n$.
 
-          Olkoon $q_1 \ldots q_{k+1}$ tilajono, jonka automaatti $M$
-          käy läpi syötteellä $w$. Lokeroperiaatteen nojalla löytyy
-          ainakin yksi $(i, j)$ pari, missä $i,j \in {1 \ldots n}$ ja
-          $i < j$. Valitaan näistä $(i, j)$ pareista sellainen, jolla
-          erotus $j - i$ on pienin. Erityisesti tilajonosta löytyy nyt
-          sykli $q_i \dots q_j$ missä $q_i = q_j$.
+          Olkoon $q_1 \ldots q_{k+1}$ tilajono, jonka automaatti $M$ käy läpi
+          syötteellä $w$. Etsitään tilajonon lyhin sykli. Lokeroperiaatteen
+          nojalla löytyy ainakin yksi $(i, j)$ pari, jolla
+          %
+          \begin{equation*}
+              i,j \in {1 \ldots n} \textrm{ ja } i < j.
+          \end{equation*}
+          %
+          Valitaan näistä $(i, j)$ pareista sellainen, jolla erotus $j - i$ on
+          pienin. Erityisesti tilajonosta löytyy nyt sykli $q_i \dots q_j$
+          missä $q_i = q_j$ ja joka on pituudeltaan mahdollisimman lyhyt.
 
           Merkkijono $w$ voidaan nyt jakaa kolmeen osaan. Sykliä
           edeltävään, sykliin ja sykliä seuraavaan osaan seuraavasti:
@@ -708,32 +723,42 @@
                 \underbrace{(w_j \dots w_k)}_\textrm{loppuosa}
           \end{equation*}
 
-          a) kohdan nojalla merkkijonosta $w_1 \ldots w_{i-1}$
+          Kohdan a) nojalla alkuosasta $w_1 \ldots w_{i-1}$
           voidaan muodostaa merkkijono $a$, jolla
+          %
           \begin{equation*}
             |a| < n \textrm{ ja } \delta^*(q_1,a) = q_i \textrm{.}
           \end{equation*}
+          %
           Vastaavasti voidaan muodostaa merkkijono $c$, jolla
+          %
           \begin{equation*}
             |c| < n \textrm{ ja } \delta^*(q_j,c) = q_{k+1} \textrm{.}
           \end{equation*}
 
           Lisäksi voidaan määritellä valittua lyhintä silmukkaa
-          vastaava merkkijono $b = w_i \dots w_{j-1}$. Nyt $|b| \le
-          n$, sillä jos $|b| > n$, niin
+          vastaava merkkijono
+          %
+          \begin{equation*}
+              b = w_i \dots w_{j-1}.
+          \end{equation*}
+          %
+          Nyt $|b| \le n$, sillä jos $|b| > n$, niin
+          %
           \begin{align*}
-          |q_i \dots q_{j-1}| & = j - (i - 1) \\
-          & = j - i + 1 \\
-          & = |b| > n
+              |q_i \dots q_{j-1}| & = j - (i - 1) \\
+                                  & = j - i + 1 \\
+                                  & = |b| > n
           \end{align*}
+          %
           joten lokeroperiaatteen nojalla on olemassa $i', j' \in
           \set{1 \dots n}$ joilla $i' < j'$ ja $q_{i'} = q_{j'}$. Nyt
-          $j' - i' < j - i$ mikä on ristiriita parin $(i, j)$ valinnan
+          $j' - i' < j - i$ mikä on ristiriidassa parin $(i, j)$ valinnan
           kanssa.
 
-          Nyt merkkijono $ab^kc \in A$ kaikilla $k \in \mathbb{N}$.
+          Nyt merkkijono $ab^kc \in A$ kaikilla $k \in \Nat$.
           Haluaisimme lisäksi, että $n \le |ab^kc| < 2n$ jollain $k
-          \in \mathbb{N}$. Tulisi siis päteä, että
+          \in \Nat$. Haluttaisiin siis sellainen $k \in \Nat$, jolla pätisi
           %
           \begin{equation*}
           \begin{array}{@{}r@{}rcl|l}
@@ -747,7 +772,14 @@
           \end{array}
           \end{equation*}
 
-          Koskaa pätee, että
+          Valinta
+          \begin{equation*}
+              k = \ceil{\frac{n - |ac|}{|b|}}
+          \end{equation*}
+          %
+          vaikuttaisi turvalliselta valinnalta. Tarkistetaan vielä että se
+          toteuttaa molemmat epä\-yh\-tä\-löt.
+          %
           \begin{align*}
             \frac{n - |ac|}{|b|} & \le \ceil{\frac{n - |ac|}{|b|}} \\
             \intertext{ja}\quad
@@ -755,9 +787,9 @@
             & < \frac{n - |ac|}{|b|} + 1 \\
             & = \frac{n - |ac| + |b|}{|b|} \\
             & \le \frac{n - |ac| + n}{|b|} \\
-            & = \frac{2n - |ac|}{|b|}
+            & = \frac{2n - |ac|}{|b|}.
           \end{align*}
-          niin voidaan valita $k = \ceil{\frac{n - |ac|}{|b|}}$. Nyt
+          Voidaan siis valita $k = \ceil{\frac{n - |ac|}{|b|}}$. Nyt
           siis $ab^kc \in A$ ja $n \le ab^kc < 2n$ kuten haluttiin.
       \end{description} 
     \end{proof}
