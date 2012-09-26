@@ -111,8 +111,8 @@
     \end{automata}
 
     Jokaisen $b$:n jälkeen on ainakin kaksi $a$:ta. Automaatin määrittelemä
-    säännöllinen kieli on siis $(\set{a} \cup \set{baa})^*$ joka voidaan
-    kuvata myös säännöllisellä lausekkeella $(a | baa)^*$.
+    säännöllinen kieli on siis $\set{a, baa}^*$ joka voidaan
+    kuvata myös säännöllisellä lausekkeella $(a \cup baa)^*$.
 
   \item \hfill \\
     \begin{automata}[2]
@@ -169,9 +169,9 @@
     De\-ter\-mi\-nis\-ti\-ses\-tä automaatista voidaan huomata, et\-tä
     automaatti hy\-väk\-syy kaikki merkkijonot, joissa on kolme,
     kuusi, seitsemän tai vähintään yhdeksän $a$:ta. Säännöllisenä
-    lausekkeena kielen voi kirjoittaa esimerkiksi $aaa(aaa|aaaa)^*$
+    lausekkeena kielen voi kirjoittaa esimerkiksi $aaa(aaa \cup aaaa)^*$
     (muodostettu vastaamaan e\-pä\-de\-ter\-mi\-nis\-tis\-tä
-    automaattia) tai $(a^3|a^6|a^7|a^9a^*)$ (muodostettu
+    automaattia) tai $(a^3 \cup a^6 \cup a^7 \cup a^9a^*)$ (muodostettu
     deterministisen automaatin antamasta lukumääräintuitiosta)
   \end{enumerate}
 
@@ -191,8 +191,7 @@
   \end{enumerate}
 
   \begin{enumerate}
-    \item \mbox{}
-
+    \item \hfill
       \begin{centerautomata}
         \node[initial, state, accepting] (q1)               {$q_1$};
         \node[state, accepting]          (q2) [right of=q1] {$q_2$};
@@ -205,9 +204,7 @@
         (q2) edge [loop above] node {$b$} (q2)
         (q3) edge [loop above] node {$b$} (q3);
       \end{centerautomata}
-
-    \item \mbox{}
-
+    \item \hfill
       \begin{centerautomata}
         \node[initial, accepting, state] (q0)               {$q_0$};
         \node[accepting, state]          (q1) [right of=q0] {$q_1$};
@@ -224,9 +221,8 @@
         (q2) edge node {$a$} (q3)
         (q3) edge [bend left] node {$b$} (q0) ;
       \end{centerautomata}
-
-    \item \mbox{}
-
+\newpage
+    \item \hfill
       \begin{centerautomata}
         \node[initial, state]   (q0)                            {$q_0$};
         \node[state, accepting] (q1) [right of=q0]              {$q_1$};
@@ -418,7 +414,7 @@
   Muunna seuraavat epädeterministiset automaatit deterministisiksi
   käyttämällä lauseen 1.39 todistusta apuna.
 
-  \begin{tabular}{cc}
+  \begin{tabular}{c|c}
     \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,semithick]
 
       \node[state,initial,accepting] (q1)               {$q_1$};
@@ -481,8 +477,8 @@
   \begin{enumerate}
   \item
     \begin{claim}
-      Todista että $A\neq \emptyset \Leftrightarrow \exists w \in A$
-      mille $|w| < n$.
+      $A\neq \emptyset \Leftrightarrow \exists w \in A$ mille $|w| <
+      n$.
     \end{claim}
     \begin{proof}
       \hfill
@@ -505,7 +501,7 @@
               Edellisen kohdan tuloksena saatua tilajonoa vastaa jokin
               merkkijono $u \in A$ jolla on haluttu ominaisuus.
           \end{itemize}
-
+\newpage
           Koska $A \neq \emptyset$, niin löytyy $w \in A, w = w_1w_2
           \ldots w_k$, ja olkoon $M = (Q, \Sigma, \delta, s, F)$.
           Määritellään tilajono $\bar{q} = q_1q_2 \ldots q_{k+1}$
@@ -522,17 +518,20 @@
             Siis tilajonosta $\bar{q}$ löytyy silmukka.
 %
             \begin{centerautomata}
-              \tikzstyle{every state}=[minimum size=1.5cm,node distance=3cm]
+              \tikzstyle{every state}=[fill=none,draw=none,text=black,minimum
+                size=1.2cm,inner sep=0cm]
               \node[state] (qi-1) {$q_{i-1}$};
               \node[state] (qij) [right of=qi-1] {$q_i = q_j$};
               \node[state] (qj+1) [right of=qij] {$q_{j+1}$};
+              \node[state] (qel) [left of=qi-1] {\dots};
+              \node[state] (qer) [right of=qj+1] {\dots};
 
-              \path ++ (-2,0) edge node {$w_{i-2}$} (qi-1)
-                    (qi-1)    edge node {$w_{i-1}$} (qij)
-                    (qij)     edge [dashed,loop above]%
-                              node {$w_i \dots w_{j-1}$} (qij)
-                              edge node {$w_i$} (qj+1)
-                    (qj+1)    edge node {$w_{i+1}$} ++ (2,0);
+              \path (qel)  edge [bend left] node {$w_{i-2}$} (qi-1)
+                    (qi-1) edge [bend left] node {$w_{i-1}$} (qij)
+                    (qij)  edge [dashed,loop above]%
+                                node {$w_i \dots w_{j-1}$} (qij)
+                           edge [bend left] node {$w_j$} (qj+1)
+                    (qj+1) edge [bend left] node {$w_{j+1}$} (qer);
             \end{centerautomata}
 %
             Erityisesti
@@ -591,10 +590,10 @@
     Funktio $\delta^*$ ottaa siis tilan ja merkkijonon, ja palauttaa
     sen tilan johon automaatti päätyy kun se käy merkkijonon läpi
     merkki kerrallaan.
-
+\newpage
     \begin{claim}
-      Todista että $A$ on ääretön jos ja vain jos $\exists w \in A$
-      mille $n \le |w| < 2n$
+      Kieli $A$ on ääretön $\Leftrightarrow \exists w \in A$ mille $n
+      \le |w| < 2n$
     \end{claim}
     \begin{proof} \hfill
       \begin{description}
@@ -663,7 +662,7 @@
           Ainoa puuttuva palanen on näyttää, että $\delta^*(q_i, b^m) = q_j$.
           Jos tämä pitää paikkansa niin $\delta^*(q_1, ab^mc) = q_{k+1}
           \in F$. Todistetaan tämä induktiolla.
-
+\newpage
           \begin{claim}
             Kaikilla $m \in \Nat$ pätee $\delta^*(q_i, b^m) = q_j$.
           \end{claim}
