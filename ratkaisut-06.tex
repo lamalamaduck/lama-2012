@@ -32,7 +32,58 @@ Osoita seuraavat kielet epäsäännöllisiksi käyttäen
 pumppauslemmaa (tai jollain muulla haluamallasi tavalla):
 \begin{enumerate}
 \item
-$\set{a^m b^n c^n\mid n,m\geq 1}$
+  \begin{equation*}
+    A = \set{a^m b^n c^n\mid n,m\geq 1}
+  \end{equation*}
+
+  Ensinnäkin huomataan, että $A$ on säännöllinen täsmälleen silloin, kun
+  $A^\mathcal{R}$ on säännöllinen, sillä aikaisemmin ollaan laskuharjoituksissa
+  näytetty, että säännölliset kielet ovat suljettu kääntämisen suhteen.
+  Riittää siis näyttää kieli $A^\mathcal{R}$ epäsäännölliseksi, missä
+  %
+  \begin{equation*}
+    A^\mathcal{R} = \set{c^nb^na^m \mid n,m \geq 1}.
+  \end{equation*}
+
+  Tehdään vastaoletus. Oletetaan, että kieli $A^\mathcal{R}$ on säännöllinen.
+  Tällöin sillä on jokin pumppauspituus $p$. Nyt voidaan valita merkkijono
+  %
+  \begin{equation*}
+    s = c^pb^pa \in A^\mathcal{R} \textrm{,}
+  \end{equation*}
+  %
+  jolla pätee $|s| \geq p$. Säännöllisten kielten pumppauslemman nojalla $s$
+  voidaan nyt jakaa kolmeen osaan siten, että
+  %
+  \begin{align*}
+    s    & = xyz, \\
+    |xy| & \leq p \textrm{ ja}\\
+    |y|  & > 0
+  \end{align*}
+  %
+  joten
+  \begin{alignat*}{2}
+    xy & = c^k         && \textrm{ jollain } k \leq p, \\
+    z  & = c^{p-k}b^pa && \textrm{ ja erityisesti} \\
+    y  & = c^n         && \textrm{ jollain } n > 0.
+  \end{alignat*}
+
+  Nyt pumppauslemman nojalla myös merkkijonon
+  %
+  \begin{equation*}
+    xz = c^{k-n}c^{p-k}b^pa = c^{p-n}b^pa
+  \end{equation*}
+  %
+  tulisi kuulua kieleen $A^\mathcal{R}$. Nyt kuitenkin $n > 0$, joten
+  %
+  \begin{equation*}
+    xz = c^{p-n}b^pa \notin A.
+  \end{equation*}
+
+  Tämä on ristiriidassa säännöllisten kielten pumppauslemman kanssa, joten
+  kielellä $A^\mathcal{R}$ ei ole pumppausominaisuutta, eikä se siten voi olla
+  säännöllinen, joten myöskään kieli $A$ ei ole säännöllinen.
+
 \item
 aakkoston $\set{a,b, c}$ palindromit
 \item
