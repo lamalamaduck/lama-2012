@@ -150,14 +150,45 @@
   \end{proof}
 
 \item
-  Voidaan osoittaa, että kieli $A=\set{ a^n b^n c^n\mid n\in N}$
-  ei ole kontekstiton.
-  (Tähän palataan myöhemmin kurssilla.)
-  Käyttäen tätä tietoa hyväksi osoita, että
-  kontekstiton kielten luokka ei ole suljettu leikkauksen suhteen.
-  ({\em Vihje:} esitä $A$ kahden kontekstittoman kielen leikkauksena.)
-  Päättele edelleen, että kontekstittomien kielten luokka
-  ei ole suljettu komplementoinnin suhteen.
+  Voidaan osoittaa, että kieli $A=\set{ a^n b^n c^n\mid n\in N}$ ei
+  ole kontekstiton. (Tähän palataan myöhemmin kurssilla.) Käyttäen
+  tätä tietoa hyväksi osoita, että kontekstiton kielten luokka ei ole
+  suljettu leikkauksen suhteen. ({\em Vihje:} esitä $A$ kahden
+  kontekstittoman kielen leikkauksena.) Päättele edelleen, että
+  kontekstittomien kielten luokka ei ole suljettu komplementoinnin
+  suhteen.
+
+  \begin{claim}
+    Yhteydettömien kielten luokka ei ole suljettu leikkauksen suhteen.
+  \end{claim}
+  \begin{proof}
+    Tehtävässä 3 osoitimme antamalla kieliopin, että kieli $A =
+    \set{a^nb^mc^m \mid n,m \in \Nat}$ on yhteydetön. Vastaavasti
+    voidaan osoittaa yhteydettömäksi kieli $B = \set{a^nb^nc^m \mid
+      n,m \in \Nat}$. Kieli $A$ on siis merkkijonot joissa $b$ ja $c$
+    merkkejä on yhtämonta. Vastaavasti kieli $B$ on merkkijonot joissa
+    $a$ ja $b$ merkkejä on yhtämonta. Nyt leikkauskieli $A \cap B =
+    \set{a^nb^nc^n \mid n \in \Nat}$ josta tiedämmä ettei se ole
+    yhteydetön. Siispä yhteydettömien kielten luokka ei ole suljettu
+    leikkauksen suhteen.
+  \end{proof}
+%
+  \begin{claim}
+    Yhteydettömien kielten luokka ei ole suljettu komplementin suhteen.
+  \end{claim}
+  \begin{proof}
+    Oletetaan vastoin, että yhteydettömät kielet ovat suljettu
+    komplementin suhteen. Olkoon nyt $A$ ja $B$ yhteydettömiä kieliä.
+    Tällöin
+    \begin{align*}
+      A \cup B \text{ yhteydetön }
+      & \Rightarrow \overline{(A \cup B)} \text{ yhteydetön} \\
+      & \Rightarrow \overline{A} \cap \overline{B} \text{ yhteydetön} \\
+      & \Rightarrow A \cap B \text{ yhteydetön}
+    \end{align*}
+    mikä on ristiriita edellä osoitetun kanssa. Siispä yhteydettömien
+    kielten luokka ei voi olla suljettu komplementin suhteen.
+  \end{proof}
 
 \item
   Osoita, että seuraavien aakkoston $\set{a,b,c}$ kielten komplementit ovat kontekstittomia:
