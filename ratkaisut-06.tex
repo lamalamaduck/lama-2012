@@ -99,12 +99,44 @@ keskimmäinen merkki ovat samat.
 Esitä kontekstittomat  kieliopit seuraaville kielille:
 \begin{enumerate}
 \item $01^\ast\cup10^\ast$
+  %
+  \begin{align*}
+    S   & \to 0T_1 \mid 1T_0 \\
+    T_1 & \to 1T_1 \mid \varepsilon \\
+    T_0 & \to 0T_0 \mid \varepsilon
+  \end{align*}
+  %
 \item $\set{0^n1^m\mid\mbox{$m,n\in N$ ja $m\geq n$}}$
+  %
+  \begin{align*}
+    S      & \to T_{01} T_1 \\
+    T_{01} & \to 0T_{01}1 \mid \varepsilon \\
+    T_{1}  & \to 1T_1 \mid \varepsilon
+  \end{align*}
+  %
 \item $\set{0^n1^k0^m\mid\mbox{$m,n,k\in N$ ja $k=n+m$}}$
+  %
+  \begin{align*}
+    S & \to T_{01} T_{10} \\
+    T_{01} & \to 0T_{01}1 \mid \varepsilon \\
+    T_{10} & \to 1T_{10}0 \mid \varepsilon
+  \end{align*}
+  %
 \item $\set{a^n b^m c^m\mid m,n\in N}$
+  %
+  \begin{align*}
+    S & \to AT_{bc} \\
+    A & \to aA \mid \varepsilon \\
+    T_{bc} & \to bT_{bc}c
+  \end{align*}
+  %
 \item
-aakkoston $\set{0,1}$ merkkijonot, joissa on yhtä paljon nollia ja
-ykkösiä.
+  aakkoston $\set{0,1}$ merkkijonot, joissa on yhtä paljon nollia ja
+  ykkösiä.
+  %
+  \begin{align*}
+    S & \to 0S1S \mid 1S0S \mid \varepsilon
+  \end{align*}
 \end{enumerate}
 
 
