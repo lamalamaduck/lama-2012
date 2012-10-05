@@ -28,67 +28,87 @@
   \subsubsection*{Säännölliset kielet}
 
 \item
-Osoita seuraavat kielet epäsäännöllisiksi käyttäen
-pumppauslemmaa (tai jollain muulla haluamallasi tavalla):
-\begin{enumerate}
-\item
-  \begin{equation*}
-    A = \set{a^m b^n c^n\mid n,m\geq 1}
-  \end{equation*}
+  Osoita seuraavat kielet epäsäännöllisiksi käyttäen
+  pumppauslemmaa (tai jollain muulla haluamallasi tavalla):
+  \begin{enumerate}
+  \item
+    \begin{equation*}
+      A = \set{a^m b^n c^n\mid n,m\geq 1}
+    \end{equation*}
 
-  Ensinnäkin huomataan, että $A$ on säännöllinen täsmälleen silloin, kun
-  $A^\mathcal{R}$ on säännöllinen, sillä aikaisemmin ollaan laskuharjoituksissa
-  näytetty, että säännölliset kielet ovat suljettu kääntämisen suhteen.
-  Riittää siis näyttää kieli $A^\mathcal{R}$ epäsäännölliseksi, missä
-  %
-  \begin{equation*}
-    A^\mathcal{R} = \set{c^nb^na^m \mid n,m \geq 1}.
-  \end{equation*}
+    Ensinnäkin huomataan, että $A$ on säännöllinen täsmälleen silloin, kun
+    $A^\mathcal{R}$ on säännöllinen, sillä aikaisemmin ollaan laskuharjoituksissa
+    näytetty, että säännölliset kielet ovat suljettu kääntämisen suhteen.
+    Riittää siis näyttää kieli $A^\mathcal{R}$ epäsäännölliseksi, missä
+    %
+    \begin{equation*}
+      A^\mathcal{R} = \set{c^nb^na^m \mid n,m \geq 1}.
+    \end{equation*}
 
-  Tehdään vastaoletus. Oletetaan, että kieli $A^\mathcal{R}$ on säännöllinen.
-  Tällöin sillä on jokin pumppauspituus $p$. Nyt voidaan valita merkkijono
-  %
-  \begin{equation*}
-    s = c^pb^pa \in A^\mathcal{R} \textrm{,}
-  \end{equation*}
-  %
-  jolla pätee $|s| \geq p$. Säännöllisten kielten pumppauslemman nojalla $s$
-  voidaan nyt jakaa kolmeen osaan siten, että
-  %
-  \begin{align*}
-    s    & = xyz, \\
-    |xy| & \leq p \textrm{ ja}\\
-    |y|  & > 0
-  \end{align*}
-  %
-  joten
-  \begin{alignat*}{2}
-    xy & = c^k         && \textrm{ jollain } k \leq p, \\
-    z  & = c^{p-k}b^pa && \textrm{ ja erityisesti} \\
-    y  & = c^n         && \textrm{ jollain } n > 0.
-  \end{alignat*}
+    Tehdään vastaoletus. Oletetaan, että kieli $A^\mathcal{R}$ on säännöllinen.
+    Tällöin sillä on jokin pumppauspituus $p$. Nyt voidaan valita merkkijono
+    %
+    \begin{equation*}
+      s = c^pb^pa \in A^\mathcal{R} \textrm{,}
+    \end{equation*}
+    %
+    jolla pätee $|s| \geq p$. Säännöllisten kielten pumppauslemman nojalla $s$
+    voidaan nyt jakaa kolmeen osaan siten, että
+    %
+    \begin{align*}
+      s    & = xyz, \\
+      |xy| & \leq p \textrm{ ja}\\
+      |y|  & > 0
+    \end{align*}
+    %
+    joten
+    \begin{alignat*}{2}
+      xy & = c^k         && \textrm{ jollain } k \leq p, \\
+      z  & = c^{p-k}b^pa && \textrm{ ja erityisesti} \\
+      y  & = c^n         && \textrm{ jollain } n > 0.
+    \end{alignat*}
 
-  Nyt pumppauslemman nojalla myös merkkijonon
-  %
-  \begin{equation*}
-    xz = c^{k-n}c^{p-k}b^pa = c^{p-n}b^pa
-  \end{equation*}
-  %
-  tulisi kuulua kieleen $A^\mathcal{R}$. Nyt kuitenkin $n > 0$, joten
-  %
-  \begin{equation*}
-    xz = c^{p-n}b^pa \notin A.
-  \end{equation*}
+    Nyt pumppauslemman nojalla myös merkkijonon
+    %
+    \begin{equation*}
+      xz = c^{k-n}c^{p-k}b^pa = c^{p-n}b^pa
+    \end{equation*}
+    %
+    tulisi kuulua kieleen $A^\mathcal{R}$. Nyt kuitenkin $n > 0$, joten
+    %
+    \begin{equation*}
+      xz = c^{p-n}b^pa \notin A.
+    \end{equation*}
 
-  Tämä on ristiriidassa säännöllisten kielten pumppauslemman kanssa, joten
-  kielellä $A^\mathcal{R}$ ei ole pumppausominaisuutta, eikä se siten voi olla
-  säännöllinen, joten myöskään kieli $A$ ei ole säännöllinen.
+    Tämä on ristiriidassa säännöllisten kielten pumppauslemman kanssa, joten
+    kielellä $A^\mathcal{R}$ ei ole pumppausominaisuutta, eikä se siten voi olla
+    säännöllinen, joten myöskään kieli $A$ ei ole säännöllinen.
 
-\item
-aakkoston $\set{a,b, c}$ palindromit
-\item
-$\set{0^n10^n\mid n\in N}$.
-\end{enumerate}
+  \item
+    aakkoston $\set{a,b,c}$ palindromit
+  \item
+    \begin{claim}
+      Kieli $A = \set{0^n10^n\mid n\in N}$ on säännöllinen.
+    \end{claim}
+    \begin{proof}
+      Oletetaan vastoin, että $A$ on säännöllinen. Nyt on olemassa
+      pumppauspituus $p \in \Nat$. Valitaan $A$:n merkkijono
+      \begin{equation*}
+        s = 0^p10^p
+      \end{equation*}
+      jolla selvästi $|s| \ge p$. Nyt jos
+      \begin{equation*}
+        s = xyz \text{, } |xy| \le p \text{ ja }|y| > 0 \text{,}
+      \end{equation*}
+      niin $xy = 0^k$ jollain $0 < k \le p$ ja erityisesti $y = 0^n$
+      jollain $n \ge 1$. Kuitenkin
+      \begin{equation*}
+        xz = 0^{k-n}0^{p-k}10^p = 0^{p-n}10^p \notin A
+      \end{equation*}
+      sillä $p - n \neq p$, mikä on ristiriidassa pumppauslemman kanssa.
+      Siis $A$ ei voi olla säännöllinen.
+    \end{proof}
+  \end{enumerate}
 
 \item
   Mitkä seuraavista kielistä ovat säännöllisiä, mitkä
@@ -147,48 +167,48 @@ $\set{0^n10^n\mid n\in N}$.
   \end{enumerate}
 
 \item
-Esitä kontekstittomat  kieliopit seuraaville kielille:
-\begin{enumerate}
-\item $01^\ast\cup10^\ast$
-  %
-  \begin{align*}
-    S   & \to 0T_1 \mid 1T_0 \\
-    T_1 & \to 1T_1 \mid \varepsilon \\
-    T_0 & \to 0T_0 \mid \varepsilon
-  \end{align*}
-  %
-\item $\set{0^n1^m\mid\mbox{$m,n\in N$ ja $m\geq n$}}$
-  %
-  \begin{align*}
-    S      & \to T_{01} T_1 \\
-    T_{01} & \to 0T_{01}1 \mid \varepsilon \\
-    T_{1}  & \to 1T_1 \mid \varepsilon
-  \end{align*}
-  %
-\item $\set{0^n1^k0^m\mid\mbox{$m,n,k\in N$ ja $k=n+m$}}$
-  %
-  \begin{align*}
-    S & \to T_{01} T_{10} \\
-    T_{01} & \to 0T_{01}1 \mid \varepsilon \\
-    T_{10} & \to 1T_{10}0 \mid \varepsilon
-  \end{align*}
-  %
-\item $\set{a^n b^m c^m\mid m,n\in N}$
-  %
-  \begin{align*}
-    S & \to AT_{bc} \\
-    A & \to aA \mid \varepsilon \\
-    T_{bc} & \to bT_{bc}c
-  \end{align*}
-  %
-\item
-  aakkoston $\set{0,1}$ merkkijonot, joissa on yhtä paljon nollia ja
-  ykkösiä.
-  %
-  \begin{align*}
-    S & \to 0S1S \mid 1S0S \mid \varepsilon
-  \end{align*}
-\end{enumerate}
+  Esitä kontekstittomat  kieliopit seuraaville kielille:
+  \begin{enumerate}
+  \item $01^\ast\cup10^\ast$
+    %
+    \begin{align*}
+      S   & \to 0T_1 \mid 1T_0 \\
+      T_1 & \to 1T_1 \mid \varepsilon \\
+      T_0 & \to 0T_0 \mid \varepsilon
+    \end{align*}
+    %
+  \item $\set{0^n1^m\mid\mbox{$m,n\in N$ ja $m\geq n$}}$
+    %
+    \begin{align*}
+      S      & \to T_{01} T_1 \\
+      T_{01} & \to 0T_{01}1 \mid \varepsilon \\
+      T_{1}  & \to 1T_1 \mid \varepsilon
+    \end{align*}
+    %
+  \item $\set{0^n1^k0^m\mid\mbox{$m,n,k\in N$ ja $k=n+m$}}$
+    %
+    \begin{align*}
+      S & \to T_{01} T_{10} \\
+      T_{01} & \to 0T_{01}1 \mid \varepsilon \\
+      T_{10} & \to 1T_{10}0 \mid \varepsilon
+    \end{align*}
+    %
+  \item $\set{a^n b^m c^m\mid m,n\in N}$
+    %
+    \begin{align*}
+      S & \to AT_{bc} \\
+      A & \to aA \mid \varepsilon \\
+      T_{bc} & \to bT_{bc}c
+    \end{align*}
+    %
+  \item
+    aakkoston $\set{0,1}$ merkkijonot, joissa on yhtä paljon nollia ja
+    ykkösiä.
+    %
+    \begin{align*}
+      S & \to 0S1S \mid 1S0S \mid \varepsilon
+    \end{align*}
+  \end{enumerate}
 
 \item
   Täydennä Jyrkin luentojen lauseen 2.3 todistus (s. 140)
@@ -201,7 +221,7 @@ Esitä kontekstittomat  kieliopit seuraaville kielille:
   L(G_A)$ ja $B = L(G_B)$ kieliopeilla $G_A = (V_A, \Sigma, R_A, S_A)$
   ja $G_B = (V_B, \Sigma, R_B, S_B)$. Oletetaan $V_A \cap V_B =
   \emptyset$.
-%
+  %
   \begin{claim}
     Kieli $A \circ B$ on yhteydetön.
   \end{claim}
@@ -216,7 +236,7 @@ Esitä kontekstittomat  kieliopit seuraaville kielille:
       R_{A \circ B} & = R_A \cup R_B \cup \set{S \to S_AS_B}
     \end{align*}
   \end{proof}
-%
+  %
   \begin{claim}
     Kieli $A^*$ on yhteydetön.
   \end{claim}
@@ -239,7 +259,7 @@ Esitä kontekstittomat  kieliopit seuraaville kielille:
   kontekstittoman kielen leikkauksena.) Päättele edelleen, että
   kontekstittomien kielten luokka ei ole suljettu komplementoinnin
   suhteen.
-
+  %
   \begin{claim}
     Yhteydettömien kielten luokka ei ole suljettu leikkauksen suhteen.
   \end{claim}
@@ -254,7 +274,7 @@ Esitä kontekstittomat  kieliopit seuraaville kielille:
     yhteydetön. Siispä yhteydettömien kielten luokka ei ole suljettu
     leikkauksen suhteen.
   \end{proof}
-%
+  %
   \begin{claim}
     Yhteydettömien kielten luokka ei ole suljettu komplementin suhteen.
   \end{claim}
