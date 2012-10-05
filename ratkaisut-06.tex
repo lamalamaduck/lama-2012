@@ -1,0 +1,165 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
+\usepackage{microtype}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+
+\setenumerate{listparindent=\parindent}
+
+\newtheorem*{claim}{Väite}
+
+\newcommand{\set}[1]{{\left\{ #1 \right\}}}
+\newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
+
+\begin{document}
+
+\subsection*{582206 Laskennan mallit, syksy 2012 \\
+  \textmd{6. harjoitusten malliratkaisut \\
+    Juhana Laurinharju ja Jani Rahkola}}
+
+\begin{enumerate}
+
+\subsubsection*{Säännölliset kielet}
+
+\item
+Osoita seuraavat kielet epäsäännöllisiksi käyttäen
+pumppauslemmaa (tai jollain muulla haluamallasi tavalla):
+\begin{enumerate}
+\item
+$\set{a^m b^n c^n\mid n,m\geq 1}$
+\item
+aakkoston $\set{a,b, c}$ palindromit
+\item
+$\set{0^n10^n\mid n\in N}$.
+\end{enumerate}
+
+\item
+Mitkä seuraavista kielistä ovat säännöllisiä, mitkä
+eivät (kielillä $A_1$ ja $A_2$ aakkostona $\set{0,1}$, muilla
+$\set{\mathrm{a},\mathrm{b},\mathrm{c}}$):
+\begin{align*}
+A_1 &=\set{0^n1^m0^n\mid n,m\in N}
+&A_2 &=\set{0^n0^n\mid n\in N}
+\\
+A_3 &=\set{ww^\mathcal{R}\mid w\in\Sigma^{\ast}}
+&A_4 &=\set{wuw^\mathcal{R}\mid w,u\in\Sigma^+}.
+\\
+A_5 &=\set{wxw^\mathcal{R}\mid w\in\Sigma^{\ast},x\in\Sigma}
+&A_6 &=\set{\mathrm{abc}\mathrm{a}^n\mathrm{b}^n\mathrm{c}^n\mid n\in N}
+\end{align*}
+Perustele.
+Voit käyttää hyväksi kaikkia tunnettuja säännöllisiä
+kieliä koskevia ominaisuuksia, etenkin edellisen tehtävän tuloksia.
+
+
+
+%
+%\item % s07 teht 7.4
+%(Sipser Problem 1.63)
+%\begin{enumerate}
+%\item
+%Olkoon $A$ ääretön säännöllinen kieli.
+%Osoita, että on olemassa äärettömät säännölliset
+%kielet $B_1$ ja $B_2$, joilla $B_1\cup B_2=A$ ja
+%$B_1\cap B_2=\emptyset$.
+%\item
+%\newcommand{\iless}{\subset\!\!\!\subset}
+%Merkitään $A\iless B$, jos $A\subset B$ ja $B-A$ on ääretön.
+%Olkoot $B$ ja $D$ säännöllisiä kieliä, joilla
+%$B\iless D$.
+%Osoita, että on olemassa säännöllinen kieli $C$, jolla
+%$B\iless C$ ja $C\iless D$.
+%\end{enumerate}
+%
+
+\subsection*{Kontekstittomat kielet}
+\item
+Esitä kontekstittomat kieliopit, jotka tuottavat seuraaville
+aakkoston $\Sigma=\set{0,1}$ kielille:
+\begin{enumerate}
+\item
+parittoman mittaiset merkkijonot
+\item
+merkkijonot, joilla on osamerkkijono 111
+\item
+merkkijonot, joissa on ainakin kaksi merkkiä ja joiden
+ensimmäinen ja viimeinen merkki ovat samat
+\item
+parittoman mittaiset merkkijonot, joiden ensimmäinen ja
+keskimmäinen merkki ovat samat.
+\end{enumerate}
+
+\item
+Esitä kontekstittomat  kieliopit seuraaville kielille:
+\begin{enumerate}
+\item $01^\ast\cup10^\ast$
+\item $\set{0^n1^m\mid\mbox{$m,n\in N$ ja $m\geq n$}}$
+\item $\set{0^n1^k0^m\mid\mbox{$m,n,k\in N$ ja $k=n+m$}}$
+\item $\set{a^n b^m c^m\mid m,n\in N}$
+\item
+aakkoston $\set{0,1}$ merkkijonot, joissa on yhtä paljon nollia ja
+ykkösiä.
+\end{enumerate}
+
+
+\item
+Täydennä Jyrkin luentojen lauseen 2.3 todistus (s. 140)
+osoittamalla, että kontekstiton kielten luokka on suljettu
+myös konkatenaation ja tähtioperaation suhteen.
+Esitä todistus samalla tarkkuustasolla kuin luentomuistiinpanoissa
+esitetty yhdisteen tapaus.
+
+
+\item
+Voidaan osoittaa, että kieli $A=\set{ a^n b^n c^n\mid n\in N}$
+ei ole kontekstiton.
+(Tähän palataan myöhemmin kurssilla.)
+Käyttäen tätä tietoa hyväksi osoita, että
+kontekstiton kielten luokka ei ole suljettu leikkauksen suhteen.
+({\em Vihje:} esitä $A$ kahden kontekstittoman kielen leikkauksena.)
+Päättele edelleen, että kontekstittomien kielten luokka
+ei ole suljettu komplementoinnin suhteen.
+
+%\item 
+%Esitä pinoautomatit seuraaville aakkoston $\set{a,b,c}$ kielille:
+%\begin{enumerate}
+%\item kaikki palindromit
+%\item $\set{ a^i b^j \mid 0 \le i \le j}$
+%\item $ \set{ a^i b^j c^k \mid j = i + k}$
+%\end{enumerate}
+
+%\item 
+%Esitä kontekstiton kielioppi, joka tuottaa kielen
+%$\set{ a^i b^j c^k \mid i =2j \mbox{ tai } j = 2k}$. Muodosta luennolla esitetyllä
+%menetelmällä kieliopistasi pinoautomaatti, joka tunnistaa saman kielen.
+
+\item
+Osoita, että seuraavien aakkoston $\set{a,b,c}$ kielten komplementit ovat kontekstittomia:
+\begin{enumerate}
+\item $A_1=\set{ a^n b^n \mid n \in N}$
+\item $A_2=\set{ a^n b^n c^n\mid n \in N}$
+\end{enumerate}
+
+Vihje: Voit tietysti yksinkertaisesti kirjoittaa kontekstittomat  kieliopit komplementeille $\overline{A_1}$ ja $\overline{A_2}$. Voi kuitenkin
+olla helpompaa esittää $\overline{A_1}$ ja $\overline{A_2}$ yhdisteinä yksinkertaisemmista kielistä, jotka on suoraviivaisempaa
+nähdä kontekstittomiksi.
+
+%
+%\item 
+%Todista, 
+%että kieli 
+%$A_2=\set{ 0^n 1^n 0^n 1^n\mid n \in N}$ ei ole kontekstiton.
+
+
+
+
+
+\end{enumerate}
+
+\end{document}
