@@ -308,26 +308,60 @@
   \end{proof}
 
 \item
-  Osoita, että seuraavien aakkoston $\set{a,b,c}$ kielten komplementit ovat kontekstittomia:
+  Osoita, että seuraavien aakkoston $\set{a,b,c}$ kielten komplementit
+  ovat kontekstittomia:
+%
   \begin{enumerate}
-  \item $A_1=\set{ a^n b^n \mid n \in N}$
-  \item $A_2=\set{ a^n b^n c^n\mid n \in N}$
+  \item
+    $A_1=\set{a^n b^n \mid n \in N}$
+
+    Kielen $A_1$ komplementti $\overline{A_1}$ voidaan ilmaista kolmen
+    kielen yhdisteenä:
+    \begin{align*}
+      \overline{A_1}
+      = & \set{a^nb^m \mid n,m \in \Nat : n < m} \\
+      \cup & \set{a^nb^m \mid n,m \in \Nat : n > m} \\
+      \cup & \set{wcu \mid w,u \in \Sigma^*}
+    \end{align*}
+    Tälle kielelle voidaan antaa seuraavanlainen kielioppi
+    \begin{align*}
+      S & \to aT_aT_{ab} \mid T_{ab}T_bb \mid T_McT_M \\
+      T_a & \to aT_a \mid \varepsilon \\
+      T_{ab} & \to aT_{ab}b \mid \varepsilon \\
+      T_M & \to MT_M \mid \varepsilon \\
+      M & \to a \mid b \mid c
+    \end{align*}
+  \item
+    $A_2 = \set{a^n b^n c^n \mid n \in N}$
+
+    Kieli $A_2$ komplementti voidaan ilmaista seuraavanlaisena
+    yhdisteenä:
+    \begin{align*}
+      \overline{A_2}
+      = & \set{a^nb^mc^k \mid n,m,k \in \Nat : n \neq m \text{ tai } n
+        \neq k \text{ tai } m \neq k} \\
+      \cup & L(b\Sigma^*) \\
+      \cup & L(a^*c\Sigma^*) \\
+      \cup & L(a^*b^+a\Sigma^*) \\
+      \cup & L(a^*b^*c^+(a \cup b)\Sigma^*)
+    \end{align*}
+    \begin{align*}
+      S \to\ & A \mid B \mid C \mid D \mid E \\
+      A \to\ & aT_aT_{ab}T_c \mid T_{ab}T_bbT_c \\
+      & \mid T_abT_{b}T_{bc} \mid T_aT_{bc}T_cc \\
+      & \mid aT_aT_K \mid T_KT_cc \\
+      T_a \to\ & aT_a \mid \varepsilon \\
+      T_b \to\ & bT_b \mid \varepsilon \\
+      T_c \to\ & cT_c \mid \varepsilon \\
+      T_{ab} \to\ & aT_{ab}b \mid \varepsilon \\
+      T_{bc} \to\ & bT_{bc}c \mid \varepsilon \\
+      T_K \to\ & aT_Kc \mid T_b \\
+      B \to\ & bT_M \\
+      C \to\ & T_acT_M \\
+      D \to\ & T_abT_baT_M \\
+      E \to\ & T_aT_bcT_caT_M \mid T_aT_bcT_cbT_M
+    \end{align*}
   \end{enumerate}
-
-  Vihje: Voit tietysti yksinkertaisesti kirjoittaa kontekstittomat  kieliopit komplementeille $\overline{A_1}$ ja $\overline{A_2}$. Voi kuitenkin
-  olla helpompaa esittää $\overline{A_1}$ ja $\overline{A_2}$ yhdisteinä yksinkertaisemmista kielistä, jotka on suoraviivaisempaa
-  nähdä kontekstittomiksi.
-
-  %
-  %\item 
-  %Todista, 
-  %että kieli 
-  %$A_2=\set{ 0^n 1^n 0^n 1^n\mid n \in N}$ ei ole kontekstiton.
-
-
-
-
-
 \end{enumerate}
 
 \end{document}
