@@ -15,8 +15,8 @@
 \setenumerate{listparindent=\parindent}
 
 \newtheorem*{claim}{Väite}
-\newtheorem*{lemma}{Lemma}
 \theoremstyle{definition}
+\newtheorem*{lemma}{Lemma}
 \newtheorem*{definition}{Määritelmä}
 
 \newtheorem{exercisethm}{Tehtävä}
@@ -29,21 +29,17 @@
 \newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
 \newcommand{\Nat}{\mathbb{N}}
 
-\tikzstyle{mybox} = [draw=none, fill=cyan!9,
-    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{mybox} = [draw=none, fill=cyan!9, rectangle,
+  rounded corners, inner sep=10pt, inner ysep=20pt]
 
-\NewEnviron{exercise}%
-{  \begin{tikzpicture}
-        \node [mybox] (box) {
-            \begin{minipage}{0.9\textwidth}
-                \begin{exercisethm}
-                    \BODY
-                \end{exercisethm}
-            \end{minipage}
-        };
-    \end{tikzpicture}
+\NewEnviron{exercise}{%
+  \begin{tikzpicture}
+    \node[mybox]
+    {\begin{minipage}{0.9\textwidth}
+      \BODY
+    \end{minipage}};
+  \end{tikzpicture}
 }
-
 
 \title{Pumppauslemmaopas}
 \author{Juhana Laurinharju \and Jani Rahkola}
@@ -51,7 +47,6 @@
 \begin{document}
 
 \maketitle
-
 
 \section*{Pumppauslemma}
 
@@ -65,9 +60,14 @@ ominaisuus.
     ehtoa ovat voimassa.
 
     \begin{enumerate}
-        \item $xy^iz \in A$ jokaisella $i \in \Nat$, erityisesti myös kun $i = 0$.
-        \item $|y| > 0$, eli toistettava osa $y$ ei saa olla tyhjä merkkijono $\varepsilon$.
-        \item $|xy| \leq p$
+        \item
+          $xy^iz \in A$ jokaisella $i \in \Nat$, erityisesti myös kun
+          $i = 0$.
+        \item
+          $|y| > 0$, eli toistettava osa $y$ ei saa olla tyhjä
+          merkkijono $\varepsilon$.
+        \item
+          $|xy| \leq p$
     \end{enumerate}
 \end{definition}
 
@@ -153,9 +153,43 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
 \subsection*{Pumppauslemman käyttäminen}
 
 Pumppauslemma on hyödyllinen koska sillä voidaan näyttää \emph{joitakin} kieliä
-epäsäännöllisiksi. Eräs tällainen kieli on jo tuttu ja epäsäännölliseksi
-osoitettu $A = \set{0^n1^n \mid n \in \Nat}$  Osoitetaan tämän kielen
-epäsäännöllisyys pumppauslemman avulla.
+epäsäännöllisiksi. Mutta kuinka tämä onnistuu työkalulla joka ei puhu
+mitään epäsäännöllisistä kielistä? Pumppauslemman jos-niin
+rakenteeseen piiloutuu kuitenkin myös väite epäsäännöllisyydestä.
+Seuraava lemma on nimittäin yhtäpitävä pumppauslemman kanssa.
+
+\begin{lemma}
+  Olkoon $A$ jokin kieli. Oletetaan lisäksi, että kaikilla
+  luonnollisilla luvuilla $p$ jotain kielen $A$ merkkijonoa $s$, $|s|
+  \ge p$ ei voida jakaa \emph{millään tapaa} kolmeen osaan $s = xyz$
+  siten, että seuraavat ehdot olisivat voimassa:
+  \begin{enumerate}
+  \item
+    $xy^iz \in A$ jokaisella $i \in \Nat$, erityisesti myös kun $i =
+    0$.
+  \item
+    $|y| > 0$, eli toistettava osa $y$ ei saa olla tyhjä merkkijono
+    $\varepsilon$.
+  \item
+    $|xy| \leq p$
+  \end{enumerate}
+  Nyt kieli $A$ on epäsäännöllinen.
+\end{lemma}
+\begin{proof}
+  Olkoon $A$ kieli jolla ei ole pumppauspituutta. Oletetaan vastoin
+  väitettä, että $A$ on säännöllinen. Nyt pumppauslemman nojalla
+  kielellä $A$ kuitenkin tulisi olla pumppauspituus. Siis $A$ ei voi
+  olla säännöllinen.
+\end{proof}
+
+Pumppauslemman avulla voidaan siis todistaa epäsäännöllisiksi vain
+sellaiset kielet joilla ei ole pumppauspituutta. Tulee kuitenkin
+muistaa, että joillain epäsäännöllisilläkin kielillä on olemassa
+pumppauspituus.
+
+Käydään nyt läpi todistus erään jo tutun kielen epäsäännöllisyydelle.
+Olkoon kieli $A = \set{0^n1^n \mid n \in \Nat}$. Osoitetaan tämän
+kielen epäsäännöllisyys pumppauslemman avulla.
 %
 \begin{claim}
     Kieli $A = \set{0^n1^n \mid n \in \Nat}$ on epäsäännöllinen.
