@@ -56,10 +56,11 @@ Jokaisella säännöllisellä kiellellä on seuraava \emph{pumppauslemmana} tunn
 ominaisuus.
 
 \begin{definition}[pumppauslemma]
-    Olkoon $A$ säännöllinen kieli. Tällöin $A$:lla on jokin pumppauspituus $p
-    \in \Nat$, $p > 0$. Nyt kaikki tätä pidemmät merkkijonot $s \in A$, $|s|
-    \geq p$ voidaan jakaa kolmeen osaan $s = xyz$ siten, että seuraavat kolme
-    ehtoa ovat voimassa.
+    Olkoon $A$ säännöllinen kieli. Tällöin $A$:lla on jokin
+    pumppauspituus $p \in \Nat$, $p > 0$. Nyt kaikki vähintään $p$:n
+    mittaiset merkkijonot $s \in A$, $|s| \geq p$ voidaan jakaa
+    kolmeen osaan $s = xyz$ siten, että seuraavat kolme ehtoa ovat
+    voimassa.
 
     \begin{enumerate}
         \item
@@ -122,7 +123,7 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
     Olkoon
     %
     \begin{equation*}
-        A = L((ab)^*
+        A = L((ab)^*)
     \end{equation*}
     %
     säännöllinen kieli. Tällä kielellä on pumppauspituus $p = 2$. Valitaan
@@ -140,6 +141,8 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
         |xy| & \leq p \text{.}
     \end{align*}
 \end{exercise}
+
+\vspace{5mm}
 
 \begin{exercise}
     Mitkä edellisen tehtävän jaoista $s = xyz$ toteuttavat pumppauslemman
@@ -198,7 +201,7 @@ kielen epäsäännöllisyys yllä todistetun lemman avulla.
 \end{claim}
 \begin{proof}
     Olkoon $p$ positiivinen luonnollinen luku. Nyt merkkijono $s =
-    0^p1^p$ kuuluu kieleen $A$ ja sisältää vähintää $p$ merkkiä.
+    0^p1^p$ kuuluu kieleen $A$ ja sisältää vähintään $p$ merkkiä.
     Haluamme osoittaa, että mikään merkkijonon $s$ jako $s = xyz$ joka
     noudattaa lemman ehtoja 2 ja 3 ei voi noudattaa ehtoa 1.
 
@@ -229,6 +232,8 @@ kielen epäsäännöllisyys yllä todistetun lemman avulla.
   Osoita kieli $A = \set{0^n1^m \mid n,m \in \Nat, n < m}$
   epäsäännölliseksi lemman avulla.
 \end{exercise}
+
+\vspace{5mm}
 
 \begin{exercise}
   Osoita kieli $A = \set{a^nb^nc^n \mid n \in \Nat}$ epäsäännölliseksi
