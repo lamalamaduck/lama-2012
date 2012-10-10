@@ -146,7 +146,7 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
     ensimmäisen ehdon? Ensimmäinen ehto on
     %
     \begin{equation*}
-        xy^iz \in A
+        xy^iz \in A \text{ kaikilla } i \in \Nat
     \end{equation*}
     %
     eli keskikohtaa $y$ voi toistaa.
@@ -198,8 +198,8 @@ kielen epäsäännöllisyys yllä todistetun lemman avulla.
 \end{claim}
 \begin{proof}
     Olkoon $p$ positiivinen luonnollinen luku. Nyt merkkijono $s =
-    0^p1^p$ kuuluu kieleen $A$ ja sisältää yli $p$ merkkiä. Haluamme
-    osoittaa, että mikään merkkijonon $s$ jako $s = xyz$ joka
+    0^p1^p$ kuuluu kieleen $A$ ja sisältää vähintää $p$ merkkiä.
+    Haluamme osoittaa, että mikään merkkijonon $s$ jako $s = xyz$ joka
     noudattaa lemman ehtoja 2 ja 3 ei voi noudattaa ehtoa 1.
 
     Kaikki ehtojen 2 ja 3 mukaiset jaot voidaan kuvata seuraavasti
@@ -208,20 +208,20 @@ kielen epäsäännöllisyys yllä todistetun lemman avulla.
       y & = 0^m \\
       \text{ja } z & = 0^{p-(m+n)}1^p
     \end{align*}
-    missä $n,m \in \Nat$, $m > 0$, jotta $y$ ei olisi tyhjä
-    merkkijono, ja $n + m \le p$ jotta merkkijonon $xy$ pituus olisi
-    korkeintaan $p$. Tarkastellaan merkkijonoa, jossa osaa $y$ ei
-    esiinny yhtään kertaa.
+    missä $n,m \in \Nat$. Jotta $y$ ei olisi tyhjä merkkijono, täytyy
+    $m$:n olla positiivinen. Jotta merkkijonon $xy$ pituus olisi
+    korkeintaan $p$, tulee summan $n + m$ olla korkeintaan $p$.
+    Tarkastellaan merkkijonoa, jossa osaa $y$ esiintyy kaksi kertaa
     \begin{align*}
-      xy^0z & = xz \\
-      & = 0^n0^{p-(m+n)}1^p \\
-      & = 0^{n+(p-(m+n))}1^p \\
-      & = 0^{n+p-m-n}1^p \\
-      & = 0^{p-m}1^p
+      xy^2z & = xyyz \\
+      & = 0^n0^{2m}0^{p-(m+n)}1^p \\
+      & = 0^{n+2m+(p-(m+n))}1^p \\
+      & = 0^{n+2m+p-m-n}1^p \\
+      & = 0^{p+m}1^p
     \end{align*}
-    Koska $m$ oli aidosti positiivinen luku, on merkkijonossa $xz$
-    vähemmän merkkejä $0$ kuin $1$ joten se ei kuulu kieleen $A$. Siis
-    ehto 3 ei voi olla voimassa, ja täten lemman nojalla $A$ on
+    Koska $m$ oli aidosti positiivinen luku, on merkkijonossa $xy^2z$
+    enemmän nollia kuin ykkösiä, joten se ei kuulu kieleen $A$. Siis
+    ehto 1 ei voi olla voimassa, ja täten lemman nojalla $A$ on
     epäsäännöllinen.
 \end{proof}
 
