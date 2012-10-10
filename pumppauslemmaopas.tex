@@ -160,9 +160,9 @@ Seuraava lemma on nimittäin yhtäpitävä pumppauslemman kanssa.
 
 \begin{lemma}
   Olkoon $A$ jokin kieli. Oletetaan lisäksi, että kaikilla
-  luonnollisilla luvuilla $p$ jotain kielen $A$ merkkijonoa $s$, $|s|
-  \ge p$ ei voida jakaa \emph{millään tapaa} kolmeen osaan $s = xyz$
-  siten, että seuraavat ehdot olisivat voimassa:
+  luonnollisilla luvuilla $p > 0$ jotain kielen $A$ merkkijonoa $s$,
+  $|s| \ge p$ ei voida jakaa \emph{millään tapaa} kolmeen osaan $s =
+  xyz$ siten, että seuraavat ehdot olisivat voimassa:
   \begin{enumerate}
   \item
     $xy^iz \in A$ jokaisella $i \in \Nat$, erityisesti myös kun $i =
@@ -189,13 +189,38 @@ pumppauspituus.
 
 Käydään nyt läpi todistus erään jo tutun kielen epäsäännöllisyydelle.
 Olkoon kieli $A = \set{0^n1^n \mid n \in \Nat}$. Osoitetaan tämän
-kielen epäsäännöllisyys pumppauslemman avulla.
+kielen epäsäännöllisyys yllä todistetun lemman avulla.
 %
 \begin{claim}
     Kieli $A = \set{0^n1^n \mid n \in \Nat}$ on epäsäännöllinen.
 \end{claim}
 \begin{proof}
-    asd
+    Olkoon $p$ positiivinen luonnollinen luku. Nyt merkkijono $s =
+    0^p1^p$ kuuluu kieleen $A$ ja sisältää yli $p$ merkkiä. Haluamme
+    osoittaa, että mikään merkkijonon $s$ jako $s = xyz$ joka
+    noudattaa lemman ehtoja 2 ja 3 ei voi noudattaa ehtoa 1.
+
+    Kaikki ehtojen 2 ja 3 mukaiset jaot voidaan kuvata seuraavasti
+    \begin{align*}
+      x & = 0^n \\
+      y & = 0^m \\
+      \text{ja } z & = 0^{p-(m+n)}1^p
+    \end{align*}
+    missä $n,m \in \Nat$, $m > 0$, jotta $y$ ei olisi tyhjä
+    merkkijono, ja $n + m \le p$ jotta merkkijonon $xy$ pituus olisi
+    korkeintaan $p$. Tarkastellaan merkkijonoa, jossa osaa $y$ ei
+    esiinny yhtään kertaa.
+    \begin{align*}
+      xy^0z & = xz \\
+      & = 0^n0^{p-(m+n)}1^p \\
+      & = 0^{n+(p-(m+n))}1^p \\
+      & = 0^{n+p-m-n}1^p \\
+      & = 0^{p-m}1^p
+    \end{align*}
+    Koska $m$ oli aidosti positiivinen luku, on merkkijonossa $xz$
+    vähemmän merkkejä $0$ kuin $1$ joten se ei kuulu kieleen $A$. Siis
+    ehto 3 ei voi olla voimassa, ja täten lemman nojalla $A$ on
+    epäsäännöllinen.
 \end{proof}
 
 \end{document}
