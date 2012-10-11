@@ -1,0 +1,243 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[finnish]{babel}
+\usepackage{xcolor}
+%\usepackage[framemethod=TikZ]{mdframed}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
+\usepackage{microtype}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{environ}
+\usetikzlibrary{arrows,automata}
+
+\setenumerate{listparindent=\parindent}
+
+\newtheorem*{claim}{Väite}
+\theoremstyle{definition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{definition}{Määritelmä}
+
+\newtheorem{exercisethm}{Tehtävä}
+%\colorlet{shadecolor}{cyan!8}
+%\newenvironment{exercise}
+%{\begin{mdframed}[roundcorner=10pt]\begin{exer}}
+        %{\end{exer}\end{mdframed}}
+
+\newcommand{\set}[1]{{\left\{ #1 \right\}}}
+\newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
+
+\tikzstyle{mybox} = [draw=none, fill=cyan!9, rectangle,
+  rounded corners, inner sep=10pt, inner ysep=20pt]
+
+\NewEnviron{exercise}{%
+  \begin{tikzpicture}
+    \node[mybox]
+    {\begin{minipage}{0.9\textwidth}
+        \begin{exercisethm}
+          \BODY
+        \end{exercisethm}
+    \end{minipage}};
+  \end{tikzpicture}
+}
+
+\title{Pumppauslemmaopas}
+\author{Juhana Laurinharju \and Jani Rahkola}
+
+\begin{document}
+
+\maketitle
+
+\section*{Pumppauslemma}
+
+Jokaisella säännöllisellä kiellellä on seuraava \emph{pumppauslemmana} tunnettu
+ominaisuus.
+
+\begin{definition}[pumppauslemma]
+    Olkoon $A$ säännöllinen kieli. Tällöin $A$:lla on jokin
+    pumppauspituus $p \in \Nat$, $p > 0$. Nyt kaikki vähintään $p$:n
+    mittaiset merkkijonot $s \in A$, $|s| \geq p$ voidaan jakaa
+    kolmeen osaan $s = xyz$ siten, että seuraavat kolme ehtoa ovat
+    voimassa.
+
+    \begin{enumerate}
+        \item
+          $xy^iz \in A$ jokaisella $i \in \Nat$, erityisesti myös kun
+          $i = 0$.
+        \item
+          $|y| > 0$, eli toistettava osa $y$ ei saa olla tyhjä
+          merkkijono $\varepsilon$.
+        \item
+          $|xy| \leq p$
+    \end{enumerate}
+\end{definition}
+
+Otetaan tästä konkreettinen esimerkki. Kieli $A = L(a^*b^*)$ on säännöllinen ja
+sillä on täten jokin pumppauspituus $p$. Tämän kielen kohdalla eräs mahdollinen
+pumppauspituus on $p = 2$. Tarkastellaan jotain riittävän pitkää kielen $A$
+merkkijonoa. Valitaan $s = abb$. Nyt pumppauslemman nojalla löytyy \emph{jokin}
+jako $s = xyz$, jolle yllä olevat kolme ehtoa pätevät.
+
+Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
+
+\begin{itemize}
+    \item Kokeillaan ensin seuraavaa jakoa:
+        \begin{align*}
+             x               & = \varepsilon,  \\
+             y               & = ab            \\
+            \textrm{ ja }  z & = b
+        \end{align*}
+        %
+        Nyt ehdot 2 ja 3 ovat voimassa, mutta ensimmäinen ehto ei täyty, sillä
+        esimerkiksi merkkijono $xyyz = ababb$ ei kuulu kieleen $A$.
+
+    \item Ensimmäinen jako ei siis täyttänyt kaikkia pumppauslemman ehtoja.
+        Pumppauslemma ei kuitenkaan takaa, että nämä ehdot täyttyisivät
+        jokaisella jaolla. Ainoa tae on se, että löytyy jokin ehdot täyttävä
+        jako. Tällainen on esimerkiksi seuraava jako:
+        %
+        \begin{align*}
+            x              & = a \textrm{,} \\
+            y              & = b \\
+            \textrm{ja } z & = b
+        \end{align*}
+        Nyt $|xy| = 2 \leq p$, $|y| = 1 > 0$. Entä miltä näyttää merkkijono
+        $xy^iz$? Tarkastellaan tätä ensin $i$:n arvoilla $0$, $1$ ja $2$:
+        %
+        \begin{align*}
+            xy^0z & = xz  = ab \in A \\
+            xy^1z & = xyz = abb \in A \\
+            xy^2z & = xyyz = abbb \in A
+        \end{align*}
+        %
+        Ja yleisessä tapauksessa, kun $i \in \Nat$, niin
+        %
+        \begin{equation*}
+            xy^iz = ab^ib = ab^{i+1} \in L(a^*b^*) = A
+        \end{equation*}
+\end{itemize}
+
+\begin{exercise}
+    Olkoon
+    %
+    \begin{equation*}
+        A = L((ab)^*)
+    \end{equation*}
+    %
+    säännöllinen kieli. Tällä kielellä on pumppauspituus $p = 2$. Valitaan
+    kielestä merkkijono
+    %
+    \begin{equation*}
+        s = ababab
+    \end{equation*}
+    %
+    joka on pidempi kuin pumppauspituus $p = 2$.  Anna kaikki merkkijonon $s$
+    jaot $s = xyz$ jotka täyttävät pumppauslemman ehdot $2$ ja $3$, eli 
+    %
+    \begin{align*}
+        |y|  & > 0 \textrm{ ja} \\
+        |xy| & \leq p \text{.}
+    \end{align*}
+\end{exercise}
+
+\vspace{5mm}
+
+\begin{exercise}
+    Mitkä edellisen tehtävän jaoista $s = xyz$ toteuttavat pumppauslemman
+    ensimmäisen ehdon? Ensimmäinen ehto on
+    %
+    \begin{equation*}
+        xy^iz \in A \text{ kaikilla } i \in \Nat
+    \end{equation*}
+    %
+    eli keskikohtaa $y$ voi toistaa.
+\end{exercise}
+
+\subsection*{Pumppauslemman käyttäminen}
+
+Pumppauslemma on hyödyllinen koska sillä voidaan näyttää \emph{joitakin} kieliä
+epäsäännöllisiksi. Mutta kuinka tämä onnistuu työkalulla joka ei puhu
+mitään epäsäännöllisistä kielistä? Pumppauslemman jos-niin
+rakenteeseen piiloutuu kuitenkin myös väite epäsäännöllisyydestä.
+Seuraava lemma on nimittäin yhtäpitävä pumppauslemman kanssa.
+
+\begin{lemma}
+  Olkoon $A$ jokin kieli. Oletetaan lisäksi, että kaikilla
+  luonnollisilla luvuilla $p > 0$ jotain kielen $A$ merkkijonoa $s$,
+  $|s| \ge p$ ei voida jakaa \emph{millään tapaa} kolmeen osaan $s =
+  xyz$ siten, että seuraavat ehdot olisivat voimassa:
+  \begin{enumerate}
+  \item
+    $xy^iz \in A$ jokaisella $i \in \Nat$, erityisesti myös kun $i =
+    0$.
+  \item
+    $|y| > 0$, eli toistettava osa $y$ ei saa olla tyhjä merkkijono
+    $\varepsilon$.
+  \item
+    $|xy| \leq p$
+  \end{enumerate}
+  Nyt kieli $A$ on epäsäännöllinen.
+\end{lemma}
+\begin{proof}
+  Olkoon $A$ kieli jolla ei ole pumppauspituutta. Oletetaan vastoin
+  väitettä, että $A$ on säännöllinen. Nyt pumppauslemman nojalla
+  kielellä $A$ kuitenkin tulisi olla pumppauspituus. Siis $A$ ei voi
+  olla säännöllinen.
+\end{proof}
+
+Pumppauslemman avulla voidaan siis todistaa epäsäännöllisiksi vain
+sellaiset kielet joilla ei ole pumppauspituutta. Tulee kuitenkin
+muistaa, että joillain epäsäännöllisilläkin kielillä on olemassa
+pumppauspituus.
+
+Käydään nyt läpi todistus erään jo tutun kielen epäsäännöllisyydelle.
+Olkoon kieli $A = \set{0^n1^n \mid n \in \Nat}$. Osoitetaan tämän
+kielen epäsäännöllisyys yllä todistetun lemman avulla.
+%
+\begin{claim}
+    Kieli $A = \set{0^n1^n \mid n \in \Nat}$ on epäsäännöllinen.
+\end{claim}
+\begin{proof}
+    Olkoon $p$ positiivinen luonnollinen luku. Nyt merkkijono $s =
+    0^p1^p$ kuuluu kieleen $A$ ja sisältää vähintään $p$ merkkiä.
+    Haluamme osoittaa, että mikään merkkijonon $s$ jako $s = xyz$ joka
+    noudattaa lemman ehtoja 2 ja 3 ei voi noudattaa ehtoa 1.
+
+    Kaikki ehtojen 2 ja 3 mukaiset jaot voidaan kuvata seuraavasti
+    \begin{align*}
+      x & = 0^n \\
+      y & = 0^m \\
+      \text{ja } z & = 0^{p-(m+n)}1^p
+    \end{align*}
+    missä $n,m \in \Nat$. Jotta $y$ ei olisi tyhjä merkkijono, täytyy
+    $m$:n olla positiivinen. Jotta merkkijonon $xy$ pituus olisi
+    korkeintaan $p$, tulee summan $n + m$ olla korkeintaan $p$.
+    Tarkastellaan merkkijonoa, jossa osaa $y$ esiintyy kaksi kertaa
+    \begin{align*}
+      xy^2z & = xyyz \\
+      & = 0^n0^{2m}0^{p-(m+n)}1^p \\
+      & = 0^{n+2m+(p-(m+n))}1^p \\
+      & = 0^{n+2m+p-m-n}1^p \\
+      & = 0^{p+m}1^p
+    \end{align*}
+    Koska $m$ oli aidosti positiivinen luku, on merkkijonossa $xy^2z$
+    enemmän nollia kuin ykkösiä, joten se ei kuulu kieleen $A$. Siis
+    ehto 1 ei voi olla voimassa, ja täten lemman nojalla $A$ on
+    epäsäännöllinen.
+\end{proof}
+
+\begin{exercise}
+  Osoita kieli $A = \set{0^n1^m \mid n,m \in \Nat, n < m}$
+  epäsäännölliseksi lemman avulla.
+\end{exercise}
+
+\vspace{5mm}
+
+\begin{exercise}
+  Osoita kieli $A = \set{a^nb^nc^n \mid n \in \Nat}$ epäsäännölliseksi
+  lemman avulla.
+\end{exercise}
+
+\end{document}

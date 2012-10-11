@@ -1,0 +1,378 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
+\usepackage{microtype}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+
+\setenumerate{listparindent=\parindent}
+
+\newtheorem*{claim}{Väite}
+
+\newcommand{\set}[1]{{\left\{ #1 \right\}}}
+\newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
+
+\begin{document}
+
+\subsection*{582206 Laskennan mallit, syksy 2012 \\
+  \textmd{6. harjoitusten malliratkaisut \\
+    Juhana Laurinharju ja Jani Rahkola}}
+
+\begin{enumerate}
+
+  \subsubsection*{Säännölliset kielet}
+
+\item
+  Osoita seuraavat kielet epäsäännöllisiksi käyttäen
+  pumppauslemmaa (tai jollain muulla haluamallasi tavalla):
+  \begin{enumerate}
+  \item
+    \begin{equation*}
+      A = \set{a^m b^n c^n\mid n,m\geq 1}
+    \end{equation*}
+
+    Ensinnäkin huomataan, että $A$ on säännöllinen täsmälleen silloin, kun
+    $A^\mathcal{R}$ on säännöllinen, sillä aikaisemmin ollaan laskuharjoituksissa
+    näytetty, että säännölliset kielet ovat suljettu kääntämisen suhteen.
+    Riittää siis näyttää kieli $A^\mathcal{R}$ epäsäännölliseksi, missä
+    %
+    \begin{equation*}
+      A^\mathcal{R} = \set{c^nb^na^m \mid n,m \geq 1}.
+    \end{equation*}
+
+    Tehdään vastaoletus. Oletetaan, että kieli $A^\mathcal{R}$ on säännöllinen.
+    Tällöin sillä on jokin pumppauspituus $p$. Nyt voidaan valita merkkijono
+    %
+    \begin{equation*}
+      s = c^pb^pa \in A^\mathcal{R} \textrm{,}
+    \end{equation*}
+    %
+    jolla pätee $|s| \geq p$. Säännöllisten kielten pumppauslemman nojalla $s$
+    voidaan nyt jakaa kolmeen osaan siten, että
+    %
+    \begin{align*}
+      s    & = xyz, \\
+      |xy| & \leq p \textrm{ ja}\\
+      |y|  & > 0
+    \end{align*}
+    %
+    joten
+    \begin{alignat*}{2}
+      xy & = c^k         && \textrm{ jollain } k \leq p, \\
+      z  & = c^{p-k}b^pa && \textrm{ ja erityisesti} \\
+      y  & = c^n         && \textrm{ jollain } n > 0.
+    \end{alignat*}
+
+    Nyt pumppauslemman nojalla myös merkkijonon
+    %
+    \begin{equation*}
+      xz = c^{k-n}c^{p-k}b^pa = c^{p-n}b^pa
+    \end{equation*}
+    %
+    tulisi kuulua kieleen $A^\mathcal{R}$. Nyt kuitenkin $n > 0$, joten
+    %
+    \begin{equation*}
+      xz = c^{p-n}b^pa \notin A.
+    \end{equation*}
+
+    Tämä on ristiriidassa säännöllisten kielten pumppauslemman kanssa, joten
+    kielellä $A^\mathcal{R}$ ei ole pumppausominaisuutta, eikä se siten voi olla
+    säännöllinen, joten myöskään kieli $A$ ei ole säännöllinen.
+
+  \item
+      \begin{claim}
+          Kieli $A = \set{w \in \Sigma^* \mid w \text{ on palindromi}}$ on
+          epäsäännöllinen, missä $\Sigma = \set{a,b,c}$
+      \end{claim}
+      \begin{proof}
+          Jos kieli $A$ on säännöllinen, niin sillä on jokin pumppauspituus
+          $p$. Valitaan kielestä $A$ merkkijono $s = a^pba^p$, jolla $|s| \geq
+          p$. Nyt pumppauslemman nojalla $s$ voidaan jakaa kolmeen osaan $s =
+          xyz$, joilla pätee ehdot $|xy| \leq p$ ja $|y| > 0$. Nyt siis $x =
+          a^n$, $y = a^k$ ja $z = a^{p-(n+k)}ba^p$, missä $k > 0$.
+          Pumppauslemman ensimmäisen ehdon nojalla myös merkkijonon $xz =
+          a^na^{p-(n+k)}ba^p = a^{p-k}ba^p$ pitäisi kuulua kieleen $A$, mutta
+          koska $k > 0$, niin tämä ei pidä paikkansa. Siis kieli $A$ ei voi
+          olla säännöllinen.
+      \end{proof}
+
+
+  \item
+    \begin{claim}
+      Kieli $A = \set{0^n10^n\mid n\in N}$ on epäsäännöllinen.
+    \end{claim}
+    \begin{proof}
+      Oletetaan vastoin, että $A$ on säännöllinen. Nyt on olemassa
+      pumppauspituus $p \in \Nat$. Valitaan $A$:n merkkijono
+      \begin{equation*}
+        s = 0^p10^p
+      \end{equation*}
+      jolla selvästi $|s| \ge p$. Nyt jos
+      \begin{equation*}
+        s = xyz \text{, } |xy| \le p \text{ ja }|y| > 0 \text{,}
+      \end{equation*}
+      niin $xy = 0^k$ jollain $0 < k \le p$ ja erityisesti $y = 0^n$
+      jollain $n \ge 1$. Kuitenkin
+      \begin{equation*}
+        xz = 0^{k-n}0^{p-k}10^p = 0^{p-n}10^p \notin A
+      \end{equation*}
+      sillä $p - n \neq p$, mikä on ristiriidassa pumppauslemman kanssa.
+      Siis $A$ ei voi olla säännöllinen.
+    \end{proof}
+  \end{enumerate}
+
+\item
+  Mitkä seuraavista kielistä ovat säännöllisiä, mitkä
+  eivät (kielillä $A_1$ ja $A_2$ aakkostona $\set{0,1}$, muilla
+  $\set{\mathrm{a},\mathrm{b},\mathrm{c}}$):
+  \begin{align*}
+    A_1 &=\set{0^n1^m0^n\mid n,m\in N}
+    &A_2 &=\set{0^n0^n\mid n\in N}
+    \\
+    A_3 &=\set{ww^\mathcal{R}\mid w\in\Sigma^{\ast}}
+    &A_4 &=\set{wuw^\mathcal{R}\mid w,u\in\Sigma^+}.
+    \\
+    A_5 &=\set{wxw^\mathcal{R}\mid w\in\Sigma^{\ast},x\in\Sigma}
+    &A_6 &=\set{\mathrm{abc}\mathrm{a}^n\mathrm{b}^n\mathrm{c}^n\mid n\in N}
+  \end{align*}
+  Perustele. Voit käyttää hyväksi kaikkia tunnettuja säännöllisiä kieliä
+  koskevia ominaisuuksia, etenkin edellisen tehtävän tuloksia.
+
+  \begin{description}
+    \item[$A_1$] ei ole säännöllinen, sillä merkkijono $s = 0^p10^p$ ei
+      pumppaudu.
+    \item[$A_2$] on säännöllinen, sillä $L((00)^*) = A_2$.
+    \item[$A_3$] ei ole säännöllinen, sillä merkkijono $s = a^pbba^p$ ei
+      pumppaudu.
+    \item[$A_4$] on säännöllinen, sillä $L(a\Sigma^+a \cup b\Sigma^+b \cup c\Sigma^+c) = A_4$
+    \item[$A_5$] ei ole säännöllinen, sillä merkkijono $s = a^pba^p$ ei
+      pumppaudu.
+    \item[$A_6$] ei ole säännöllinen, sillä $A_6^\mathcal{R}$ ei ole
+      säännöllinen. Tämä voidaan nähdä sillä,\\ että \mbox{$s =
+        c^pb^pa^pcba \in A_6^\mathcal{R}$} ei pumppaudu.
+  \end{description}
+
+  \subsubsection*{Kontekstittomat kielet}
+
+\item
+  Esitä kontekstittomat kieliopit, jotka tuottavat seuraavat aakkoston
+  $\Sigma=\set{0,1}$ kielet:
+  \begin{enumerate}
+  \item
+    parittoman mittaiset merkkijonot
+    \begin{align*}
+      S & \to MT \\
+      T & \to MMT \mid \varepsilon \\
+      M & \to 0 \mid 1
+    \end{align*}
+  \item
+    merkkijonot, joilla on osamerkkijono 111
+    \begin{align*}
+      S & \to H111H \\
+      H & \to MH \mid \varepsilon \\
+      M & \to 0 \mid 1
+    \end{align*}
+  \item
+    merkkijonot, joissa on ainakin kaksi merkkiä ja joiden
+    ensimmäinen ja viimeinen merkki ovat samat
+    \begin{align*}
+      S & \to 1H1 \mid 0H0 \\
+      H & \to MH \mid \varepsilon \\
+      M & \to 0 \mid 1
+    \end{align*}
+  \item
+    parittoman mittaiset merkkijonot, joiden ensimmäinen ja
+    keskimmäinen merkki ovat samat.
+    \begin{align*}
+      S & \to 1T_1M \mid 0T_0M \\
+      T_1 & \to MT_1M \mid 1 \\
+      T_0 & \to MT_0M \mid 0 \\
+      M & \to 0 \mid 1
+    \end{align*}
+  \end{enumerate}
+
+\item
+  Esitä kontekstittomat  kieliopit seuraaville kielille:
+  \begin{enumerate}
+  \item $01^\ast\cup10^\ast$
+    %
+    \begin{align*}
+      S   & \to 0T_1 \mid 1T_0 \\
+      T_1 & \to 1T_1 \mid \varepsilon \\
+      T_0 & \to 0T_0 \mid \varepsilon
+    \end{align*}
+    %
+  \item $\set{0^n1^m\mid\mbox{$m,n\in N$ ja $m\geq n$}}$
+    %
+    \begin{align*}
+      S      & \to T_{01} T_1 \\
+      T_{01} & \to 0T_{01}1 \mid \varepsilon \\
+      T_{1}  & \to 1T_1 \mid \varepsilon
+    \end{align*}
+    %
+  \item $\set{0^n1^k0^m\mid\mbox{$m,n,k\in N$ ja $k=n+m$}}$
+    %
+    \begin{align*}
+      S & \to T_{01} T_{10} \\
+      T_{01} & \to 0T_{01}1 \mid \varepsilon \\
+      T_{10} & \to 1T_{10}0 \mid \varepsilon
+    \end{align*}
+    %
+  \item $\set{a^n b^m c^m\mid m,n\in N}$
+    %
+    \begin{align*}
+      S & \to AT_{bc} \\
+      A & \to aA \mid \varepsilon \\
+      T_{bc} & \to bT_{bc}c
+    \end{align*}
+    %
+  \item
+    aakkoston $\set{0,1}$ merkkijonot, joissa on yhtä paljon nollia ja
+    ykkösiä.
+    %
+    \begin{align*}
+      S & \to 0S1S \mid 1S0S \mid \varepsilon
+    \end{align*}
+  \end{enumerate}
+
+\item
+  Täydennä Jyrkin luentojen lauseen 2.3 todistus (s. 140)
+  osoittamalla, että kontekstiton kielten luokka on suljettu myös
+  konkatenaation ja tähtioperaation suhteen. Esitä todistus samalla
+  tarkkuustasolla kuin luentomuistiinpanoissa esitetty yhdisteen
+  tapaus.
+  
+  Olkoon $A$ ja $B$ aakkoston $\Sigma$ yhteydettömiä kieliä ja $A =
+  L(G_A)$ ja $B = L(G_B)$ kieliopeilla $G_A = (V_A, \Sigma, R_A, S_A)$
+  ja $G_B = (V_B, \Sigma, R_B, S_B)$. Oletetaan $V_A \cap V_B =
+  \emptyset$.
+  %
+  \begin{claim}
+    Kieli $A \circ B$ on yhteydetön.
+  \end{claim}
+  \begin{proof}
+    Luodaan uusi kielioppi, jossa on uusi lähtösymboli $S \notin V_A
+    \cup V_B$, ja sääntö $S \to S_AS_B$ jolla tästä uudesta
+    lähtösymbolista voi tuottaa alkuperäisten kielten lähtösymbolien
+    katenaation.
+    \begin{align*}
+      G_{A \circ B} & = (V_{A \circ B}, \Sigma, R_{A \circ B}, S) \\
+      V_{A \circ B} & = V_A \cup V_B \cup \set{S} \\
+      R_{A \circ B} & = R_A \cup R_B \cup \set{S \to S_AS_B}
+    \end{align*}
+  \end{proof}
+  %
+  \begin{claim}
+    Kieli $A^*$ on yhteydetön.
+  \end{claim}
+  \begin{proof}
+    Luodaan uusi kielioppi, jossa on uusi lähtösymboli $S \notin V_A
+    \cup V_B$, ja sääntö $S \to S_AS \mid \varepsilon$ joka
+    mahdollistaa $A$:n merkkijonojen toistamisen.
+    \begin{align*}
+      G_{A^*} & = (V_{A^*}, \Sigma, R_{A^*}, S) \\
+      V_{A^*} & = V_A \cup \set{S} \\
+      R_{A^*} & = R_A \cup \set{S \to S_AS \mid \varepsilon}
+    \end{align*}
+  \end{proof}
+
+\item
+  Voidaan osoittaa, että kieli $A=\set{ a^n b^n c^n\mid n\in N}$ ei
+  ole kontekstiton. (Tähän palataan myöhemmin kurssilla.) Käyttäen
+  tätä tietoa hyväksi osoita, että kontekstiton kielten luokka ei ole
+  suljettu leikkauksen suhteen. ({\em Vihje:} esitä $A$ kahden
+  kontekstittoman kielen leikkauksena.) Päättele edelleen, että
+  kontekstittomien kielten luokka ei ole suljettu komplementoinnin
+  suhteen.
+  %
+  \begin{claim}
+    Yhteydettömien kielten luokka ei ole suljettu leikkauksen suhteen.
+  \end{claim}
+  \begin{proof}
+    Tehtävässä 3 osoitimme antamalla kieliopin, että kieli $A =
+    \set{a^nb^mc^m \mid n,m \in \Nat}$ on yhteydetön. Vastaavasti
+    voidaan osoittaa yhteydettömäksi kieli $B = \set{a^nb^nc^m \mid
+      n,m \in \Nat}$. Kieli $A$ on siis merkkijonot joissa $b$ ja $c$
+    merkkejä on yhtämonta. Vastaavasti kieli $B$ on merkkijonot joissa
+    $a$ ja $b$ merkkejä on yhtämonta. Nyt leikkauskieli $A \cap B =
+    \set{a^nb^nc^n \mid n \in \Nat}$ josta tiedämmä ettei se ole
+    yhteydetön. Siispä yhteydettömien kielten luokka ei ole suljettu
+    leikkauksen suhteen.
+  \end{proof}
+  %
+  \begin{claim}
+    Yhteydettömien kielten luokka ei ole suljettu komplementin suhteen.
+  \end{claim}
+  \begin{proof}
+    Oletetaan vastoin, että yhteydettömät kielet ovat suljettu
+    komplementin suhteen. Olkoon nyt $A$ ja $B$ yhteydettömiä kieliä.
+    Tällöin
+    \begin{align*}
+      A \cup B \text{ yhteydetön }
+      & \Rightarrow \overline{(A \cup B)} \text{ yhteydetön} \\
+      & \Rightarrow \overline{A} \cap \overline{B} \text{ yhteydetön} \\
+      & \Rightarrow A \cap B \text{ yhteydetön}
+    \end{align*}
+    mikä on ristiriita edellä osoitetun kanssa. Siispä yhteydettömien
+    kielten luokka ei voi olla suljettu komplementin suhteen.
+  \end{proof}
+
+\item
+  Osoita, että seuraavien aakkoston $\set{a,b,c}$ kielten komplementit
+  ovat kontekstittomia:
+%
+  \begin{enumerate}
+  \item
+    $A_1=\set{a^n b^n \mid n \in N}$
+
+    Kielen $A_1$ komplementti $\overline{A_1}$ voidaan ilmaista kolmen
+    kielen yhdisteenä:
+    \begin{align*}
+      \overline{A_1}
+      = & \set{a^nb^m \mid n,m \in \Nat : n < m} \\
+      \cup & \set{a^nb^m \mid n,m \in \Nat : n > m} \\
+      \cup & \set{wcu \mid w,u \in \Sigma^*}
+    \end{align*}
+    Tälle kielelle voidaan antaa seuraavanlainen kielioppi
+    \begin{align*}
+      S & \to aT_aT_{ab} \mid T_{ab}T_bb \mid T_McT_M \\
+      T_a & \to aT_a \mid \varepsilon \\
+      T_{ab} & \to aT_{ab}b \mid \varepsilon \\
+      T_M & \to MT_M \mid \varepsilon \\
+      M & \to a \mid b \mid c
+    \end{align*}
+  \item
+    $A_2 = \set{a^n b^n c^n \mid n \in N}$
+
+    Kieli $A_2$ komplementti voidaan ilmaista seuraavanlaisena
+    yhdisteenä:
+    \begin{align*}
+      \overline{A_2}
+         = & \set{a^nb^mc^k \mid n,m,k \in \Nat : n \neq m \text{ tai }
+                                                  m \neq k} \\
+      \cup & \overline{L(a^*b^*c^*)} \text{.}
+    \end{align*}
+    %
+    Kieli $\overline{L(a^*b^*c^*)}$ on säännöllisen kielen komplementtina
+    säännöllinen ja täten sille löytyy jokin kontekstiton kielioppi $G$. Koska
+    konstekstittomat kielet ovat suljettuja yhdisteen suhteen, riittää enää
+    kirjoittaa kielioppi unionin ensimmäiselle kielelle.
+    %
+    \begin{align*}
+      S \to\      & aT_aT_{ab}T_c \mid T_{ab}T_bbT_c \\
+                  & \mid T_abT_{b}T_{bc} \mid T_aT_{bc}T_cc \\
+      T_a \to\    & aT_a \mid \varepsilon \\
+      T_b \to\    & bT_b \mid \varepsilon \\
+      T_c \to\    & cT_c \mid \varepsilon \\
+      T_{ab} \to\ & aT_{ab}b \mid \varepsilon \\
+      T_{bc} \to\ & bT_{bc}c \mid \varepsilon
+    \end{align*}
+  \end{enumerate}
+\end{enumerate}
+
+\end{document}
