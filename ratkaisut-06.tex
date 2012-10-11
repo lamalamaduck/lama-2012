@@ -85,10 +85,26 @@
     säännöllinen, joten myöskään kieli $A$ ei ole säännöllinen.
 
   \item
-    aakkoston $\set{a,b,c}$ palindromit
+      \begin{claim}
+          Kieli $A = \set{w \in \Sigma^* \mid w \text{ on palindromi}}$ on
+          epäsäännöllinen, missä $\Sigma = \set{a,b,c}$
+      \end{claim}
+      \begin{proof}
+          Jos kieli $A$ on säännöllinen, niin sillä on jokin pumppauspituus
+          $p$. Valitaan kielestä $A$ merkkijono $s = a^pba^p$, jolla $|s| \geq
+          p$. Nyt pumppauslemman nojalla $s$ voidaan jakaa kolmeen osaan $s =
+          xyz$, joilla pätee ehdot $|xy| \leq p$ ja $|y| > 0$. Nyt siis $x =
+          a^n$, $y = a^k$ ja $z = a^{p-(n+k)}ba^p$, missä $k > 0$.
+          Pumppauslemman ensimmäisen ehdon nojalla myös merkkijonon $xz =
+          a^na^{p-(n+k)}ba^p = a^{p-k}ba^p$ pitäisi kuulua kieleen $A$, mutta
+          koska $k > 0$, niin tämä ei pidä paikkansa. Siis kieli $A$ ei voi
+          olla säännöllinen.
+      \end{proof}
+
+
   \item
     \begin{claim}
-      Kieli $A = \set{0^n10^n\mid n\in N}$ on säännöllinen.
+      Kieli $A = \set{0^n10^n\mid n\in N}$ on epäsäännöllinen.
     \end{claim}
     \begin{proof}
       Oletetaan vastoin, että $A$ on säännöllinen. Nyt on olemassa
@@ -133,8 +149,7 @@
     \item[$A_2$] on säännöllinen, sillä $L((00)^*) = A_2$.
     \item[$A_3$] ei ole säännöllinen, sillä merkkijono $s = a^pbba^p$ ei
       pumppaudu.
-    \item[$A_4$] ei ole säännöllinen, sillä merkkijono $s = a^pba^p$ ei
-      pumppaudu.
+    \item[$A_4$] on säännöllinen, sillä $L(a\Sigma^+a \cup b\Sigma^+b \cup c\Sigma^+c) = A_4$
     \item[$A_5$] ei ole säännöllinen, sillä merkkijono $s = a^pba^p$ ei
       pumppaudu.
     \item[$A_6$] ei ole säännöllinen, sillä $A_6^\mathcal{R}$ ei ole
@@ -338,28 +353,24 @@
     yhdisteenä:
     \begin{align*}
       \overline{A_2}
-      = & \set{a^nb^mc^k \mid n,m,k \in \Nat : n \neq m \text{ tai } n
-        \neq k \text{ tai } m \neq k} \\
-      \cup & L(b\Sigma^*) \\
-      \cup & L(a^*c\Sigma^*) \\
-      \cup & L(a^*b^+a\Sigma^*) \\
-      \cup & L(a^*b^*c^+(a \cup b)\Sigma^*)
+         = & \set{a^nb^mc^k \mid n,m,k \in \Nat : n \neq m \text{ tai }
+                                                  m \neq k} \\
+      \cup & \overline{L(a^*b^*c^*)} \text{.}
     \end{align*}
+    %
+    Kieli $\overline{L(a^*b^*c^*)}$ on säännöllisen kielen komplementtina
+    säännöllinen ja täten sille löytyy jokin kontekstiton kielioppi $G$. Koska
+    konstekstittomat kielet ovat suljettuja yhdisteen suhteen, riittää enää
+    kirjoittaa kielioppi unionin ensimmäiselle kielelle.
+    %
     \begin{align*}
-      S \to\ & A \mid B \mid C \mid D \mid E \\
-      A \to\ & aT_aT_{ab}T_c \mid T_{ab}T_bbT_c \\
-      & \mid T_abT_{b}T_{bc} \mid T_aT_{bc}T_cc \\
-      & \mid aT_aT_K \mid T_KT_cc \\
-      T_a \to\ & aT_a \mid \varepsilon \\
-      T_b \to\ & bT_b \mid \varepsilon \\
-      T_c \to\ & cT_c \mid \varepsilon \\
+      S \to\      & aT_aT_{ab}T_c \mid T_{ab}T_bbT_c \\
+                  & \mid T_abT_{b}T_{bc} \mid T_aT_{bc}T_cc \\
+      T_a \to\    & aT_a \mid \varepsilon \\
+      T_b \to\    & bT_b \mid \varepsilon \\
+      T_c \to\    & cT_c \mid \varepsilon \\
       T_{ab} \to\ & aT_{ab}b \mid \varepsilon \\
-      T_{bc} \to\ & bT_{bc}c \mid \varepsilon \\
-      T_K \to\ & aT_Kc \mid T_b \\
-      B \to\ & bT_M \\
-      C \to\ & T_acT_M \\
-      D \to\ & T_abT_baT_M \\
-      E \to\ & T_aT_bcT_caT_M \mid T_aT_bcT_cbT_M
+      T_{bc} \to\ & bT_{bc}c \mid \varepsilon
     \end{align*}
   \end{enumerate}
 \end{enumerate}
