@@ -218,7 +218,7 @@
   \item $\set{0^n1^k0^m\mid\mbox{$m,n,k\in N$ ja $k=n+m$}}$
     %
     \begin{align*}
-      S & \to T_{01} T_{10} \\
+      S      & \to T_{01} T_{10} \\
       T_{01} & \to 0T_{01}1 \mid \varepsilon \\
       T_{10} & \to 1T_{10}0 \mid \varepsilon
     \end{align*}
@@ -226,9 +226,9 @@
   \item $\set{a^n b^m c^m\mid m,n\in N}$
     %
     \begin{align*}
-      S & \to AT_{bc} \\
-      A & \to aA \mid \varepsilon \\
-      T_{bc} & \to bT_{bc}c
+      S      & \to AT_{bc} \\
+      A      & \to aA       \mid \varepsilon \\
+      T_{bc} & \to bT_{bc}c \mid \varepsilon
     \end{align*}
     %
   \item
@@ -312,12 +312,14 @@
     Oletetaan vastoin, että yhteydettömät kielet ovat suljettu
     komplementin suhteen. Olkoon nyt $A$ ja $B$ yhteydettömiä kieliä.
     Tällöin
+    %
     \begin{align*}
       A \cup B \text{ yhteydetön }
       & \Rightarrow \overline{(A \cup B)} \text{ yhteydetön} \\
       & \Rightarrow \overline{A} \cap \overline{B} \text{ yhteydetön} \\
       & \Rightarrow A \cap B \text{ yhteydetön}
     \end{align*}
+    %
     mikä on ristiriita edellä osoitetun kanssa. Siispä yhteydettömien
     kielten luokka ei voi olla suljettu komplementin suhteen.
   \end{proof}
@@ -332,25 +334,34 @@
 
     Kielen $A_1$ komplementti $\overline{A_1}$ voidaan ilmaista kolmen
     kielen yhdisteenä:
+    %
     \begin{align*}
       \overline{A_1}
-      = & \set{a^nb^m \mid n,m \in \Nat : n < m} \\
-      \cup & \set{a^nb^m \mid n,m \in \Nat : n > m} \\
-      \cup & \set{wcu \mid w,u \in \Sigma^*}
+      =    & \set{a^nb^m \mid n,m \in \Nat, n \neq m}
+             \cup \overline{L(a^*b^*)}\\
+      =    & \set{a^nb^m \mid n,m \in \Nat, n < m} \\
+      \cup & \set{a^nb^m \mid n,m \in \Nat, n > m} \\
+      \cup & \overline{L(a^*b^*)}
     \end{align*}
-    Tälle kielelle voidaan antaa seuraavanlainen kielioppi
+    %
+    Tässä kieli $\overline{L(a^*b^*)}$ on säännöllisen kielen komplementtina
+    säännöllinen ja siten sille on jokin kontekstiton kielioppi. Lisäksi
+    kontekstittomat kielet ovat suljettu yhdisteen suhteen, joten riittää
+    keksiä kielioppi lopulle osalle yllä olevaa yhdistettä.  Tälle kielelle
+    voidaan antaa seuraavanlainen kielioppi
+    %
     \begin{align*}
-      S & \to aT_aT_{ab} \mid T_{ab}T_bb \mid T_McT_M \\
-      T_a & \to aT_a \mid \varepsilon \\
-      T_{ab} & \to aT_{ab}b \mid \varepsilon \\
-      T_M & \to MT_M \mid \varepsilon \\
-      M & \to a \mid b \mid c
+      S      & \to aT_aT_{ab} \mid T_{ab} T_b b \\
+      T_a    & \to aT_a       \mid \varepsilon  \\
+      T_{ab} & \to aT_{ab}b   \mid \varepsilon
     \end{align*}
+
   \item
     $A_2 = \set{a^n b^n c^n \mid n \in N}$
 
     Kieli $A_2$ komplementti voidaan ilmaista seuraavanlaisena
     yhdisteenä:
+    %
     \begin{align*}
       \overline{A_2}
          = & \set{a^nb^mc^k \mid n,m,k \in \Nat : n \neq m \text{ tai }
