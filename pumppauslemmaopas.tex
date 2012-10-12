@@ -36,6 +36,7 @@
   rounded corners, inner sep=10pt, inner ysep=20pt]
 
 \NewEnviron{exercise}{%
+  \vspace{5mm}
   \begin{tikzpicture}
     \node[mybox]
     {\begin{minipage}{0.9\textwidth}
@@ -147,8 +148,6 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
     \end{align*}
 \end{exercise}
 
-\vspace{5mm}
-
 \begin{exercise}
     Mitkä edellisen tehtävän jaoista $s = xyz$ toteuttavat pumppauslemman
     ensimmäisen ehdon? Ensimmäinen ehto on
@@ -160,7 +159,7 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
     eli keskikohtaa $y$ voi toistaa.
 \end{exercise}
 
-\subsection*{Pumppauslemman käyttäminen}
+\section*{Pumppauslemman käyttäminen}
 
 Pumppauslemma on hyödyllinen, koska sillä voidaan näyttää monia kieliä
 epäsäännöllisiksi. Mutta kuinka tämä onnistuu työkalulla, joka ei puhu
@@ -259,11 +258,113 @@ kielen epäsäännöllisyys yllä todistetun lemman avulla.
   epä\-sään\-nöl\-li\-sek\-si lemman avulla.
 \end{exercise}
 
-\vspace{5mm}
+\subsection*{Epäsäännöllisyyksien huomaaminen}
+
+Kun kielen haluaa näyttää epäsäännölliseksi, pitää siitä huomata jokin
+ominaisuus joka ei ole säännöllinen. Siis ominaisuus jota ei voi tunnistaa
+äärellisellä automaatilla. Automaatissa on vain rajoitettu määrä tiloja eikä
+automaatti voi muistaa mitään muuta, kuin nykyisen tilansa. Erityisesti
+automaatin muisti on siis ennalta rajattu.
+
+Automaatti ei voi muistaa kaikkia näkemiään merkkejä, tai käsitellyn syötteen
+pituutta, tai kaikkien nähtyjen $a$-merkkien lukumäärää.
+
+Äärellisellä automaatilla on aina vakiomäärä tiloja. Esimerkiksi $k$
+kappaletta. Nyt jos syötteen pituus on enemmän kuin $k$, niin automaatin täytyy
+syötettä läpi käydessä kulkea jonkin syklin läpi. Kun automaatti on tämän
+syklin ensimmäisessä tilassa, se ei voi muistaa kuinka monta kertaa sykli on
+kuljettu, tai edes sitä onko syklissä käyty ollenkaan. Syötemerkkijonoa voidaan
+siis muokata niin, että automaatti kulkee tämän syklin läpi useamman kerran tai
+ei yhtään kertaa ja automaatti päätyy edelleen samaan lopputilaan.
+
+Yllä todistettiin kieli $\set{0^n1^n \mid n \in \Nat}$ epäsäännölliseksi. Tämän
+kielen tunnistavan automaatin pitäisi muistaa, kuinka monta $0$-merkkiä ollaan
+nähty, jotta se voisi $1$-merkkien kohdalla varmistaa niitä olevan yhtä paljon.
+
+Kun tästä kielestä valittiin alkio $s = 0^p1^p$, käytettiin hyväksi tätä
+tunnistettua epäsäännöllisyyttä. Kielen ehto vaatii, että nollia ja ykkösiä on
+aina yhtä monta. Pumppauslemma toisaalta takaa, että säännöllisillä kielillä
+ensimmäisestä $p$ merkistä löytyy toistettava kohta. Jotain alkuosaa
+toistamalla saadaan kuitenkin aina merkkijono jossa $0$-merkkejä on enemmän
+kuin $1$-merkkejä, eikä kielen ominaisuus siis säily toiston yhteydessä
+riippumatta siitä, mitä kohtaa ensimmäisestä $p$ merkistä toistettiin.
 
 \begin{exercise}
   Osoita kieli $A = \set{a^nb^nc^n \mid n \in \Nat}$ epäsäännölliseksi
   lemman avulla.
 \end{exercise}
+
+\subsection*{Vastaoletuksella todistaminen}
+
+Edellisen kappaleen lemma sanoo suoraan sen, mitä pumppauslemma kertoo
+epäsäännöllisistä kielistä. Useimmiten todistukset jonkin kielen
+epäsäännöllisyydelle käyttävät kuitenkin niin kutsuttua ristiriitatodistusta.
+Siinä todistus alkaa vastaoletuksella, jossa nimensä mukaisesti oletetaan
+todistettava väitteen vääräksi. Tästä oletuksesta pyritään osoittamaan
+jokin ristiriita jo todeksi tiedetyn kanssa.
+
+Jos haluamme osoittaa jonkin kielen epäsäännölliseksi, vastaoletuksemme on,
+että kieli onkin säännöllinen. Nyt pumppauslemman tulisi päteä kielelle.
+Käydään läpi esimerkki.
+
+\begin{claim}
+    Kieli $A = \set{ww \mid w \in \Sigma^*}$ on epäsäännöllinen, missä $\Sigma
+    = \set{0,1}$
+\end{claim}
+\begin{proof}
+    Aloitamme todistuksen siis olettamalla vastoin väitettä, että kieli $A$ on
+    säännöllinen. Nyt pumppauslemma sanoo, että kielellä tulee olla jokin
+    pumppauspituus $p \in \Nat$, $p > 0$. Emme tiedä mitään $p$:n arvosta,
+    mutta tiedämme sen olevan pumppauspituus. Siispä merkkijonon $s =
+    a^pba^pb$ jollekkin jaolle $s = xyz$ tulee päteä kaikki pumppauslemman
+    kolme ehtoa.
+
+    Noudattaen ehtoja 2 ja 3 merkkijono $s$ voidaan jakaa seuraavilla tavoilla:
+    %
+    \begin{align*}
+        x & = a^n \\
+        y & = a^m \text{, } m > 0 \\
+        z & = a^{p-(n+m)}ba^pb
+    \end{align*}
+    %
+    Koska oletimme kielen $A$ olevan säännöllinen, tulisi pumppauslemman
+    ensimmäisenkin ehdon olla voimassa. Siis merkkijonon $xy^0z$ tulisi kuulua
+    kieleen. Kuitenkin merkkijono $xy^0z = a^na^{p-(n+m)}ba^p = a^{p+m}ba^p$ ei
+    kuulu kieleen $A$. Päädyimme siis ristiriitaan pumppauslemman kanssa.
+    Uskomme kaikkien esittämiemme argumenttien pitävän paikkansa.
+    Ainoaksi vaihtoehdoksi siis jää, että tekemämme oletus kielen $A$
+    säännöllisyydestä oli väärä. Siis kielen $A$ täytyy olla epäsäännöllinen.
+\end{proof}
+
+\begin{exercise}
+    Osoita vastaoletuksella, että kieli $A = \set{ww^{\mathcal{R}} \mid w \in
+        \Sigma^*}$ on epäsäännöllinen, missä $\Sigma = \set{0,1}$.
+\end{exercise}
+
+\begin{exercise}
+    Osoita vastaoletuksella, että kieli \mbox{$A = \set{0^n1^m0^n \mid n,m \in
+            \Nat}$} on epäsäännöllinen.
+\end{exercise}
+
+\section*{Epäsäännöllisyyden säilyttävät operaatiot}
+
+Vaikka säännölliset kielet ovat suljettu hyvin monien operaatioiden suhteen,
+niin epäsäännöllisyys ei kuitenkaan ole suljettua kovinkaan monien
+operaatioiden suhteen. Epäsäännöllisetkin kielet ovat kuitenkin suljettuja
+kahden hyödyllisen operaation, komplementin $\overline{A}$ ja käänteiskielen
+$A^\mathcal{R}$, suhteen.
+
+Välillä on helpompaa näyttää kielen $A$ komplementti $\overline{A}$ tai
+käänteiskieli $A^\mathcal{R}$ epäsäännölliseksi kuin kieli $A$ itse.
+
+TODO: esimerkki a^mb^nc^n käänteiskielestä
+
+TODO: tehtävä abca^nb^n
+
+TODO: esimerkki ei-palindromit komplementista
+
+TODO: tehtävä 0^m1^n n != m tai nollia eri määrä kuin ykkösiä
+
+TODO: tehtävä jostain
 
 \end{document}
