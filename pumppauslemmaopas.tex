@@ -4,12 +4,13 @@
 \usepackage{xcolor}
 %\usepackage[framemethod=TikZ]{mdframed}
 \usepackage[utf8]{inputenc}
-\usepackage[margin=2cm]{geometry}
+%\usepackage[margin=2cm]{geometry}
 \usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
 \usepackage{microtype}
 \usepackage{pgf}
 \usepackage{tikz}
 \usepackage{environ}
+\usepackage{color}
 \usetikzlibrary{arrows,automata}
 
 \setenumerate{listparindent=\parindent}
@@ -28,6 +29,8 @@
 \newcommand{\set}[1]{{\left\{ #1 \right\}}}
 \newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
 \newcommand{\Nat}{\mathbb{N}}
+
+\newcommand{\fixme}[1]{\textcolor{red}{FIXME: #1}}
 
 \tikzstyle{mybox} = [draw=none, fill=cyan!9, rectangle,
   rounded corners, inner sep=10pt, inner ysep=20pt]
@@ -52,7 +55,7 @@
 
 \section*{Pumppauslemma}
 
-Jokaisella säännöllisellä kiellellä on seuraava \emph{pumppauslemmana} tunnettu
+Jokaisella säännöllisellä kielellä on seuraava \emph{pumppauslemmana} tunnettu
 ominaisuus.
 
 \begin{definition}[pumppauslemma]
@@ -76,9 +79,11 @@ ominaisuus.
 
 Otetaan tästä konkreettinen esimerkki. Kieli $A = L(a^*b^*)$ on säännöllinen ja
 sillä on täten jokin pumppauspituus $p$. Tämän kielen kohdalla eräs mahdollinen
-pumppauspituus on $p = 2$. Tarkastellaan jotain riittävän pitkää kielen $A$
-merkkijonoa. Valitaan $s = abb$. Nyt pumppauslemman nojalla löytyy \emph{jokin}
-jako $s = xyz$, jolle yllä olevat kolme ehtoa pätevät.
+pumppauspituus on $p = 3$. Tämän pumppauspituuden saa esimerkiksi siitä, että
+kielen voi tunnistaa deterministisellä äärellisellä automaatilla jossa on kolme
+tilaa. Tarkastellaan jotain riittävän pitkää kielen $A$ merkkijonoa. Valitaan
+$s = abbb$. Nyt pumppauslemman nojalla löytyy \emph{jokin} jako $s = xyz$,
+jolle yllä olevat kolme ehtoa pätevät.
 
 Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
 
@@ -87,11 +92,11 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
         \begin{align*}
              x               & = \varepsilon,  \\
              y               & = ab            \\
-            \textrm{ ja }  z & = b
+            \textrm{ ja }  z & = bb
         \end{align*}
         %
         Nyt ehdot 2 ja 3 ovat voimassa, mutta ensimmäinen ehto ei täyty, sillä
-        esimerkiksi merkkijono $xyyz = ababb$ ei kuulu kieleen $A$.
+        esimerkiksi merkkijono $xyyz = ababbb$ ei kuulu kieleen $A$.
 
     \item Ensimmäinen jako ei siis täyttänyt kaikkia pumppauslemman ehtoja.
         Pumppauslemma ei kuitenkaan takaa, että nämä ehdot täyttyisivät
@@ -101,21 +106,21 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
         \begin{align*}
             x              & = a \textrm{,} \\
             y              & = b \\
-            \textrm{ja } z & = b
+            \textrm{ja } z & = bb
         \end{align*}
         Nyt $|xy| = 2 \leq p$, $|y| = 1 > 0$. Entä miltä näyttää merkkijono
         $xy^iz$? Tarkastellaan tätä ensin $i$:n arvoilla $0$, $1$ ja $2$:
         %
         \begin{align*}
-            xy^0z & = xz  = ab \in A \\
-            xy^1z & = xyz = abb \in A \\
-            xy^2z & = xyyz = abbb \in A
+            xy^0z & = xz  = abb \in A \\
+            xy^1z & = xyz = abbb \in A \\
+            xy^2z & = xyyz = abbbb \in A
         \end{align*}
         %
         Ja yleisessä tapauksessa, kun $i \in \Nat$, niin
         %
         \begin{equation*}
-            xy^iz = ab^ib = ab^{i+1} \in L(a^*b^*) = A
+            xy^iz = ab^ibb = ab^{i+2} \in L(a^*b^*) = A
         \end{equation*}
 \end{itemize}
 
@@ -157,8 +162,8 @@ Tarkastellaan merkkijonon $s$ mahdollisia jakoja.
 
 \subsection*{Pumppauslemman käyttäminen}
 
-Pumppauslemma on hyödyllinen koska sillä voidaan näyttää \emph{joitakin} kieliä
-epäsäännöllisiksi. Mutta kuinka tämä onnistuu työkalulla joka ei puhu
+Pumppauslemma on hyödyllinen, koska sillä voidaan näyttää monia kieliä
+epäsäännöllisiksi. Mutta kuinka tämä onnistuu työkalulla, joka ei puhu
 mitään epäsäännöllisistä kielistä? Pumppauslemman jos-niin
 rakenteeseen piiloutuu kuitenkin myös väite epäsäännöllisyydestä.
 Seuraava lemma on nimittäin yhtäpitävä pumppauslemman kanssa.
@@ -188,11 +193,11 @@ Seuraava lemma on nimittäin yhtäpitävä pumppauslemman kanssa.
 \end{proof}
 
 Pumppauslemman avulla voidaan siis todistaa epäsäännöllisiksi vain
-sellaiset kielet joilla ei ole pumppauspituutta. Tulee kuitenkin
+sellaiset kielet, joilla ei ole pumppauspituutta. Tulee kuitenkin
 muistaa, että joillain epäsäännöllisilläkin kielillä on olemassa
 pumppauspituus.
 
-Käydään nyt läpi todistus erään jo tutun kielen epäsäännöllisyydelle.
+Käydään läpi todistus erään jo tutun kielen epäsäännöllisyydelle.
 Olkoon kieli $A = \set{0^n1^n \mid n \in \Nat}$. Osoitetaan tämän
 kielen epäsäännöllisyys yllä todistetun lemman avulla.
 %
@@ -200,21 +205,43 @@ kielen epäsäännöllisyys yllä todistetun lemman avulla.
     Kieli $A = \set{0^n1^n \mid n \in \Nat}$ on epäsäännöllinen.
 \end{claim}
 \begin{proof}
-    Olkoon $p$ positiivinen luonnollinen luku. Nyt merkkijono $s =
-    0^p1^p$ kuuluu kieleen $A$ ja sisältää vähintään $p$ merkkiä.
-    Haluamme osoittaa, että mikään merkkijonon $s$ jako $s = xyz$ joka
-    noudattaa lemman ehtoja 2 ja 3 ei voi noudattaa ehtoa 1.
+    Olkoon $p$ positiivinen luonnollinen luku. Nyt haluttaisiin jokin
+    merkkijono $s \in A$, jolla $|s| \geq p$. \fixme{Tää virke on liian pitkä} Merkkijonon $s$ tulisi olla
+    sellainen, että jos sen jakaa osiin $s = xyz$ niin, että pumppauslemman
+    ehdot $|xy| \leq p$ ja $y \neq \varepsilon$ ovat voimassa, niin toistettava
+    osa $y$ sisältää kielen $A$ epäsäännöllisen ominaisuuden. Tämän
+    ominaisuuden ei tulisi säilyä kun osaa $y$ toistaa monta kertaa tai sen
+    poistaa.
 
-    Kaikki ehtojen 2 ja 3 mukaiset jaot voidaan kuvata seuraavasti
+    Valitaan merkkijono
+    %
+    \begin{equation*}
+        s = 0^p1^p \in A
+    \end{equation*}
+    %
+    joka kuuluu kieleen $A$ ja sisältää vähintään $p$ merkkiä. Haluamme
+    osoittaa, että mikään merkkijonon $s$ jako $s = xyz$, joka noudattaa lemman
+    ehtoja 2 ja 3, ei voi noudattaa ehtoa 1.  Merkkijonoon $s$ valittiin $p$
+    kappaletta nollia ja ykkösiä, jotta kaikki ensimmäiset $p$ merkkiä olisivat
+    samoja, tässä tapauksessa nollia.  Koska $y$ on jokin ensimmäisen $p$:n
+    merkin alimerkkijono, $y$ on muotoa $0^k$ ja kaikki $1$-merkit jäävät
+    loppuosaan $z$. Nyt jos osaa $y$ toistaa, eli muodostaa esimerkiksi
+    merkkijonon $xyyz$, niin $0$-merkkien lukumäärä muuttuu. Kaikki $1$-merkit
+    ovat kuitenkin loppuosassa $z$, joten niiden lukumäärä säilyy ennallaan
+    eikä merkkijono $xyyz$ enää toteuta kielen $A$ ehtoa.
+
+    Merkkijonon $s$ ensimmäiset $p$ merkkiä ovat nollia, joten kaikki
+    mahdolliset ehtojen 2 ja 3 mukaiset jaot ovat olennaisesti samaa muotoa.
+    Ne voidaan kuvata seuraavasti
     \begin{align*}
       x & = 0^n \\
-      y & = 0^m \\
+      y & = 0^m\text{, } m > 0 \\
       \text{ja } z & = 0^{p-(m+n)}1^p
     \end{align*}
-    missä $n,m \in \Nat$. Jotta $y$ ei olisi tyhjä merkkijono, täytyy
-    $m$:n olla positiivinen. Jotta merkkijonon $xy$ pituus olisi
-    korkeintaan $p$, tulee summan $n + m$ olla korkeintaan $p$.
-    Tarkastellaan merkkijonoa, jossa osaa $y$ esiintyy kaksi kertaa
+    missä $n,m \in \Nat$. Jotta $y$ ei
+    olisi tyhjä merkkijono, täytyy $m$:n olla positiivinen. Jotta merkkijonon
+    $xy$ pituus olisi korkeintaan $p$, tulee summan $n + m$ olla korkeintaan
+    $p$.  Tarkastellaan merkkijonoa, jossa osa $y$ esiintyy kaksi kertaa
     \begin{align*}
       xy^2z & = xyyz \\
       & = 0^n0^{2m}0^{p-(m+n)}1^p \\
@@ -222,15 +249,14 @@ kielen epäsäännöllisyys yllä todistetun lemman avulla.
       & = 0^{n+2m+p-m-n}1^p \\
       & = 0^{p+m}1^p
     \end{align*}
-    Koska $m$ oli aidosti positiivinen luku, on merkkijonossa $xy^2z$
-    enemmän nollia kuin ykkösiä, joten se ei kuulu kieleen $A$. Siis
-    ehto 1 ei voi olla voimassa, ja täten lemman nojalla $A$ on
-    epäsäännöllinen.
+    Koska $m$ on aidosti positiivinen luku, niin merkkijonossa $xy^2z$ on
+    enemmän nollia kuin ykkösiä. Se ei siis kuulu kieleen $A$. Ehto 1 ei
+    voi olla voimassa, joten lemman nojalla $A$ on epäsäännöllinen.
 \end{proof}
 
 \begin{exercise}
   Osoita kieli $A = \set{0^n1^m \mid n,m \in \Nat, n < m}$
-  epäsäännölliseksi lemman avulla.
+  epä\-sään\-nöl\-li\-sek\-si lemman avulla.
 \end{exercise}
 
 \vspace{5mm}
