@@ -32,63 +32,127 @@
   pumppauslemmaa (tai jollain muulla haluamallasi tavalla):
   \begin{enumerate}
   \item
-    \begin{equation*}
-      A = \set{a^m b^n c^n\mid n,m\geq 1}
-    \end{equation*}
+    \begin{claim}
+        Kieli $A = \set{a^m b^n c^n \mid n,m\geq 1}$ ei ole säännöllinen.
+    \end{claim}
 
-    Ensinnäkin huomataan, että $A$ on säännöllinen täsmälleen silloin, kun
-    $A^\mathcal{R}$ on säännöllinen, sillä aikaisemmin ollaan laskuharjoituksissa
-    näytetty, että säännölliset kielet ovat suljettu kääntämisen suhteen.
-    Riittää siis näyttää kieli $A^\mathcal{R}$ epäsäännölliseksi, missä
-    %
-    \begin{equation*}
-      A^\mathcal{R} = \set{c^nb^na^m \mid n,m \geq 1}.
-    \end{equation*}
+    \begin{proof}
+            Ensinnäkin huomataan, että $A$ on säännöllinen täsmälleen silloin, kun
+            $A^\mathcal{R}$ on säännöllinen, sillä aikaisemmin ollaan laskuharjoituksissa
+            näytetty, että säännölliset kielet ovat suljettu kääntämisen suhteen.
+            Riittää siis näyttää kieli $A^\mathcal{R}$ epäsäännölliseksi, missä
+            %
+            \begin{equation*}
+              A^\mathcal{R} = \set{c^nb^na^m \mid n,m \geq 1}.
+            \end{equation*}
+        
+            Tehdään vastaoletus. Oletetaan, että kieli $A^\mathcal{R}$ on säännöllinen.
+            Tällöin sillä on jokin pumppauspituus $p$. Nyt voidaan valita merkkijono
+            %
+            \begin{equation*}
+              s = c^pb^pa \in A^\mathcal{R} \textrm{,}
+            \end{equation*}
+            %
+            jolla pätee $|s| \geq p$. Merkkijono $s$ valittiin juuri näin siksi, että
+            nyt pumppauslemman kolmannen ehdon nojalla $|xy| \leq p$, joten
+            toisettavassa osassa $y$ on pelkästään merkkiä $c$ ja $y$:tä toistamalla
+            saadaan siis aikaan merkkijono, jossa on $c$-kirjaimia eri määrä kuin
+            $b$-kirjaimia, joka rikkoo kielen ehtoa. Säännöllisten kielten
+            pumppauslemman nojalla $s$ voidaan nyt jakaa kolmeen osaan siten, että
+            %
+            \begin{align*}
+              s    & = xyz, \\
+              |xy| & \leq p \textrm{ ja}\\
+              |y|  & > 0
+            \end{align*}
+            %
+            joten
+            \begin{alignat*}{2}
+              xy & = c^k         && \textrm{ jollain } k \leq p, \\
+              z  & = c^{p-k}b^pa && \textrm{ ja erityisesti} \\
+              y  & = c^n         && \textrm{ jollain } n > 0.
+            \end{alignat*}
+        
+            Nyt pumppauslemman nojalla myös merkkijonon
+            %
+            \begin{equation*}
+              xz = c^{k-n}c^{p-k}b^pa = c^{p-n}b^pa
+            \end{equation*}
+            %
+            tulisi kuulua kieleen $A^\mathcal{R}$. Nyt kuitenkin $n > 0$, joten
+            %
+            \begin{equation*}
+              xz = c^{p-n}b^pa \notin A.
+            \end{equation*}
+        
+            Tämä on ristiriidassa säännöllisten kielten pumppauslemman kanssa, joten
+            kielellä $A^\mathcal{R}$ ei ole pumppausominaisuutta, eikä se siten voi olla
+            säännöllinen, joten myöskään kieli $A$ ei ole säännöllinen.
+    \end{proof}
 
-    Tehdään vastaoletus. Oletetaan, että kieli $A^\mathcal{R}$ on säännöllinen.
-    Tällöin sillä on jokin pumppauspituus $p$. Nyt voidaan valita merkkijono
-    %
-    \begin{equation*}
-      s = c^pb^pa \in A^\mathcal{R} \textrm{,}
-    \end{equation*}
-    %
-    jolla pätee $|s| \geq p$. Säännöllisten kielten pumppauslemman nojalla $s$
-    voidaan nyt jakaa kolmeen osaan siten, että
-    %
-    \begin{align*}
-      s    & = xyz, \\
-      |xy| & \leq p \textrm{ ja}\\
-      |y|  & > 0
-    \end{align*}
-    %
-    joten
-    \begin{alignat*}{2}
-      xy & = c^k         && \textrm{ jollain } k \leq p, \\
-      z  & = c^{p-k}b^pa && \textrm{ ja erityisesti} \\
-      y  & = c^n         && \textrm{ jollain } n > 0.
-    \end{alignat*}
+    Väite voidaan näyttää myös ilman käänteiskielen käyttämistä seuraavasti:
 
-    Nyt pumppauslemman nojalla myös merkkijonon
-    %
-    \begin{equation*}
-      xz = c^{k-n}c^{p-k}b^pa = c^{p-n}b^pa
-    \end{equation*}
-    %
-    tulisi kuulua kieleen $A^\mathcal{R}$. Nyt kuitenkin $n > 0$, joten
-    %
-    \begin{equation*}
-      xz = c^{p-n}b^pa \notin A.
-    \end{equation*}
-
-    Tämä on ristiriidassa säännöllisten kielten pumppauslemman kanssa, joten
-    kielellä $A^\mathcal{R}$ ei ole pumppausominaisuutta, eikä se siten voi olla
-    säännöllinen, joten myöskään kieli $A$ ei ole säännöllinen.
+    \begin{proof}
+            Valitaan kielestä $A$ merkkijono $s = ab^pc^p$. Nyt pumppauslemman nojalla
+            $s$ voidaan jakaa kolmeen osaan $s = xyz$, missä $|xy| \leq p$ ja $|y| >
+            0$. Koska merkkijonon ensimmäiset $p$ merkkiä eivät nyt koostu samasta
+            merkistä, joudutaan tarkastelemaan erikseen tapaus, jossa $y$ sisältää
+            ensimmäisen merkin $a$.
+        
+            \begin{description}
+                \item[Tapaus $x = \varepsilon$] \hfill\newline
+                    %
+                    Tällöin $y = ab^k$, missä $k \geq 0$ ja siis $z = b^{p-k}c^p$. Nyt
+                    pumppauslemman nojalla myös merkkijono
+                    %
+                    \begin{equation*}
+                        xy^0z = xz = b^{p-k}c^p
+                    \end{equation*}
+                    %
+                    kuuluu kieleen $A$. Tämä ei kuitenkaan pidä paikkansa, sillä kaikki
+                    $A$:n merkkijonot alkavat $a$-merkillä. Tämä tapaus ei siis ole
+                    mahdollinen.
+        
+                \item[Tapaus $x = ab^n$]
+                    %
+                    Tällöin $y = b^k$ jollain $k > 0$ ja $z = b^{p-(n+k)}c^p$.
+                    Nyt pumppauslemman nojalla myös merkkijono
+                    %
+                    \begin{equation*}
+                        xy^2z = xyyz = ab^nb^{2k}b^{p-(n+k)}c^p = ab^{p+k}c^p
+                    \end{equation*}
+                    %
+                    kuuluu kieleen $A$. Tämä ei kuitenkaan ole mahdollista, sillä $k >
+                    0$, joten tässä merkkijonossa  $b$-merkkejä on enemmän kuin
+                    $c$-merkkejä.
+            \end{description}
+        
+            Mikään merkkijonon $s$ jako osiin $s = xyz$ ei nyt siis toteuta
+            pumppauslemman kaikkia ehtoja, joten kieli $A$ ei ole pumppautuva eikä siis
+            myöskään säännöllinen.
+    \end{proof}
 
   \item
-    aakkoston $\set{a,b,c}$ palindromit
+      \begin{claim}
+          Kieli $A = \set{w \in \Sigma^* \mid w \text{ on palindromi}}$ on
+          epäsäännöllinen, missä $\Sigma = \set{a,b,c}$
+      \end{claim}
+      \begin{proof}
+          Jos kieli $A$ on säännöllinen, niin sillä on jokin pumppauspituus
+          $p$. Valitaan kielestä $A$ merkkijono $s = a^pba^p$, jolla $|s| \geq
+          p$. Nyt pumppauslemman nojalla $s$ voidaan jakaa kolmeen osaan $s =
+          xyz$, joilla pätee ehdot $|xy| \leq p$ ja $|y| > 0$. Nyt siis $x =
+          a^n$, $y = a^k$ ja $z = a^{p-(n+k)}ba^p$, missä $k > 0$.
+          Pumppauslemman ensimmäisen ehdon nojalla myös merkkijonon $xz =
+          a^na^{p-(n+k)}ba^p = a^{p-k}ba^p$ pitäisi kuulua kieleen $A$, mutta
+          koska $k > 0$, niin tämä ei pidä paikkansa. Siis kieli $A$ ei voi
+          olla säännöllinen.
+      \end{proof}
+
+
   \item
     \begin{claim}
-      Kieli $A = \set{0^n10^n\mid n\in N}$ on säännöllinen.
+      Kieli $A = \set{0^n10^n\mid n\in \Nat}$ on epäsäännöllinen.
     \end{claim}
     \begin{proof}
       Oletetaan vastoin, että $A$ on säännöllinen. Nyt on olemassa
@@ -115,14 +179,14 @@
   eivät (kielillä $A_1$ ja $A_2$ aakkostona $\set{0,1}$, muilla
   $\set{\mathrm{a},\mathrm{b},\mathrm{c}}$):
   \begin{align*}
-    A_1 &=\set{0^n1^m0^n\mid n,m\in N}
-    &A_2 &=\set{0^n0^n\mid n\in N}
+    A_1 &=\set{0^n1^m0^n\mid n,m\in \Nat}
+    &A_2 &=\set{0^n0^n\mid n\in \Nat}
     \\
     A_3 &=\set{ww^\mathcal{R}\mid w\in\Sigma^{\ast}}
     &A_4 &=\set{wuw^\mathcal{R}\mid w,u\in\Sigma^+}.
     \\
     A_5 &=\set{wxw^\mathcal{R}\mid w\in\Sigma^{\ast},x\in\Sigma}
-    &A_6 &=\set{\mathrm{abc}\mathrm{a}^n\mathrm{b}^n\mathrm{c}^n\mid n\in N}
+    &A_6 &=\set{\mathrm{abc}\mathrm{a}^n\mathrm{b}^n\mathrm{c}^n\mid n\in \Nat}
   \end{align*}
   Perustele. Voit käyttää hyväksi kaikkia tunnettuja säännöllisiä kieliä
   koskevia ominaisuuksia, etenkin edellisen tehtävän tuloksia.
@@ -133,8 +197,7 @@
     \item[$A_2$] on säännöllinen, sillä $L((00)^*) = A_2$.
     \item[$A_3$] ei ole säännöllinen, sillä merkkijono $s = a^pbba^p$ ei
       pumppaudu.
-    \item[$A_4$] ei ole säännöllinen, sillä merkkijono $s = a^pba^p$ ei
-      pumppaudu.
+    \item[$A_4$] on säännöllinen, sillä $L(a\Sigma^+a \cup b\Sigma^+b \cup c\Sigma^+c) = A_4$
     \item[$A_5$] ei ole säännöllinen, sillä merkkijono $s = a^pba^p$ ei
       pumppaudu.
     \item[$A_6$] ei ole säännöllinen, sillä $A_6^\mathcal{R}$ ei ole
@@ -192,7 +255,7 @@
       T_0 & \to 0T_0 \mid \varepsilon
     \end{align*}
     %
-  \item $\set{0^n1^m\mid\mbox{$m,n\in N$ ja $m\geq n$}}$
+  \item $\set{0^n1^m\mid\mbox{$m,n\in \Nat$ ja $m\geq n$}}$
     %
     \begin{align*}
       S      & \to T_{01} T_1 \\
@@ -203,17 +266,17 @@
   \item $\set{0^n1^k0^m\mid\mbox{$m,n,k\in N$ ja $k=n+m$}}$
     %
     \begin{align*}
-      S & \to T_{01} T_{10} \\
+      S      & \to T_{01} T_{10} \\
       T_{01} & \to 0T_{01}1 \mid \varepsilon \\
       T_{10} & \to 1T_{10}0 \mid \varepsilon
     \end{align*}
     %
-  \item $\set{a^n b^m c^m\mid m,n\in N}$
+  \item $\set{a^n b^m c^m\mid m,n\in \Nat}$
     %
     \begin{align*}
-      S & \to AT_{bc} \\
-      A & \to aA \mid \varepsilon \\
-      T_{bc} & \to bT_{bc}c
+      S      & \to AT_{bc} \\
+      A      & \to aA       \mid \varepsilon \\
+      T_{bc} & \to bT_{bc}c \mid \varepsilon
     \end{align*}
     %
   \item
@@ -267,7 +330,7 @@
   \end{proof}
 
 \item
-  Voidaan osoittaa, että kieli $A=\set{ a^n b^n c^n\mid n\in N}$ ei
+  Voidaan osoittaa, että kieli $A=\set{ a^n b^n c^n\mid n \in \Nat}$ ei
   ole kontekstiton. (Tähän palataan myöhemmin kurssilla.) Käyttäen
   tätä tietoa hyväksi osoita, että kontekstiton kielten luokka ei ole
   suljettu leikkauksen suhteen. ({\em Vihje:} esitä $A$ kahden
@@ -297,12 +360,14 @@
     Oletetaan vastoin, että yhteydettömät kielet ovat suljettu
     komplementin suhteen. Olkoon nyt $A$ ja $B$ yhteydettömiä kieliä.
     Tällöin
+    %
     \begin{align*}
       A \cup B \text{ yhteydetön }
       & \Rightarrow \overline{(A \cup B)} \text{ yhteydetön} \\
       & \Rightarrow \overline{A} \cap \overline{B} \text{ yhteydetön} \\
       & \Rightarrow A \cap B \text{ yhteydetön}
     \end{align*}
+    %
     mikä on ristiriita edellä osoitetun kanssa. Siispä yhteydettömien
     kielten luokka ei voi olla suljettu komplementin suhteen.
   \end{proof}
@@ -313,53 +378,60 @@
 %
   \begin{enumerate}
   \item
-    $A_1=\set{a^n b^n \mid n \in N}$
+    $A_1=\set{a^n b^n \mid n \in \Nat}$
 
     Kielen $A_1$ komplementti $\overline{A_1}$ voidaan ilmaista kolmen
     kielen yhdisteenä:
+    %
     \begin{align*}
       \overline{A_1}
-      = & \set{a^nb^m \mid n,m \in \Nat : n < m} \\
-      \cup & \set{a^nb^m \mid n,m \in \Nat : n > m} \\
-      \cup & \set{wcu \mid w,u \in \Sigma^*}
+      =    & \set{a^nb^m \mid n,m \in \Nat, n \neq m}
+             \cup \overline{L(a^*b^*)}\\
+      =    & \set{a^nb^m \mid n,m \in \Nat, n < m} \\
+      \cup & \set{a^nb^m \mid n,m \in \Nat, n > m} \\
+      \cup & \overline{L(a^*b^*)}
     \end{align*}
-    Tälle kielelle voidaan antaa seuraavanlainen kielioppi
+    %
+    Tässä kieli $\overline{L(a^*b^*)}$ on säännöllisen kielen komplementtina
+    säännöllinen ja siten sille on jokin kontekstiton kielioppi. Lisäksi
+    kontekstittomat kielet ovat suljettu yhdisteen suhteen, joten riittää
+    keksiä kielioppi lopulle osalle yllä olevaa yhdistettä. Kielelle
+    $\set{a^nb^m \mid n,m \in \Nat, n \neq m}$ voidaan antaa seuraavanlainen
+    kontekstiton kielioppi.
+    %
     \begin{align*}
-      S & \to aT_aT_{ab} \mid T_{ab}T_bb \mid T_McT_M \\
-      T_a & \to aT_a \mid \varepsilon \\
-      T_{ab} & \to aT_{ab}b \mid \varepsilon \\
-      T_M & \to MT_M \mid \varepsilon \\
-      M & \to a \mid b \mid c
+      S      & \to \overbrace{aT_aT_{ab}}^{n > m} \mid \overbrace{T_{ab} T_b b}^{n < m} \\
+      T_a    & \to aT_a       \mid \varepsilon  \\
+      T_b    & \to bT_b       \mid \varepsilon  \\
+      T_{ab} & \to aT_{ab}b   \mid \varepsilon
     \end{align*}
+
   \item
-    $A_2 = \set{a^n b^n c^n \mid n \in N}$
+    $A_2 = \set{a^n b^n c^n \mid n \in \Nat}$
 
     Kieli $A_2$ komplementti voidaan ilmaista seuraavanlaisena
     yhdisteenä:
+    %
     \begin{align*}
       \overline{A_2}
-      = & \set{a^nb^mc^k \mid n,m,k \in \Nat : n \neq m \text{ tai } n
-        \neq k \text{ tai } m \neq k} \\
-      \cup & L(b\Sigma^*) \\
-      \cup & L(a^*c\Sigma^*) \\
-      \cup & L(a^*b^+a\Sigma^*) \\
-      \cup & L(a^*b^*c^+(a \cup b)\Sigma^*)
+         = & \set{a^nb^mc^k \mid n,m,k \in \Nat : n \neq m \text{ tai }
+                                                  m \neq k} \\
+      \cup & \overline{L(a^*b^*c^*)} \text{.}
     \end{align*}
+    %
+    Kieli $\overline{L(a^*b^*c^*)}$ on säännöllisen kielen komplementtina
+    säännöllinen ja täten sille löytyy jokin kontekstiton kielioppi $G$. Koska
+    konstekstittomat kielet ovat suljettuja yhdisteen suhteen, riittää enää
+    kirjoittaa kielioppi unionin ensimmäiselle kielelle.
+    %
     \begin{align*}
-      S \to\ & A \mid B \mid C \mid D \mid E \\
-      A \to\ & aT_aT_{ab}T_c \mid T_{ab}T_bbT_c \\
-      & \mid T_abT_{b}T_{bc} \mid T_aT_{bc}T_cc \\
-      & \mid aT_aT_K \mid T_KT_cc \\
-      T_a \to\ & aT_a \mid \varepsilon \\
-      T_b \to\ & bT_b \mid \varepsilon \\
-      T_c \to\ & cT_c \mid \varepsilon \\
+      S \to\      & aT_aT_{ab}T_c \mid T_{ab}T_bbT_c \\
+                  & \mid T_abT_{b}T_{bc} \mid T_aT_{bc}T_cc \\
+      T_a \to\    & aT_a \mid \varepsilon \\
+      T_b \to\    & bT_b \mid \varepsilon \\
+      T_c \to\    & cT_c \mid \varepsilon \\
       T_{ab} \to\ & aT_{ab}b \mid \varepsilon \\
-      T_{bc} \to\ & bT_{bc}c \mid \varepsilon \\
-      T_K \to\ & aT_Kc \mid T_b \\
-      B \to\ & bT_M \\
-      C \to\ & T_acT_M \\
-      D \to\ & T_abT_baT_M \\
-      E \to\ & T_aT_bcT_caT_M \mid T_aT_bcT_cbT_M
+      T_{bc} \to\ & bT_{bc}c \mid \varepsilon
     \end{align*}
   \end{enumerate}
 \end{enumerate}
