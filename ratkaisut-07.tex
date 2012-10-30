@@ -16,6 +16,7 @@
 \newcommand{\set}[1]{{\left\{ #1 \right\}}}
 \newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
 \newcommand{\Nat}{\mathbb{N}}
+\newcommand{\ve}{\varepsilon}
 
 \newenvironment{automata}[1][2.8]%
 {\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=#1cm,semithick]}%
@@ -70,7 +71,7 @@
     kontekstiton kielioppi
 %
     \begin{equation*}
-      S \to SS \mid 0S1 \mid 1S0 \mid \varepsilon
+      S \to SS \mid 0S1 \mid 1S0 \mid \ve
     \end{equation*}
 %
     \begin{enumerate}
@@ -87,12 +88,13 @@
   \item
     \begin{enumerate}
       \item
-        Koostukoon aakkoston $\set{\mathrm{a},\mathrm{b},\mathrm{c}}$ kieli
-        $A$ merkkijonoista, joissa on yhtä monta $\mathrm{a}$-, $\mathrm{b}$-
-        ja $\mathrm{c}$-merkkiä. Osoita, että $A$ ei ole yhteydetön.
+        Koostukoon aakkoston $\set{a,b,c}$ kieli $A$ merkkijonoista, joissa on
+        yhtä monta $a$-, $b$- ja $c$-merkkiä. Osoita, että $A$ ei ole
+        yhteydetön.
 
       \item
-        Osoita, että kieli $\set{0^n1^n0^n1^n\mid n\in N}$ ei ole yhteydetön.
+        Osoita, että kieli $\set{0^n1^n0^n1^n \mid n \in \Nat}$ ei ole
+        yhteydetön.
     \end{enumerate}
 
   \item
@@ -109,19 +111,33 @@
       \node[state,accepting] (q3) [below right of=q0] {$q_3$};
       \node[state]           (q2) [above right of=q3] {$q_2$};
 
-      \path (q0) edge              node {$\varepsilon, \varepsilon \to \$ $} (q1)
+      \path (q0) edge              node {$\ve, \ve \to \$ $} (q1)
             (q1) edge [loop above] node {$\begin{aligned}
-                                           0, & \varepsilon \to  0 \\
-                                           1, & \varepsilon \to  1
+                                           0, & \ve \to  0 \\
+                                           1, & \ve \to  1
                                          \end{aligned}$} ()
-                 edge node        {$\varepsilon,\varepsilon\to\varepsilon$} (q2)
+                 edge              node {$\ve,\ve\to\ve$} (q2)
             (q2) edge [loop right] node {$\begin{aligned}
-                                          0, & 0 \to \varepsilon \\
-                                          1, & 1 \to \varepsilon
+                                          0, & 0 \to \ve \\
+                                          1, & 1 \to \ve
                                           \end{aligned}$} ()
-                 edge node        {$\varepsilon,\$ \to \varepsilon$} (q3);
+                 edge              node {$\ve,\$ \to \ve$} (q3);
     \end{centerautomata}
 
+  \item
+    \begin{enumerate}
+    \item
+      Osoita, että jos $A$ on yhteydetön ja $B$ säännöllinen kieli, niin
+      $A\cap B$ on yhteydetön.
+
+      \emph{Vihje:} muodosta pinoautomaatin ja äärellisen automaatin
+      leikkausautomaatti samaan tapaan kuin Jyrkin luentojen lauseessa 1.1
+      (luentomateriaalin sivut 48--50).
+
+    \item
+      Tiedetään, että kieli $L$ on yhteydetön ja $R$ säännöllinen. Voidaanko
+      tästä päätellä, että $L-R$ on yhteydetön? Entä $R-L$? Perustele.
+    \end{enumerate}
 \end{enumerate}
 
 \end{document}
