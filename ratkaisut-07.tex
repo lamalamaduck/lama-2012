@@ -17,6 +17,14 @@
 \newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
 \newcommand{\Nat}{\mathbb{N}}
 
+\newenvironment{automata}[1][2.8]%
+{\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=#1cm,semithick]}%
+{\end{tikzpicture}}
+
+\newenvironment{centerautomata}[1][2.2]%
+{\begin{center}\begin{automata}[#1]}%
+{\end{automata} \end{center}}
+
 \begin{document}
 
 \subsection*{582206 Laskennan mallit, syksy 2012 \\
@@ -37,6 +45,83 @@
         Kaikki aakkoston $\Sigma = \set{0, 1}$ merkkijonot joissa nollia on
         kaksi kertaa niin paljon kuin ykkösiä.
     \end{enumerate}
+
+  \item
+    Tarkastellaan kielioppia
+%
+    \begin{align*}
+      S & \to S+T \mid T \\
+      T & \to T*F \mid F \\
+      F & \to (S) \mid a
+    \end{align*}
+%
+    Muodosta merkkijonon $s=( a+ a)* a$ jäsennyspuu tämän kieliopin
+    mukaisesti.
+
+    Etsi jäsennyspuusta jokin juuresta lehteen johtava polku, jolla sama
+    muuttuja esiintyy kahdessa solmussa. Muodosta tämän perusteella
+    toistuvuusominaisuuden todistuksen ideaa mukaillen jokin merkkijonon $s$
+    jako osiin $s=uvxyz$, joilla merkkijono $uv^ixy^iz$ kuuluu tarkasteltavaan
+    kieleen kaikilla $i\in N$.
+
+  \item
+    Olkoon $A$ aakkoston $\set{0,1}$ kieli, joka koostuu niistä
+    merkkijonoista, joissa on sama määrä nollia ja ykkösiä. Tällä kielellä on
+    kontekstiton kielioppi
+%
+    \begin{equation*}
+      S \to SS \mid 0S1 \mid 1S0 \mid \varepsilon
+    \end{equation*}
+%
+    \begin{enumerate}
+    \item
+      Kielen $A$ eräs toistuvuuspituus on 4. Esitä kieleen $A$ kuuluvalle
+      merkkijonolle $s=001101$ kaikki eri tavat jakaa se osiin $s=uvxyz$
+      toistuvuusominaisuuden ehdot toteuttavalla tavalla (lause 2.30; Sipser
+      Theorem 2.34; tässä siis $p=4$).
+
+    \item
+      Onko kielellä $A$ pienempiä toistuvuuspituuksia kuin 4? Perustele.
+    \end{enumerate}
+
+  \item
+    \begin{enumerate}
+      \item
+        Koostukoon aakkoston $\set{\mathrm{a},\mathrm{b},\mathrm{c}}$ kieli
+        $A$ merkkijonoista, joissa on yhtä monta $\mathrm{a}$-, $\mathrm{b}$-
+        ja $\mathrm{c}$-merkkiä. Osoita, että $A$ ei ole yhteydetön.
+
+      \item
+        Osoita, että kieli $\set{0^n1^n0^n1^n\mid n\in N}$ ei ole yhteydetön.
+    \end{enumerate}
+
+  \item
+    Anna yhteydetön kielioppi, joka tuottaa kielen $\set{a^ib^jc^k \mid i = 2j
+      \text{ tai } j = 2k}$. Muodosta apulauseen 2.21 mukaisesti kieliopistasi
+    pinoautomaatti, joka tunnistaa saman kielen.
+
+  \item
+    Tee alla olevasta pinoautomaatista Apulauseen 2.27 mukaisesti kielioppi.
+
+    \begin{centerautomata}
+      \node[initial,state,accepting]   (q0)                     {$q_0$};
+      \node[state]           (q1) [above right of=q0] {$q_1$};
+      \node[state,accepting] (q3) [below right of=q0] {$q_3$};
+      \node[state]           (q2) [above right of=q3] {$q_2$};
+
+      \path (q0) edge              node {$\varepsilon, \varepsilon \to \$ $} (q1)
+            (q1) edge [loop above] node {$\begin{aligned}
+                                           0, & \varepsilon \to  0 \\
+                                           1, & \varepsilon \to  1
+                                         \end{aligned}$} ()
+                 edge node        {$\varepsilon,\varepsilon\to\varepsilon$} (q2)
+            (q2) edge [loop right] node {$\begin{aligned}
+                                          0, & 0 \to \varepsilon \\
+                                          1, & 1 \to \varepsilon
+                                          \end{aligned}$} ()
+                 edge node        {$\varepsilon,\$ \to \varepsilon$} (q3);
+    \end{centerautomata}
+
 \end{enumerate}
 
 \end{document}
