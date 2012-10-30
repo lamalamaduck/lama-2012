@@ -38,10 +38,76 @@
     \begin{enumerate}
       \item
         Kaikki palindromit aakkostosta $\Sigma = \set{a, b, c}$.
+
+        \begin{automata}
+            \node[initial, state] (q0) {$q_0$};
+            \node[state] (q1) [right of=q0] {$q_1$};
+            \node[state] (q2) [right of=q1] {$q_2$};
+            \node[state, accepting] (q3) [right of=q2] {$q_3$};
+
+            \path
+            (q0) edge node {$\ve, \ve \to \$ $} (q1)
+            (q1) edge [loop below] node {$\begin{aligned}
+                              a, \ve \to a \\
+                              b, \ve \to b \\
+                              c, \ve \to c
+                            \end{aligned}$} (q0)
+            (q1) edge node {$\begin{aligned}
+                                \ve, \ve \to \ve\\
+                                a, \ve \to \ve \\
+                                b, \ve \to \ve \\
+                                c, \ve \to \ve
+                            \end{aligned}$} (q2)
+            (q2) edge [loop below] node {$\begin{aligned}
+                                a, a \to \ve \\
+                                b, b \to \ve \\
+                                c, c \to \ve
+                            \end{aligned}$} (q2)
+            (q2) edge node {$\ve, \$ \to \ve$} (q3);
+
+        \end{automata}
+
       \item
         $\set{a^ib^j \mid 0 \le i \le j}$ missä $\Sigma = \set{a, b, c}$
+
+        \begin{automata}
+            \node[initial, state] (q0) {$q_0$};
+            \node[state] (q1) [right of=q0] {$q_1$};
+            \node[state] (q2) [right of=q1] {$q_2$};
+            \node[state] (q3) [right of=q2] {$q_3$};
+
+            \path
+            (q0) edge node {$\ve, \ve \to \$ $} (q1)
+            (q1) edge [loop below] node {$a, \ve \to 1$} (q1)
+            (q1) edge node {$\ve, \ve \to \ve$} (q2)
+            (q2) edge [loop below] node {$b, 1 \to \ve$} (q2)
+            (q2) edge node {$\ve, \$ \to \ve$} (q3)
+            (q3) edge [loop below] node {$b, \ve \to \ve$} (q3);
+        \end{automata}
+
       \item
         $\set{a^ib^jc^k \mid j = i + k}$ missä $\Sigma = \set{a, b, c}$
+
+        \begin{automata}
+            \node[initial, state] (q0) {$q_0$};
+            \node[state] (q1) [above of=q0] {$q_1$};
+            \node[state] (q2) [right of=q1] {$q_2$};
+            \node[state] (q3) [right of=q2] {$q_3$};
+            \node[state] (q4) [right of=q3] {$q_4$};
+            \node[state, accepting] (q5) [below of=q4] {$q_5$};
+
+            \path
+            (q0) edge node {$\ve, \ve \to \$ $} (q1)
+            (q1) edge [loop above] node {$a, \ve \to 1$} (q1)
+            (q1) edge node {$\ve, \ve \to \ve$} (q2)
+            (q2) edge [loop above] node {$b, 1 \to \ve$} (q2)
+            (q2) edge node {$\ve, \$ \to \$ $} (q3)
+            (q3) edge [loop above] node {$b, \ve \to 1$} (q3)
+            (q3) edge node {$\ve, \ve \to \ve$} (q4)
+            (q4) edge [loop above] node {$c, 1 \to \ve$} (q4)
+            (q4) edge node {$\ve, \$ \to \ve$} (q5) ;
+        \end{automata}
+
       \item
         Kaikki aakkoston $\Sigma = \set{0, 1}$ merkkijonot joissa nollia on
         kaksi kertaa niin paljon kuin ykkösiä.
