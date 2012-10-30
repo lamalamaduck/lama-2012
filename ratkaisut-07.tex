@@ -5,6 +5,7 @@
 \usepackage[margin=2cm]{geometry}
 \usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
 \usepackage{microtype}
+\usepackage{booktabs}
 \usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
@@ -146,6 +147,46 @@
       merkkijonolle $s=001101$ kaikki eri tavat jakaa se osiin $s=uvxyz$
       toistuvuusominaisuuden ehdot toteuttavalla tavalla (lause 2.30; Sipser
       Theorem 2.34; tässä siis $p=4$).
+
+      \begin{tabular}{ccccc}
+          \toprule
+          $u$         & $v$  & $x$ & $y$  & $z$ \\
+          \midrule
+                      &      &     & 0011 & 01\\
+                      &      & 0   & 01   & 101\\
+                      & 0    &     & 011  & 01\\
+                      & 0    & 0   & 1    & 101\\
+                      & 0    & 01  & 1    & 01\\
+                      & 00   &     & 11   & 01\\
+                      & 001  &     & 1    & 01\\
+                      & 0011 &     &      & 01\\
+          0           &      &     & 01   & 101\\
+          0           &      &     & 0110 & 1\\
+          0           &      & 01  & 10   & 1\\
+          0           & 0    &     & 1    & 101\\
+          0           & 0    &     & 110  & 1\\
+          0           & 0    & 1   & 1    & 01\\
+          0           & 01   &     &      & 101\\
+          0           & 01   &     & 10   & 1\\
+          0           & 01   & 1   &      & 01\\
+          0           & 01   & 10  &      & 1\\
+          0           & 011  &     & 0    & 1\\
+          0           & 0110 &     &      & 1\\
+          00          &      & 1   & 10   & 1\\
+          00          &      & 11  & 01   & \\
+          00          & 1    & 1   & 0    & 1\\
+          001         &      &     & 10   & 1\\
+          001         &      & 1   & 01   & \\
+          001         & 1    &     & 0    & 1\\
+          001         & 10   &     &      & 1\\
+          001         & 10   & 1   &      & \\
+          0011        &      &     & 01   & \\
+          0011        & 0    &     & 1    & \\
+          0011        & 01   &     &      &
+          \bottomrule
+      \end{tabular}
+
+      Yhteensä 31 ehdot täyttävää jakoa.
 
     \item
       Onko kielellä $A$ pienempiä toistuvuuspituuksia kuin 4? Perustele.
