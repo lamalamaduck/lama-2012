@@ -6,6 +6,7 @@
 \usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
 \usepackage{microtype}
 \usepackage{array}
+\usepackage{booktabs}
 \usepackage{pgf}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata}
@@ -27,8 +28,8 @@
 {\begin{center}\begin{automata}[#1]}%
 {\end{automata} \end{center}}
 
-\newcolumntype{V}{>{\centering\arraybackslash} m{2cm} }
-\newcolumntype{W}{>{\centering\arraybackslash} m{5cm} }
+\newcolumntype{W}{>{\centering}m{5cm} }
+\newcolumntype{V}{>{\centering}m{2cm} }
 
 \begin{document}
 
@@ -42,10 +43,76 @@
     \begin{enumerate}
       \item
         Kaikki palindromit aakkostosta $\Sigma = \set{a, b, c}$.
+
+        \begin{automata}
+            \node[initial, state] (q0) {$q_0$};
+            \node[state] (q1) [right of=q0] {$q_1$};
+            \node[state] (q2) [right of=q1] {$q_2$};
+            \node[state, accepting] (q3) [right of=q2] {$q_3$};
+
+            \path
+            (q0) edge node {$\ve, \ve \to \$ $} (q1)
+            (q1) edge [loop below] node {$\begin{aligned}
+                              a, \ve \to a \\
+                              b, \ve \to b \\
+                              c, \ve \to c
+                            \end{aligned}$} (q0)
+            (q1) edge node {$\begin{aligned}
+                                \ve, \ve \to \ve\\
+                                a, \ve \to \ve \\
+                                b, \ve \to \ve \\
+                                c, \ve \to \ve
+                            \end{aligned}$} (q2)
+            (q2) edge [loop below] node {$\begin{aligned}
+                                a, a \to \ve \\
+                                b, b \to \ve \\
+                                c, c \to \ve
+                            \end{aligned}$} (q2)
+            (q2) edge node {$\ve, \$ \to \ve$} (q3);
+
+        \end{automata}
+
       \item
         $\set{a^ib^j \mid 0 \le i \le j}$ missä $\Sigma = \set{a, b, c}$
+
+        \begin{automata}
+            \node[initial, state] (q0) {$q_0$};
+            \node[state] (q1) [right of=q0] {$q_1$};
+            \node[state] (q2) [right of=q1] {$q_2$};
+            \node[state] (q3) [right of=q2] {$q_3$};
+
+            \path
+            (q0) edge node {$\ve, \ve \to \$ $} (q1)
+            (q1) edge [loop below] node {$a, \ve \to 1$} (q1)
+            (q1) edge node {$\ve, \ve \to \ve$} (q2)
+            (q2) edge [loop below] node {$b, 1 \to \ve$} (q2)
+            (q2) edge node {$\ve, \$ \to \ve$} (q3)
+            (q3) edge [loop below] node {$b, \ve \to \ve$} (q3);
+        \end{automata}
+
       \item
         $\set{a^ib^jc^k \mid j = i + k}$ missä $\Sigma = \set{a, b, c}$
+
+        \begin{automata}
+            \node[initial, state] (q0) {$q_0$};
+            \node[state] (q1) [above of=q0] {$q_1$};
+            \node[state] (q2) [right of=q1] {$q_2$};
+            \node[state] (q3) [right of=q2] {$q_3$};
+            \node[state] (q4) [right of=q3] {$q_4$};
+            \node[state, accepting] (q5) [below of=q4] {$q_5$};
+
+            \path
+            (q0) edge node {$\ve, \ve \to \$ $} (q1)
+            (q1) edge [loop above] node {$a, \ve \to 1$} (q1)
+            (q1) edge node {$\ve, \ve \to \ve$} (q2)
+            (q2) edge [loop above] node {$b, 1 \to \ve$} (q2)
+            (q2) edge node {$\ve, \$ \to \$ $} (q3)
+            (q3) edge [loop above] node {$b, \ve \to 1$} (q3)
+            (q3) edge node {$\ve, \ve \to \ve$} (q4)
+            (q4) edge [loop above] node {$c, 1 \to \ve$} (q4)
+            (q4) edge node {$\ve, \$ \to \ve$} (q5) ;
+        \end{automata}
+
       \item
         Kaikki aakkoston $\Sigma = \set{0, 1}$ merkkijonot joissa nollia on
         kaksi kertaa niin paljon kuin ykkösiä.
@@ -84,6 +151,46 @@
       merkkijonolle $s=001101$ kaikki eri tavat jakaa se osiin $s=uvxyz$
       toistuvuusominaisuuden ehdot toteuttavalla tavalla (lause 2.30; Sipser
       Theorem 2.34; tässä siis $p=4$).
+
+      \begin{tabular}{ccccc}
+          \toprule
+          $u$         & $v$  & $x$ & $y$  & $z$ \tabularnewline
+          \midrule
+                      &      &     & 0011 & 01\tabularnewline
+                      &      & 0   & 01   & 101\tabularnewline
+                      & 0    &     & 011  & 01\tabularnewline
+                      & 0    & 0   & 1    & 101\tabularnewline
+                      & 0    & 01  & 1    & 01\tabularnewline
+                      & 00   &     & 11   & 01\tabularnewline
+                      & 001  &     & 1    & 01\tabularnewline
+                      & 0011 &     &      & 01\tabularnewline
+          0           &      &     & 01   & 101\tabularnewline
+          0           &      &     & 0110 & 1\tabularnewline
+          0           &      & 01  & 10   & 1\tabularnewline
+          0           & 0    &     & 1    & 101\tabularnewline
+          0           & 0    &     & 110  & 1\tabularnewline
+          0           & 0    & 1   & 1    & 01\tabularnewline
+          0           & 01   &     &      & 101\tabularnewline
+          0           & 01   &     & 10   & 1\tabularnewline
+          0           & 01   & 1   &      & 01\tabularnewline
+          0           & 01   & 10  &      & 1\tabularnewline
+          0           & 011  &     & 0    & 1\tabularnewline
+          0           & 0110 &     &      & 1\tabularnewline
+          00          &      & 1   & 10   & 1\tabularnewline
+          00          &      & 11  & 01   & \tabularnewline
+          00          & 1    & 1   & 0    & 1\tabularnewline
+          001         &      &     & 10   & 1\tabularnewline
+          001         &      & 1   & 01   & \tabularnewline
+          001         & 1    &     & 0    & 1\tabularnewline
+          001         & 10   &     &      & 1\tabularnewline
+          001         & 10   & 1   &      & \tabularnewline
+          0011        &      &     & 01   & \tabularnewline
+          0011        & 0    &     & 1    & \tabularnewline
+          0011        & 01   &     &      & \tabularnewline
+          \bottomrule
+      \end{tabular}
+
+      Yhteensä 31 ehdot täyttävää jakoa.
 
     \item
       Onko kielellä $A$ pienempiä toistuvuuspituuksia kuin 4? Perustele.
@@ -185,7 +292,7 @@
           \node[state] (qj) [right of=qi] {$q_j$};
 
           \path (qi) edge node {$a, t \to s$} (qj);
-        \end{automata} & & \\
+        \end{automata} & & \tabularnewline
         &
         \scalebox{2}{$\to$}
         &
@@ -195,7 +302,7 @@
           \node[state] (j) [right of=i] {$(q_j, p_j)$};
 
           \path (i) edge node {$a, t \to s$} (j);
-        \end{automata} \\
+        \end{automata} \tabularnewline
         \begin{automata}
           \node[state] (pi)               {$p_i$};
           \node[state] (pj) [right of=pi] {$p_j$};
