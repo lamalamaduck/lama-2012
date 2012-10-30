@@ -1,0 +1,42 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
+\usepackage{microtype}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+
+\setenumerate{listparindent=\parindent}
+
+\newtheorem*{claim}{Väite}
+
+\newcommand{\set}[1]{{\left\{ #1 \right\}}}
+\newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
+
+\begin{document}
+
+\subsection*{582206 Laskennan mallit, syksy 2012 \\
+  \textmd{7. harjoitusten malliratkaisut \\
+    Juhana Laurinharju ja Jani Rahkola}}
+
+\begin{enumerate}
+  \item
+    Esitä pinoautomaatti seuraaville kielille.
+    \begin{enumerate}
+      \item
+        Kaikki palindromit aakkostosta $\Sigma = \set{a, b, c}$.
+      \item
+        $\set{a^ib^j \mid 0 \le i \le j}$ missä $\Sigma = \set{a, b, c}$
+      \item
+        $\set{a^ib^jc^k \mid j = i + k}$ missä $\Sigma = \set{a, b, c}$
+      \item
+        Kaikki aakkoston $\Sigma = \set{0, 1}$ merkkijonot joissa nollia on
+        kaksi kertaa niin paljon kuin ykkösiä.
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
