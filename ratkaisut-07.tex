@@ -8,6 +8,7 @@
 \usepackage{booktabs}
 \usepackage{pgf}
 \usepackage{tikz}
+\usepackage{tikz-qtree}
 \usetikzlibrary{arrows,automata}
 
 \setenumerate{listparindent=\parindent}
@@ -131,6 +132,10 @@
     toistuvuusominaisuuden todistuksen ideaa mukaillen jokin merkkijonon $s$
     jako osiin $s=uvxyz$, joilla merkkijono $uv^ixy^iz$ kuuluu tarkasteltavaan
     kieleen kaikilla $i\in N$.
+
+    \begin{tikzpicture}
+        {\Tree [.1 [.2 a ] [.3 [.4 b ] [.5 c ] ] ]}
+    \end{tikzpicture}
 
   \item
     Olkoon $A$ aakkoston $\set{0,1}$ kieli, joka koostuu niistä
