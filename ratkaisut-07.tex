@@ -9,6 +9,7 @@
 \usepackage{booktabs}
 \usepackage{pgf}
 \usepackage{tikz}
+\usepackage{tikz-qtree}
 \usetikzlibrary{arrows,automata}
 
 \setenumerate{listparindent=\parindent}
@@ -171,6 +172,10 @@
     jako osiin $s=uvxyz$, joilla merkkijono $uv^ixy^iz$ kuuluu tarkasteltavaan
     kieleen kaikilla $i\in N$.
 
+    \begin{tikzpicture}
+        {\Tree [.1 [.2 a ] [.3 [.4 b ] [.5 c ] ] ]}
+    \end{tikzpicture}
+
   \item
     Olkoon $A$ aakkoston $\set{0,1}$ kieli, joka koostuu niistä
     merkkijonoista, joissa on sama määrä nollia ja ykkösiä. Tällä kielellä on
@@ -281,6 +286,14 @@
     Anna yhteydetön kielioppi, joka tuottaa kielen $\set{a^ib^jc^k \mid i = 2j
       \text{ tai } j = 2k}$. Muodosta a\-pu\-lau\-seen 2.21 mukaisesti
     kieliopistasi pinoautomaatti, joka tunnistaa saman kielen.
+
+    \begin{align*}
+      S & \to T_{aab}T_c \mid T_a T_{bbc} \\
+      T_{aab} & \to aaT_{aab}b \mid \ve \\
+      T_c & \to cT_c \mid \ve \\
+      T_a & \to aT_a \mid \ve \\
+      T_{bbc} & \to bbT_{bbc}c \mid \ve
+    \end{align*}
 
   \item
     Tee alla olevasta pinoautomaatista Apulauseen 2.27 mukaisesti kielioppi.
