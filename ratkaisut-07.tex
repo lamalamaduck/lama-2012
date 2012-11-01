@@ -138,7 +138,20 @@
     kieleen kaikilla $i\in N$.
 
     \begin{tikzpicture}
-        {\Tree [.1 [.2 a ] [.3 [.4 b ] [.5 c ] ] ]}
+        \tikzset{frontier/.style={distance from root=200pt}}
+        \tikzset{edge from parent/.style=
+          {draw,
+           edge from parent path={(\tikzparentnode.south)
+                                   -- +(0,-8pt)
+                                   -| (\tikzchildnode)}}}
+        \Tree [.S [.T [.T [.F \edge[bend right] node  {}; (
+                              [.S [.S T F a ]
+                                  +
+                                  [.T F a ]]
+                              ) ]  ]
+                      *
+                      [.F a ]
+                      ] ]
     \end{tikzpicture}
 
   \item
@@ -225,6 +238,56 @@
       T_a & \to aT_a \mid \ve \\
       T_{bbc} & \to bbT_{bbc}c \mid \ve
     \end{align*}
+
+    Jos automaateissa saisi laittaa monta aakkosta pinoon kerralla, näyttäisi automaatti seuraavalta:
+
+    \begin{centerautomata}
+        \node[initial,state,acceting] (qstart)                    {$q_{\text{start}}$};
+        \node[state]                  (qloop)   [below of=qstart] {$q_{\text{loop}}$};
+        \node[state,accepting]        (qaccept) [below of=qloop]  {$q_{\text{accept}}$};
+
+        \path
+            (qstart) edge node {$\ve, \ve \to S\$ $} (qloop)
+            (qloop)  edge [loop left, looseness=13] node {$\begin{aligned}
+                    a &, a \to \ve \\
+                    b &, b \to \ve \\
+                    c &, c \to \ve
+                \end{aligned}$} (qloop)
+            (qloop)  edge [loop right, looseness=20] node {$\begin{aligned}
+                    &\ve, S       & \to & T_{aab}T_c \\
+                    &\ve, S       & \to & T_aT_{bbc} \\
+                    &\ve, T_{aab} & \to & aaT_{aab}b \\
+                    &\ve, T_{aab} & \to & \ve \\
+                    &\ve, T_c     & \to & cT_c \\
+                    &\ve, T_c     & \to & \ve \\
+                    &\ve, T_a     & \to & aT_a \\
+                    &\ve, T_a     & \to & \ve \\
+                    &\ve, T_{bbc} & \to & bbT_{bbc}c \\
+                    &\ve, T_{bbc} & \to & \ve
+                \end{aligned}$} (qloop)
+            (qloop)  edge node {$\ve, \$ \to \ve$} (qaccept);
+    \end{centerautomata}
+
+    Jokainen sääntö, jossa pinoon lisätään monta symbolia kerralla voidaan avata silmukaksi. Esimerkiksi sääntö
+    %
+    \begin{equation*}
+        \ve, T_{aab} \to aaT_{aab}b}
+    \end{equation*}
+    %
+    voidaan toteuttaa tavallisella pinokoneella seuraavasti:
+
+    \begin{centerautomata}
+        \node[state] (qloop) {$q_{\text{loop}}$};
+        \node[state] (q1) [right of=qloop, above of=qloop] {$q_1$};
+        \node[state] (q2) [right of=q1, below of=q1] {$q_2$};
+        \node[state] (q3) [left of=q2, below of=q2] {$q_3$};
+
+        \path
+            (qloop) edge [bend left] node {$\ve, T_{aab} \to b$}   (q1)
+            (q1)    edge [bend left] node {$\ve, \ve \to T_{aab}$} (q2)
+            (q2)    edge [bend left] node {$\ve, \ve \to a$}       (q3)
+            (q3)    edge [bend left] node {$\ve, \ve \to a$}       (qloop);
+    \end{centerautomata}
 
   \item
     Tee alla olevasta pinoautomaatista Apulauseen 2.27 mukaisesti kielioppi.
