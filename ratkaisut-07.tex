@@ -116,6 +116,41 @@
       \item
         Kaikki aakkoston $\Sigma = \set{0, 1}$ merkkijonot joissa nollia on
         kaksi kertaa niin paljon kuin ykkösiä.
+
+        \begin{automata}[3]
+          \node[state] (q1) {$q_1$};
+          \node[state] (q2) [below of=q1] {$q_2$};
+          \node[state] (q3) [above of=q1] {$q_3$};
+          \node[initial,state] [left of=q3] (q0) {$q_0$};
+          \node[state] (q5) [right of=q3] {$q_5$};
+          \node[state] (q4) [right of=q5] {$q_4$};
+          \node[state, accepting] (q6) [left of=q2] {$q_6$};
+
+          \path
+          (q0) edge [bend right=40] node [swap] {$\ve, \ve \to \$$} (q1)
+          (q1) edge [bend right=40] node [swap] {$\ve, \$ \to \ve$} (q6)
+          (q1) edge [out=350, in=320, looseness=10] node {$0, A \to \ve$} (q1)
+          (q1) edge [bend left=15] node {$1, Y \to \ve$} (q3)
+          (q3) edge [bend left=15] node {$\ve, Y \to \ve$} (q1)
+          (q1) edge [bend right,looseness=1.3] node [swap] {$\begin{aligned}
+                             1&, \$ \to \$ \\
+                             1&, A \to A
+                           \end{aligned}$} (q4)
+          (q3) edge node {$\ve, \$ \to \$$} (q5)
+          (q4) edge node [swap] {$\ve, \ve \to A$} (q5)
+          (q5) edge [bend left,looseness=1.2] node {$\ve, \ve \to A$} (q1)
+          (q1) edge [bend right=15] node [swap] {$\begin{aligned}
+                                         0&, \$ \to \$ \\
+                                         0&, Y \to Y
+                                       \end{aligned}$} (q2)
+          (q2) edge [bend right=15] node [swap] {$\ve, \ve \to Y$} (q1);
+        \end{automata}
+
+        Automaatin ideana on pitää pinossa kirjaa siitä kuinka paljon
+        nolla-merkkien määrässä on yli- tai alijäämää. Pinoon laitetaan $A$
+        jos siirtymä kerryttää alijäämää ja $Y$ jos se kerryttää ylijäämää.
+        Vastaavasti pinosta poistetaan merkkejä aina tilaisuuden tullen, kun
+        syötemerkin lukeminen tasoittaa nollien ja ykkösten suhdetta.
     \end{enumerate}
 
   \item
@@ -200,12 +235,46 @@
     \begin{enumerate}
       \item
         Koostukoon aakkoston $\set{a,b,c}$ kieli $A$ merkkijonoista, joissa on
-        yhtä monta $a$-, $b$- ja $c$-merkkiä. Osoita, että $A$ ei ole
-        yhteydetön.
+        yhtä monta $a$-, $b$- ja $c$-merkkiä.
+        \begin{claim}
+          Kieli $A$ ei ole yhteydetön.
+        \end{claim}
+        \begin{proof}
+          Oletetaan vastoin väitettä, että kieli $A$ on yhteydetön. Nyt
+          tehtävässä 7 todistetun nojalla leikkaus $A \cap L(a^*b^*c^*) =
+          \set{a^nb^nc^n \mid n \in \Nat}$ on yhteydetön. Tämä on kuitenkin
+          tunnetusti ristiriita. Siis kieli $A$ ei ole yhteydetön.
+        \end{proof}
 
       \item
         Osoita, että kieli $\set{0^n1^n0^n1^n \mid n \in \Nat}$ ei ole
         yhteydetön.
+        \begin{claim}
+          Kieli $A = \set{0^n1^n0^n1^n \mid n \in \Nat}$ ei ole yhteydetön.
+        \end{claim}
+        \begin{proof}
+          Oletetaan vastoin väitettä, että kieli $A$ on yhteydetön. Nyt
+          pumppauslemman nojalla sillä on pumppauspituus $p$. Valitaan
+          merkkijono $s = 0^p1^p0^p1^p$. Nyt merkkijonon jakojen $s = uvxyz$
+          tulisi täyttää pumppauslemman ehdot.
+
+          Merkkijonon $s$ pituus on $4p$ ja koska osaan $vxy$ ei saa tulla yli
+          $p$:tä merkkiä, täytyy osiin $u$ ja $z$ jäädä yhteensä vähintään
+          $3p$ merkkiä. Nyt siis joko osaan $u$ jäävät ainakin kaikki
+          merkkijonon $p$ esimmäistä nollaa, tai osaan $z$ jäävät ainakin
+          kaikki merkkijonon $p$ viimeistä ykköstä.
+
+          Jos kieleen $A$ kuuluvassa merkkijonossa on $p$ kappaletta
+          peräkkäisiä nollia tai $p$ kappaletta peräkkäisiä ykkösiä, täytyy
+          merkkijonon pituuden olla $4p$. Pumppauslemman mukaan merkkijonon
+          $uv^0xy^0z = uxz$ tulisi kuulua kieleen $A$. Koska osat $u$ ja $z$
+          pitävät sisällään joko $p$ nollaa tai $p$ ykköstä, tulisi
+          merkkijonon $uxz$ pituuden olla edelleen $4p$ jotta se voisi kuulua
+          kieleen $A$. Koska puuttuvat osat $v$ ja $y$ eivät kuitenkaan
+          saaneet molemmat olla tyhjiä, täytyy merkkijonon $uxz$ pituuden olla
+          aidosti vähemmän kuin $4p$. Siis $uxz$ ei kuulu kieleen $A$, mikä on
+          ristiriita. Täten kieli $A$ ei ole yhdeydetön.
+        \end{proof}
     \end{enumerate}
 
   \item
