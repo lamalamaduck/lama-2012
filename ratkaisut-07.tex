@@ -1,10 +1,11 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,11pt, draft]{article}
 
 \usepackage[finnish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=2cm]{geometry}
 \usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
 \usepackage{microtype}
+\usepackage{array}
 \usepackage{booktabs}
 \usepackage{pgf}
 \usepackage{tikz}
@@ -27,6 +28,9 @@
 \newenvironment{centerautomata}[1][2.2]%
 {\begin{center}\begin{automata}[#1]}%
 {\end{automata} \end{center}}
+
+\newcolumntype{W}{>{\centering}m{5cm} }
+\newcolumntype{V}{>{\centering}m{2cm} }
 
 \begin{document}
 
@@ -155,39 +159,39 @@
 
       \begin{tabular}{ccccc}
           \toprule
-          $u$         & $v$  & $x$ & $y$  & $z$ \\
+          $u$         & $v$  & $x$ & $y$  & $z$ \tabularnewline
           \midrule
-                      &      &     & 0011 & 01\\
-                      &      & 0   & 01   & 101\\
-                      & 0    &     & 011  & 01\\
-                      & 0    & 0   & 1    & 101\\
-                      & 0    & 01  & 1    & 01\\
-                      & 00   &     & 11   & 01\\
-                      & 001  &     & 1    & 01\\
-                      & 0011 &     &      & 01\\
-          0           &      &     & 01   & 101\\
-          0           &      &     & 0110 & 1\\
-          0           &      & 01  & 10   & 1\\
-          0           & 0    &     & 1    & 101\\
-          0           & 0    &     & 110  & 1\\
-          0           & 0    & 1   & 1    & 01\\
-          0           & 01   &     &      & 101\\
-          0           & 01   &     & 10   & 1\\
-          0           & 01   & 1   &      & 01\\
-          0           & 01   & 10  &      & 1\\
-          0           & 011  &     & 0    & 1\\
-          0           & 0110 &     &      & 1\\
-          00          &      & 1   & 10   & 1\\
-          00          &      & 11  & 01   & \\
-          00          & 1    & 1   & 0    & 1\\
-          001         &      &     & 10   & 1\\
-          001         &      & 1   & 01   & \\
-          001         & 1    &     & 0    & 1\\
-          001         & 10   &     &      & 1\\
-          001         & 10   & 1   &      & \\
-          0011        &      &     & 01   & \\
-          0011        & 0    &     & 1    & \\
-          0011        & 01   &     &      &
+                      &      &     & 0011 & 01\tabularnewline
+                      &      & 0   & 01   & 101\tabularnewline
+                      & 0    &     & 011  & 01\tabularnewline
+                      & 0    & 0   & 1    & 101\tabularnewline
+                      & 0    & 01  & 1    & 01\tabularnewline
+                      & 00   &     & 11   & 01\tabularnewline
+                      & 001  &     & 1    & 01\tabularnewline
+                      & 0011 &     &      & 01\tabularnewline
+          0           &      &     & 01   & 101\tabularnewline
+          0           &      &     & 0110 & 1\tabularnewline
+          0           &      & 01  & 10   & 1\tabularnewline
+          0           & 0    &     & 1    & 101\tabularnewline
+          0           & 0    &     & 110  & 1\tabularnewline
+          0           & 0    & 1   & 1    & 01\tabularnewline
+          0           & 01   &     &      & 101\tabularnewline
+          0           & 01   &     & 10   & 1\tabularnewline
+          0           & 01   & 1   &      & 01\tabularnewline
+          0           & 01   & 10  &      & 1\tabularnewline
+          0           & 011  &     & 0    & 1\tabularnewline
+          0           & 0110 &     &      & 1\tabularnewline
+          00          &      & 1   & 10   & 1\tabularnewline
+          00          &      & 11  & 01   & \tabularnewline
+          00          & 1    & 1   & 0    & 1\tabularnewline
+          001         &      &     & 10   & 1\tabularnewline
+          001         &      & 1   & 01   & \tabularnewline
+          001         & 1    &     & 0    & 1\tabularnewline
+          001         & 10   &     &      & 1\tabularnewline
+          001         & 10   & 1   &      & \tabularnewline
+          0011        &      &     & 01   & \tabularnewline
+          0011        & 0    &     & 1    & \tabularnewline
+          0011        & 01   &     &      & \tabularnewline
           \bottomrule
       \end{tabular}
 
@@ -211,8 +215,8 @@
 
   \item
     Anna yhteydetön kielioppi, joka tuottaa kielen $\set{a^ib^jc^k \mid i = 2j
-      \text{ tai } j = 2k}$. Muodosta apulauseen 2.21 mukaisesti kieliopistasi
-    pinoautomaatti, joka tunnistaa saman kielen.
+      \text{ tai } j = 2k}$. Muodosta a\-pu\-lau\-seen 2.21 mukaisesti
+    kieliopistasi pinoautomaatti, joka tunnistaa saman kielen.
 
   \item
     Tee alla olevasta pinoautomaatista Apulauseen 2.27 mukaisesti kielioppi.
@@ -246,9 +250,125 @@
       leikkausautomaatti samaan tapaan kuin Jyrkin luentojen lauseessa 1.1
       (luentomateriaalin sivut 48--50).
 
+      Olkoon $A$ yhteydetön kieli ja $M_A = (Q_A, \Sigma, \Gamma, \delta_A,
+      q_{A0}, F_A)$ automaatti joka tunnistaa kielen $A$. Olkoon $B$
+      säännöllinen kieli ja $M_B = (Q_B, \Sigma, \delta_B, q_{B0}, F_B)$
+      deterministinen automaatti joka tunnistaa kielen $B$.
+      \begin{claim}
+         Kieli $A \cap B$ on säännöllinen.
+      \end{claim}
+      \begin{proof}
+        Leikkauksen tunnistava automaatti luodaan samankaltaisella
+        menetelmällä kuin säännöllisten kielten tapauksessa. Ero säännöllisten
+        kielten tapaukseen on siirtymäfunktion $\delta_{A \cap B}$
+        määrrittelyssä.
+
+        Muodostetaan siis automaatti
+        \begin{equation*}
+          M_{A \cap B} = (Q_A \times Q_B \text{, } \Sigma \text{, } \Gamma
+          \text{, } \delta_{A \cap B} \text{, } (q_{A0}, q_{B0}) \text{, } F_A
+          \times F_B)
+        \end{equation*}
+        missä siirtymäfunktio $\delta_{A \cap B}$ on määritelty seuraavasti.
+%
+        \begin{equation*}
+          \delta_{A \cap B}((q_i, p_i), a, t) = 
+          \begin{cases}
+            \{((q_j, p_i),s) \mid \delta_A(q_i, \ve, t) = (q_j, s)\} & \text{
+              kun } a = \ve \\
+
+            \{((q_j, p_j),s) \mid \delta_B(q_i, a) = q_j \text{ ja }
+            \delta_A(p_i, a, t) = (p_j, s)\} & \text{ muulloin}
+          \end{cases}
+        \end{equation*}
+%
+        Automaatin tilajoukko on siis karteesinen tulo alkuperäisten
+        automaattien tiloista. Kaikki uuden automaatin tilat ovat siis muotoa
+        $(q, p)$ missä $q \in Q_A$ ja $p \in Q_B$. Siirtymät noudattavat parin
+        ensimmäisen alkion kohdalla automaatin $M_A$ siirtymäfunktiota ja
+        toisen alkion kohdalla automaatin $M_B$ siirtymäfunktiota. Pinon
+        käsittely noudattaa aina automaatin $M_A$ siirtymäfunktiota, sillä
+        automaatissa $M_B$ ei ole pinoa.
+%
+        \begin{center}
+        \begin{tabular}{W V W}
+        \begin{automata}
+          \node[state] (qi)               {$q_i$};
+          \node[state] (qj) [right of=qi] {$q_j$};
+
+          \path (qi) edge node {$a, t \to s$} (qj);
+        \end{automata} & & \tabularnewline
+        &
+        \scalebox{2}{$\to$}
+        &
+        \begin{automata}[3.5]
+          \tikzstyle{every state}=[shape=rectangle, rounded corners];
+          \node[state] (i) {$(q_i, p_i)$};
+          \node[state] (j) [right of=i] {$(q_j, p_j)$};
+
+          \path (i) edge node {$a, t \to s$} (j);
+        \end{automata} \tabularnewline
+        \begin{automata}
+          \node[state] (pi)               {$p_i$};
+          \node[state] (pj) [right of=pi] {$p_j$};
+
+          \path (pi) edge node {$a$} (pj);
+        \end{automata} & &
+        \end{tabular}
+        \end{center}
+%
+        Pinoautomaatti $M_A$ on e\-pä\-de\-ter\-mi\-nis\-ti\-nen, mutta $M_B$
+        ei. Pinoautomaatin e\-pä\-de\-ter\-mi\-nis\-tis\-ten siirtymien
+        kohdalla uudessa automaatissa tilaparin jälkimmäinen alkio ei muutu.
+        Ensimmäinen alkio noudattaa pinoautomaatin $M_A$ siirtymäfunktiota.
+%
+        \begin{center}
+        \begin{tabular}{W V W}
+        \begin{automata}
+          \node[state] (qi)               {$q_i$};
+          \node[state] (qj) [right of=qi] {$q_j$};
+ 
+          \path (qi) edge node {$\ve, t \to s$} (qj);
+         \end{automata}
+        &
+        \scalebox{2}{$\to$}
+        &
+        \begin{automata}[3.5]
+          \tikzstyle{every state}=[shape=rectangle, rounded corners];
+          \node[state] (i) {$(q_i, p_i)$};
+          \node[state] (j) [right of=i] {$(q_j, p_i)$};
+
+          \path (i) edge node {$\ve, t \to s$} (j);
+        \end{automata}
+        \end{tabular}
+        \end{center}
+%
+        Nyt luotu automaatti $M_{A \cap B}$ hyväksyy merkkijonon $w$ jos ja
+        vain jos $M_A$ ja $M_B$ hyväksyvät merkkijonon $w$. Siis $M_{A \cap
+          B}$ tunnistaa kielen $A \cap B$.
+      \end{proof}
+
     \item
       Tiedetään, että kieli $L$ on yhteydetön ja $R$ säännöllinen. Voidaanko
       tästä päätellä, että $L-R$ on yhteydetön? Entä $R-L$? Perustele.
+
+      \begin{claim}
+        Olkoon $L$ yhteydetön ja $R$ säännöllinen kieli. Nyt $L - R$ on
+        yhteydetön.
+      \end{claim}
+      \begin{proof}
+        Joukko-opista tiedämme, että $L - R = L \cap \overline{R}$. Lisäksi
+        tiedämme, että säännölliset kielet ovat suljettuja komplementin
+        suhteen. Nyt siis edellisen kohdan nojalla $L \cap \overline{R}$ on
+        yhteydetön, ja siten myös $L - R$ on yhteydetön.
+      \end{proof}
+
+      Toinen suunta ei päde yleisesti. Koska yhteydettömät kielet eivät ole
+      suljettuja komplementin suhteen, on olemassa yhteydetön kieli jonka
+      komplementti ei ole yhteydetön. Olkoon $L$ jokin tällainen kieli. Olkoon
+      nyt $R = \Sigma^*$ joka tunnetusti säännöllinen. Nyt siis $L$ on
+      yhteydetön ja $R$ säännöllinen, mutta $R - L = \Sigma^* - L =
+      \overline{L}$ joka oletuksen mukaan ei ole yhteydetön.
     \end{enumerate}
 \end{enumerate}
 
