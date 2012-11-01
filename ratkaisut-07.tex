@@ -380,6 +380,70 @@
                  edge              node {$\ve,\$ \to \ve$} (q3);
     \end{centerautomata}
 
+    Mainittu apulause vaatii, että automaatissa on tasan yksi hyväksyvä tila,
+    jokaisessa siirtymässä tulee joko laittaa pinoon jotain tai ottaa sieltä
+    jotain, mutta ei molempia ja lisäksy pinon täytyy aina hyväksyvässä tilassa
+    olla tyhjä. Muutetaan siis automaatti ensin tähän muotoon.
+
+    \begin{centerautomata}[3.0]
+      \node[initial,state]   (q0)                     {$q_0$};
+      \node[state]           (q1) [above right of=q0] {$q_1$};
+      \node[state]           (q4) [right of=q1] {$q_4$};
+      \node[state]           (q2) [below of=q4] {$q_2$};
+      \node[state,accepting] (q3) [below left of=q2] {$q_3$};
+
+      \path (q0) edge              node {$\ve, \ve \to \$ $} (q1)
+            (q1) edge [loop above] node {$\begin{aligned}
+                                           0, & \ve \to  0 \\
+                                           1, & \ve \to  1
+                                         \end{aligned}$} ()
+                 edge              node {$\ve,\ve\to X$}  (q4)
+            (q4) edge              node [swap] {$\ve, X \to\ve$} (q2)
+            (q2) edge [loop right] node {$\begin{aligned}
+                                          0, & 0 \to \ve \\
+                                          1, & 1 \to \ve
+                                          \end{aligned}$} ()
+                 edge              node {$\ve,\$ \to \ve$} (q3);
+    \end{centerautomata}
+
+    Nyt automaattiin voi soveltaa apulauseen menetelmää, jolloin saadaan seuraavat merkitykselliset säännöt:
+
+    \begin{align*}
+        A_{03} & \to \ve A_{12} \ve \\
+        A_{12} & \to  0 A_{12} 0 \mid 1 A_{12} 1 \mid \ve A_{44} \ve \\
+        A_{44} & \to \ve
+    \end{align*}
+
+    Lisäksi menetelmää noudattamalla saa seuraavat säännöt, joita ei tässä
+    tapauksessa satuta tarvitsemaan mihinkään:
+
+    \begin{align*}
+        A_{00} & \to \ve \\
+        A_{11} & \to \ve \\
+        A_{22} & \to \ve \\
+        A_{33} & \to \ve \\
+        A_{01} & \to A_{02}A_{21} \mid A_{03}A_{31} \mid A_{04}A_{41} \\
+        A_{02} & \to A_{01}A_{12} \mid A_{03}A_{32} \mid A_{04}A_{42} \\
+        A_{03} & \to A_{01}A_{13} \mid A_{02}A_{23} \mid A_{04}A_{43} \\
+        A_{04} & \to A_{01}A_{14} \mid A_{02}A_{24} \mid A_{03}A_{34} \\
+        A_{10} & \to A_{12}A_{20} \mid A_{13}A_{30} \mid A_{14}A_{40} \\
+        A_{12} & \to A_{10}A_{02} \mid A_{13}A_{32} \mid A_{14}A_{42} \\
+        A_{13} & \to A_{10}A_{03} \mid A_{12}A_{23} \mid A_{14}A_{43} \\
+        A_{14} & \to A_{10}A_{04} \mid A_{12}A_{24} \mid A_{13}A_{34} \\
+        A_{20} & \to A_{21}A_{10} \mid A_{23}A_{30} \mid A_{24}A_{40} \\
+        A_{21} & \to A_{20}A_{01} \mid A_{23}A_{31} \mid A_{24}A_{41} \\
+        A_{23} & \to A_{20}A_{03} \mid A_{21}A_{13} \mid A_{24}A_{43} \\
+        A_{24} & \to A_{20}A_{04} \mid A_{21}A_{14} \mid A_{23}A_{34} \\
+        A_{30} & \to A_{31}A_{10} \mid A_{32}A_{20} \mid A_{34}A_{40} \\
+        A_{31} & \to A_{30}A_{01} \mid A_{32}A_{21} \mid A_{34}A_{41} \\
+        A_{32} & \to A_{30}A_{02} \mid A_{31}A_{12} \mid A_{34}A_{42} \\
+        A_{34} & \to A_{30}A_{04} \mid A_{31}A_{14} \mid A_{32}A_{24} \\
+        A_{40} & \to A_{41}A_{10} \mid A_{42}A_{20} \mid A_{43}A_{30} \\
+        A_{41} & \to A_{40}A_{01} \mid A_{42}A_{21} \mid A_{43}A_{31} \\
+        A_{42} & \to A_{40}A_{02} \mid A_{41}A_{12} \mid A_{43}A_{32} \\
+        A_{43} & \to A_{40}A_{03} \mid A_{41}A_{13} \mid A_{42}A_{23}
+    \end{align*}
+
   \item
     \begin{enumerate}
     \item
