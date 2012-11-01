@@ -311,7 +311,7 @@
     Jos automaateissa saisi laittaa monta aakkosta pinoon kerralla, näyttäisi automaatti seuraavalta:
 
     \begin{centerautomata}
-        \node[initial,state,accepting] (qstart)                    {$q_{\text{start}}$};
+        \node[initial,state] (qstart)                    {$q_{\text{start}}$};
         \node[state]                  (qloop)   [below of=qstart] {$q_{\text{loop}}$};
         \node[state,accepting]        (qaccept) [below of=qloop]  {$q_{\text{accept}}$};
 
