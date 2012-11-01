@@ -29,8 +29,8 @@
 {\begin{center}\begin{automata}[#1]}%
 {\end{automata} \end{center}}
 
-\newcolumntype{W}{>{\centering}m{5cm} }
-\newcolumntype{V}{>{\centering}m{2cm} }
+\newcolumntype{W}{>{\centering\arraybackslash}m{5cm} }
+\newcolumntype{V}{>{\centering\arraybackslash}m{2cm} }
 
 \begin{document}
 
@@ -290,13 +290,12 @@
           \end{cases}
         \end{equation*}
 %
-        Automaatin tilajoukko on siis karteesinen tulo alkuperäisten
-        automaattien tiloista. Kaikki uuden automaatin tilat ovat siis muotoa
-        $(q, p)$ missä $q \in Q_A$ ja $p \in Q_B$. Siirtymät noudattavat parin
-        ensimmäisen alkion kohdalla automaatin $M_A$ siirtymäfunktiota ja
-        toisen alkion kohdalla automaatin $M_B$ siirtymäfunktiota. Pinon
-        käsittely noudattaa aina automaatin $M_A$ siirtymäfunktiota, sillä
-        automaatissa $M_B$ ei ole pinoa.
+        Kaikki uuden automaatin tilat ovat siis muotoa $(q, p)$ missä $q \in
+        Q_A$ ja $p \in Q_B$. Siirtymät noudattavat parin ensimmäisen alkion
+        kohdalla automaatin $M_A$ siirtymäfunktiota ja toisen alkion kohdalla
+        automaatin $M_B$ siirtymäfunktiota. Pinon käsittely noudattaa aina
+        automaatin $M_A$ siirtymäfunktiota, sillä automaatissa $M_B$ ei ole
+        pinoa.
 %
         \begin{center}
         \begin{tabular}{W V W}
@@ -351,9 +350,9 @@
         \end{tabular}
         \end{center}
 %
-        Nyt luotu automaatti $M_{A \cap B}$ hyväksyy merkkijonon $w$ jos ja
-        vain jos $M_A$ ja $M_B$ hyväksyvät merkkijonon $w$. Siis $M_{A \cap
-          B}$ tunnistaa kielen $A \cap B$.
+        Luotu automaatti $M_{A \cap B}$ hyväksyy merkkijonon $w$ jos ja vain
+        jos $M_A$ ja $M_B$ hyväksyvät merkkijonon $w$. Siis $M_{A \cap B}$
+        tunnistaa kielen $A \cap B$.
       \end{proof}
 
     \item
