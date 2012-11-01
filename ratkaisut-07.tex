@@ -25,7 +25,7 @@
 {\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=#1cm,semithick]}%
 {\end{tikzpicture}}
 
-\newenvironment{centerautomata}[1][2.2]%
+\newenvironment{centerautomata}[1][2.8]%
 {\begin{center}\begin{automata}[#1]}%
 {\end{automata} \end{center}}
 
@@ -45,7 +45,7 @@
       \item
         Kaikki palindromit aakkostosta $\Sigma = \set{a, b, c}$.
 
-        \begin{automata}
+        \begin{centerautomata}
             \node[initial, state] (q0) {$q_0$};
             \node[state] (q1) [right of=q0] {$q_1$};
             \node[state] (q2) [right of=q1] {$q_2$};
@@ -71,12 +71,12 @@
                             \end{aligned}$} (q2)
             (q2) edge node {$\ve, \$ \to \ve$} (q3);
 
-        \end{automata}
+        \end{centerautomata}
 
       \item
         $\set{a^ib^j \mid 0 \le i \le j}$ missä $\Sigma = \set{a, b, c}$
 
-        \begin{automata}
+        \begin{centerautomata}
             \node[initial, state] (q0) {$q_0$};
             \node[state] (q1) [right of=q0] {$q_1$};
             \node[state] (q2) [right of=q1] {$q_2$};
@@ -89,12 +89,12 @@
             (q2) edge [loop below] node {$b, 1 \to \ve$} (q2)
             (q2) edge node {$\ve, \$ \to \ve$} (q3)
             (q3) edge [loop below] node {$b, \ve \to \ve$} (q3);
-        \end{automata}
+        \end{centerautomata}
 
       \item
         $\set{a^ib^jc^k \mid j = i + k}$ missä $\Sigma = \set{a, b, c}$
 
-        \begin{automata}
+        \begin{centerautomata}
             \node[initial, state] (q0) {$q_0$};
             \node[state] (q1) [above of=q0] {$q_1$};
             \node[state] (q2) [right of=q1] {$q_2$};
@@ -112,13 +112,13 @@
             (q3) edge node {$\ve, \ve \to \ve$} (q4)
             (q4) edge [loop above] node {$c, 1 \to \ve$} (q4)
             (q4) edge node {$\ve, \$ \to \ve$} (q5) ;
-        \end{automata}
+        \end{centerautomata}
 
       \item
         Kaikki aakkoston $\Sigma = \set{0, 1}$ merkkijonot joissa nollia on
         kaksi kertaa niin paljon kuin ykkösiä.
 
-        \begin{automata}[3]
+        \begin{centerautomata}[3]
           \node[state] (q1) {$q_1$};
           \node[state] (q2) [below of=q1] {$q_2$};
           \node[state] (q3) [above of=q1] {$q_3$};
@@ -145,7 +145,7 @@
                                          0&, Y \to Y
                                        \end{aligned}$} (q2)
           (q2) edge [bend right=15] node [swap] {$\ve, \ve \to Y$} (q1);
-        \end{automata}
+        \end{centerautomata}
 
         Automaatin ideana on pitää pinossa kirjaa siitä kuinka paljon
         nolla-merkkien määrässä on yli- tai alijäämää. Pinoon laitetaan $A$
@@ -172,22 +172,24 @@
     jako osiin $s=uvxyz$, joilla merkkijono $uv^ixy^iz$ kuuluu tarkasteltavaan
     kieleen kaikilla $i\in N$.
 
-    \begin{tikzpicture}
+    \begin{center}
+      \begin{tikzpicture}
         \tikzset{frontier/.style={distance from root=200pt}}
         \tikzset{edge from parent/.style=
           {draw,
-           edge from parent path={(\tikzparentnode.south)
-                                   -- +(0,-8pt)
-                                   -| (\tikzchildnode)}}}
+            edge from parent path={(\tikzparentnode.south)
+              -- +(0,-8pt)
+              -| (\tikzchildnode)}}}
         \Tree [.S [.T [.T [.F \edge[bend right] node  {}; (
-                              [.S [.S T F a ]
-                                  +
-                                  [.T F a ]]
-                              ) ]  ]
-                      *
-                      [.F a ]
-                      ] ]
-    \end{tikzpicture}
+                [.S [.S T F a ]
+                  +
+                  [.T F a ]]
+                ) ]  ]
+            *
+            [.F a ]
+        ] ]
+      \end{tikzpicture}
+    \end{center}
 
   \item
     Olkoon $A$ aakkoston $\set{0,1}$ kieli, joka koostuu niistä
@@ -205,18 +207,19 @@
       toistuvuusominaisuuden ehdot toteuttavalla tavalla (lause 2.30; Sipser
       Theorem 2.34; tässä siis $p=4$).
 
-      \begin{tabular}{ccccc}
+      \begin{center}
+        \begin{tabular}{ccccc}
           \toprule
           $u$         & $v$  & $x$ & $y$  & $z$ \tabularnewline
           \midrule
-                      &      &     & 0011 & 01\tabularnewline
-                      &      & 0   & 01   & 101\tabularnewline
-                      & 0    &     & 011  & 01\tabularnewline
-                      & 0    & 0   & 1    & 101\tabularnewline
-                      & 0    & 01  & 1    & 01\tabularnewline
-                      & 00   &     & 11   & 01\tabularnewline
-                      & 001  &     & 1    & 01\tabularnewline
-                      & 0011 &     &      & 01\tabularnewline
+          &      &     & 0011 & 01\tabularnewline
+          &      & 0   & 01   & 101\tabularnewline
+          & 0    &     & 011  & 01\tabularnewline
+          & 0    & 0   & 1    & 101\tabularnewline
+          & 0    & 01  & 1    & 01\tabularnewline
+          & 00   &     & 11   & 01\tabularnewline
+          & 001  &     & 1    & 01\tabularnewline
+          & 0011 &     &      & 01\tabularnewline
           0           &      &     & 01   & 101\tabularnewline
           0           &      &     & 0110 & 1\tabularnewline
           0           &      & 01  & 10   & 1\tabularnewline
@@ -241,7 +244,8 @@
           0011        & 0    &     & 1    & \tabularnewline
           0011        & 01   &     &      & \tabularnewline
           \bottomrule
-      \end{tabular}
+        \end{tabular}
+      \end{center}
 
       Yhteensä 31 ehdot täyttävää jakoa.
 
@@ -337,7 +341,8 @@
             (qloop)  edge node {$\ve, \$ \to \ve$} (qaccept);
     \end{centerautomata}
 
-    Jokainen sääntö, jossa pinoon lisätään monta symbolia kerralla voidaan avata silmukaksi. Esimerkiksi sääntö
+    Jokainen sääntö, jossa pinoon lisätään monta symbolia kerralla voidaan
+    avata silmukaksi. Esimerkiksi sääntö
     %
     \begin{equation*}
         \ve, T_{aab} \to aaT_{aab}b}
