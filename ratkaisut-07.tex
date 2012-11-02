@@ -174,22 +174,45 @@
 
     \begin{center}
       \begin{tikzpicture}
-        \tikzset{frontier/.style={distance from root=200pt}}
+        \tikzset{frontier/.style={distance from root=240pt}}
         \tikzset{edge from parent/.style=
           {draw,
             edge from parent path={(\tikzparentnode.south)
               -- +(0,-8pt)
               -| (\tikzchildnode)}}}
-        \Tree [.S [.T [.T [.F \edge[bend right] node  {}; (
-                [.S [.S T F a ]
-                  +
-                  [.T F a ]]
-                ) ]  ]
-            *
-            [.F a ]
+        \Tree [.$S$ [.$T$ [.$T$ [.$F$ \edge[bend right] node  {}; (
+                                      [.\node[draw]{$S$}; [.\node[draw]{$S$}; [.$T$ [.$F$ $a$ ] ] ]
+                                                          +
+                                                          [.$T$ [.$F$ $a$ ]]]
+                                      ) ]  ]
+                          *
+                          [.$F$ $a$ ]
         ] ]
       \end{tikzpicture}
     \end{center}
+
+    Nyt puusta löytyy kuvan osoittamalla tavalla sama symboli $S$ kahdessa eri
+    paikassa saman juuresta lehteen johtavan polun varrella. Ylemmästä on
+    johdettu merkkijono $a+a$ ja alemmasta merkkijono $a$. Jos nyt alemman
+    johdon korvaisi ylemmästä saadulla merkkijonolla, saataisiin merkkijono
+    $a+a+a$. Valitaan siis toistettavat osat seuraavasti:
+%
+    \begin{align*}
+        u &= (a \\
+        v &= +a \\
+        x &= \ve \\
+        y &= \ve \\
+        z &= )*a
+    \end{align*}
+    %
+    jolloin voidaan tuottaa kieliopin tunnistamia merkkijonoja toistolauseen
+    mukaisesti. Tässä esimerkkinä muutama ensimmäinen:
+    %
+    \begin{align*}
+        uxz       &= (a)*a \\
+        uv^2xy^2z &= (a+a+a)*a \\
+        uv^3xy^3z &= (a+a+a+a)*a \\
+    \end{align*}
 
   \item
     Olkoon $A$ aakkoston $\set{0,1}$ kieli, joka koostuu niistä
