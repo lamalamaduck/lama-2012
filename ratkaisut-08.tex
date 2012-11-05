@@ -34,50 +34,89 @@
 
 \begin{document}
 
-
 \subsection*{582206 Laskennan mallit, syksy 2012 \\
   \textmd{8. harjoitusten malliratkaisut \\
     Juhana Laurinharju ja Jani Rahkola}}
 
 Moninauhaisissa koneissa $S$-siirtymä eĺi siirtymä missä ei nauha päätä
-siirretä mihinkään on usein hyödyllinen. Koska tämä ominaisuus ei muuta
+siirretä mihinkään on usein hyö\-dyl\-li\-nen. Koska tämä ominaisuus ei muuta
 Turing-koneen kielentunnistusominaisuuksia, voit vapaasti käyttää tätä
 ominaisuutta ratkaisuissasi.
 
 \begin{enumerate}
 \item
   Tehtävässä tarkastellaan Jyrkin luentojen sivuilla~230 ja 241 esitettyjä
-  determinististä ja epädeterminististä Turingin konetta kielelle $\set{ww\mid
-    w\in\set{0,1}^\ast}$. Koneiden kaavioesitykset on myös annettu seuraavalla
-  sivulla.
-\begin{enumerate}
+  determinististä ja e\-pä\-de\-ter\-mi\-nis\-tis\-tä Turingin konetta
+  kielelle $\set{ww\mid w\in\set{0,1}^\ast}$. Koneiden kaavioesitykset on myös
+  annettu seuraavalla sivulla.
+  \begin{enumerate}
+  \item
+    Esitä Jyrkin luentojen sivun 230 deterministisen Turingin koneen laskenta
+    (ts.\ tilanteiden jono) syötteellä 001001.
+  \item
+    Esitä Jyrkin luentojen sivun 241 epädeterministiselle Turingin koneelle
+    yksi hyväksyvä ja yksi hylkäävä laskenta syötteellä 001001.
+  \end{enumerate}
+  
 \item
-Esitä Jyrkin luentojen sivun 230 deterministisen Turingin koneen
-laskenta (ts.\ tilanteiden jono) syötteellä 001001.
-\item
-Esitä Jyrkin luentojen sivun 241 epädeterministiselle Turingin koneelle
-yksi hyväksyvä ja yksi hylkäävä laskenta
-syötteellä 001001.
-\end{enumerate}
+  Esitä tilakaaviona kielen $\set{a^ib^jc^id^j\mid i,j\in \Nat}$ tunnistava
+  deterministinen yksinauhainen Turingin kone.
+
+  \begin{centerautomata}
+    \node[initial,state] (q0)                      {$q_0$};
+    \node[state]         (q1)  [above left of=q0]  {$q_1$};
+    \node[state]         (q2)  [above right of=q0] {$q_2$};
+    \node[state]         (q3)  [below=1.4cm of q0] {$q_3$};
+    \node[state]         (q4)  [below right of=q3] {$q_4$};
+    \node[state]         (q5)  [below left of=q3]  {$q_5$};
+    \node[state]         (q6)  [right=2.8cm of q3] {$q_6$};
+    \node[accepting,state] (a) [right of=q6]       {$q_{accept}$};
+
+    \path
+    (q0) edge              node {$a \to \bar{a},R$}   (q1)
+    (q1) edge [loop above] node {$a,b,\bar{c} \to R$} (q1)
+    (q1) edge              node {$c \to \bar{c}, L$}  (q2)
+    (q2) edge [loop above] node {$a,b,\bar{c} \to L$} (q2)
+    (q2) edge              node {$\bar{a} \to R$}     (q0);
+    \path
+    (q0) edge node {$\_,b \to S$} (q3);
+    \path
+    (q3) edge              node {$b \to \bar{b}, R$}        (q4)
+    (q4) edge [loop below] node {$b,\bar{c},\bar{d} \to R$} (q4)
+    (q4) edge              node {$d \to \bar{d}, L$}        (q5)
+    (q5) edge [loop below] node {$b,\bar{c},\bar{d} \to L$} (q5)
+    (q5) edge              node {$\bar{b} \to R$}           (q3);
+    \path
+    (q3) edge              node {$\_,\bar{c},\bar{d} \to R$} (q6)
+    (q6) edge [loop above] node {$\bar{c},\bar{d} \to R$}    (q6)
+    (q6) edge              node {$\_ \to S$}                 (a);
+  \end{centerautomata}
+
+  Automaatti koostuu kolmesta osasta. Tilasta $q_0$ lähtevässä silmukassa
+  tarkistetaan, että $c$ merkkejä on vähintään yhtä monta kuin $a$ merkkejä.
+  Tilasta $q_3$ lähtevässä silmukassa puolestaan tarkistetaan, että $d$
+  merkkejä on vähintään yhtä monta kuin $b$ merkkejä. Tämä tehdään
+  merkitsemällä käsitelty $a$-merkki (vastaavasti $b$-merkki) viivalla,
+  etsimällä seuraava merkitsemätön $c$-merkki (vastaavasti $d$-merkki) ja
+  merkitsemällä sekin. Jos näin tehtäessä $c$ tai $d$ merkit loppuivat kesken,
+  siirrytään virhetilaan (jota ei selvyyden vuoksi piirretty kuvaan).
+
+  Lopuksi tarkistetaan, että yhtään $c$ tai $d$ merkkiä ei jäänyt
+  merkkaamatta. Tämä tehdään aloittamalla viimeisestä $b$-merkkiä seuraavasta
+  merkistä, ja sallimalla vain merkattuja $c$ ja $d$ merkkejä. Kun koko syöte
+  on luettu, siirrytään hyväksyvään tilaan.
 
 \item
-Esitä tilakaaviona deterministinen yksinauhainen
-Turingin kone, joka tunnistaa kielen
-$\set{a^ib^jc^id^j\mid i,j\in N}$.
+  Esitä tilakaaviona kaksinauhainen Turingin kone, joka tunnistaa kielen
+  $\set{a^nb^nc^n\mid n\in N}$. Sopiva tapa merkitä kaksinauhaisen koneen
+  siirtymä $\delta(r,a_1,a_2)=(s,b_1,b_2,D_1,D_2)$ on esim.
 
-
-
-
-\item
-Esitä tilakaaviona kaksinauhainen Turingin kone, joka tunnistaa
-kielen $\set{a^nb^nc^n\mid n\in N}$.
-Sopiva tapa merkitä kaksinauhaisen koneen siirtymä
-$\delta(r,a_1,a_2)=(s,b_1,b_2,D_1,D_2)$ on esim.
-\newcommand{\twotrans}
+  \newcommand{\twotrans}
 {\left[\begin{array}{c}
 a_1\rightarrow b_1,D_1\\
 a_2\rightarrow b_2,D_2
 \end{array}\right]}
+
 \bigskip
 
 %% \begin{center}
@@ -109,127 +148,60 @@ a_2\rightarrow b_2,D_2
     ;
 \end{centerautomata}
 
-\item Merkkijono-operaatioita. Olkoon syöteaakkosto $\set{a,b}$
-\begin{enumerate}
-\item 
-Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan loppuun eli syötteen oikealle puolelle.
+\item
+  Merkkijono-operaatioita. Olkoon syöteaakkosto $\set{a,b}$
+  \begin{enumerate}
+  \item 
+    Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan loppuun eli
+    syötteen oikealle puolelle.
+  \item
+    Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan alkuun eli
+    vasempaan laitaan.
+  \item
+    Esitä tilakaaviona Turing-kone, mikä siirtää syötteensä yhdellä paikalla
+    oikealle.
+  \item
+    Esitä tilakaaviona Turing-kone, mikä kääntää syötteensä toisin päin.
+  \end{enumerate}
 
 \item
-Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan alkuun eli vasempaan laitaan.
-
-\item
-Esitä tilakaaviona Turing-kone, mikä siirtää syötteensä yhdellä paikalla oikealle.
-
-\item
-Esitä tilakaaviona Turing-kone, mikä kääntää syötteensä toisin päin.
-
-\end{enumerate}
-
-\item Laskentoa Turing-koneella. Olkoon syöte aakkosto $\set{0,1}$.
-\begin{enumerate}
-\item
-Esitä tilakaaviona Turing-kone, mikä kasvattaa yhdellä syötteenään saamaansa binäärilukua. 
-\begin{enumerate}
-\item 
-Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan alussa.
-\item 
-Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan lopussa.   
-
-\end{enumerate}
-
-\item
-Esitä  
-tilakaaviona Turing-kone, mikä vähentää yhdellä syötteenään saamaansa binäärilukua. 
-
-
-
-
-\item
-Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee kolmannelle nauhalle syötelukujen summan.
-
-
-
-
- 
-\end{enumerate}
-
+  Laskentoa Turing-koneella. Olkoon syöte aakkosto $\set{0,1}$.
+  \begin{enumerate}
+  \item
+    Esitä tilakaaviona Turing-kone, mikä kasvattaa yhdellä syötteenään
+    saamaansa binäärilukua.
+    \begin{enumerate}
+    \item
+      Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan alussa.
+    \item
+      Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan lopussa.
+    \end{enumerate}
+  \item
+    Esitä tilakaaviona Turing-kone, mikä vähentää yhdellä syötteenään
+    saamaansa binäärilukua.
+  \item
+    Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
+    ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee
+    kolmannelle nauhalle syötelukujen summan.
+  \end{enumerate}
 
 \item 
-Esitä tilakaaviona kolminauhainen  Turing-kone, mikä saa yhdellä nauhalla syötteenä binääriluvun ja kirjoittaa toiselle nauhalle binäärilukua vastaavan määrän kirjainta $a$. Kolmatta nauhaa voit käyttää jos tarvitset (onkohan tää liian vaikea...).
+  Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa yhdellä nauhalla
+  syötteenä binääriluvun ja kirjoittaa toiselle nauhalle binäärilukua
+  vastaavan määrän kirjainta $a$. Kolmatta nauhaa voit käyttää jos tarvitset
+  (onkohan tää liian vaikea...).
 
 \item
-Esitä tilakaaviona kolminauhainen  Turing-kone, 
-mikä saa kahdellä ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee kolmannen nauhan  avulla syötelukujen kertolaskun (onkohan tää liian vaikea...).
-
-
-%
-%\item
-%Esitä tilakaaviona epädeterministinen Turingin kone, joka
-%tunnistaa aakkoston $\set{0,1,\#}$ kielen
-%\[\set{\# w_1\# w_2\#\ldots\# w_n\#\mid
-%\mbox{$w_i\in\set{0,1}^\ast$ kaikilla $i$ ja %
-%$w_i=w_j$ joillakin $i \neq j$}}.\]
-%
-%\iffalse
-%\item
-%\begin{enumerate}
-%\item {[Sipser Problem~3.15]}
-%Osoita, että Turing-ratkeavien kielten luokka on suljettu
-%yhdisteen, leikkauksen ja komplementin suhteen.
-%\item {[Sipser Problem~3.16]}
-%Osoita, että Turing-tunnistettavien kielten luokka on suljettu
-%yhdisteen ja leikkauksen suhteen.
-%Miksi edellisen kohdan konstruktio komplementille ei tässä
-%toimi?
-%\end{enumerate}
-%\fi
-%
-%\item {[Sipser Problem~3.9]}
-%Merkintä $k$-PDA tarkoittaa pinoautomaattia, jossa on
-%käytettävänä $k$ pinoa.
-%Siis 0-PDA on NFA ja 1-PDA on tavallinen PDA.
-%Osoita, että
-%\begin{enumerate}
-%\item
-%2-PDA pystyy tunnistamaan kieliä, joita 1-PDA ei pysty mutta
-%\item
-%minkä tahansa 3-PDA:n tunnistama kieli voidaan tunnistaa
-%2-PDA:lla.
-%\end{enumerate}
-%{\em Vihje:} Simuloi Turingin koneen nauhaa kahdella pinolla.
-%Esitä ratkaisun periaate pseudokoodilla tms.\ menemättä
-%automaattiformalismin yksityiskohtiin.
-%
-%\item {[Sipser Exercise 3.14]}
-%{\em Jonoautomaatti} on muuten kuin pinoautomaatti,
-%mutta pino on korvattu jonolla.
-%Jonoon voidaan kohdistaa kahdenlaisia operaatioita:
-%\begin{itemize}
-%\item
-%$\mbox{\sc Enqueue}(a)$ kirjoittaa merkin $a$ jonon loppuun ja
-%\item
-%$\mbox{\sc Dequeue}$ poistaa jonon ensimmäisen merkin ja
-%palauttaa sen arvonaan.
-%\end{itemize}
-%Pinoautomaatin tapaan syöte on luettavissa merkki kerrallaan.
-%Sovitaan, että syötteessä on aina loppumerkkinä
-%(mutta ei muualla) tyhjämerkki $\square$.
-%Turingin koneen tapaan pinoautomaatti
-%hyväksyy syötteen siirtymällä erilliseen hyväksyvään tilaan.
-%
-%Osoita, että mikä tahansa Turing-tunnistettava kieli voidaan
-%tunnistaa deterministisellä jonoautomaatilla.
-%Perusteluksi riittää esittää sopivan tasoisena
-%pseudokoodina, miten Turingin konetta voidaan simuloida
-%jonoa käyttäen.
-%
-
+  Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
+  ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee kolmannen
+  nauhan avulla syötelukujen kertolaskun (onkohan tää liian vaikea...).
 \end{enumerate}
-\vfill
 
-\centerline{\bf Tehtävän~1 kaaviot seuraavalla sivulla!}
+%% \vfill
 
-\newpage
+%% \centerline{\bf Tehtävän~1 kaaviot seuraavalla sivulla!}
+
+%% \newpage
 
 %% Tehtävän 1.(a) deterministinen Turingin kone:
 %% \begin{center}
