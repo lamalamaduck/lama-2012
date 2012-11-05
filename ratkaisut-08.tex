@@ -1,0 +1,219 @@
+\documentclass[finnish,11pt,draft]{article}
+
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usetikzlibrary{arrows,automata}
+
+\setenumerate{listparindent=\parindent}
+
+\newtheorem*{claim}{Väite}
+
+\newcommand{\set}[1]{{\left\{ #1 \right\}}}
+\newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\ve}{\varepsilon}
+
+\newenvironment{automata}[1][2.8]%
+{\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=#1cm,semithick]}%
+{\end{tikzpicture}}
+
+\newenvironment{centerautomata}[1][2.8]%
+{\begin{center}\begin{automata}[#1]}%
+{\end{automata} \end{center}}
+
+\newcolumntype{W}{>{\centering\arraybackslash}m{5cm} }
+\newcolumntype{V}{>{\centering\arraybackslash}m{2cm} }
+
+\begin{document}
+
+
+\subsection*{582206 Laskennan mallit, syksy 2012 \\
+  \textmd{8. harjoitusten malliratkaisut \\
+    Juhana Laurinharju ja Jani Rahkola}}
+
+Moninauhaisissa koneissa $S$-siirtymä eĺi siirtymä missä ei nauha päätä
+siirretä mihinkään on usein hyödyllinen. Koska tämä ominaisuus ei muuta
+Turing-koneen kielentunnistusominaisuuksia, voit vapaasti käyttää tätä
+ominaisuutta ratkaisuissasi.
+
+\begin{enumerate}
+\item
+  Tehtävässä tarkastellaan Jyrkin luentojen sivuilla~230 ja 241 esitettyjä
+  determinististä ja epädeterminististä Turingin konetta kielelle $\set{ww\mid
+    w\in\set{0,1}^\ast}$. Koneiden kaavioesitykset on myös annettu seuraavalla
+  sivulla.
+\begin{enumerate}
+\item
+Esitä Jyrkin luentojen sivun 230 deterministisen Turingin koneen
+laskenta (ts.\ tilanteiden jono) syötteellä 001001.
+\item
+Esitä Jyrkin luentojen sivun 241 epädeterministiselle Turingin koneelle
+yksi hyväksyvä ja yksi hylkäävä laskenta
+syötteellä 001001.
+\end{enumerate}
+
+\item
+Esitä tilakaaviona deterministinen yksinauhainen
+Turingin kone, joka tunnistaa kielen
+$\set{a^ib^jc^id^j\mid i,j\in N}$.
+
+
+
+
+\item
+Esitä tilakaaviona kaksinauhainen Turingin kone, joka tunnistaa
+kielen $\set{a^nb^nc^n\mid n\in N}$.
+Sopiva tapa merkitä kaksinauhaisen koneen siirtymä
+$\delta(r,a_1,a_2)=(s,b_1,b_2,D_1,D_2)$ on esim.
+\newcommand{\twotrans}
+{\left[\begin{array}{c}
+a_1\rightarrow b_1,D_1\\
+a_2\rightarrow b_2,D_2
+\end{array}\right]}
+\bigskip
+
+%% \begin{center}
+%% \input{pics/t11t3.pspdftex}
+%% \end{center}
+
+\item Merkkijono-operaatioita. Olkoon syöteaakkosto $\set{a,b}$
+\begin{enumerate}
+\item 
+Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan loppuun eli syötteen oikealle puolelle.
+
+\item
+Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan alkuun eli vasempaan laitaan.
+
+\item
+Esitä tilakaaviona Turing-kone, mikä siirtää syötteensä yhdellä paikalla oikealle.
+
+\item
+Esitä tilakaaviona Turing-kone, mikä kääntää syötteensä toisin päin.
+
+\end{enumerate}
+
+\item Laskentoa Turing-koneella. Olkoon syöte aakkosto $\set{0,1}$.
+\begin{enumerate}
+\item
+Esitä tilakaaviona Turing-kone, mikä kasvattaa yhdellä syötteenään saamaansa binäärilukua. 
+\begin{enumerate}
+\item 
+Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan alussa.
+\item 
+Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan lopussa.   
+
+\end{enumerate}
+
+\item
+Esitä  
+tilakaaviona Turing-kone, mikä vähentää yhdellä syötteenään saamaansa binäärilukua. 
+
+
+
+
+\item
+Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee kolmannelle nauhalle syötelukujen summan.
+
+
+
+
+ 
+\end{enumerate}
+
+
+\item 
+Esitä tilakaaviona kolminauhainen  Turing-kone, mikä saa yhdellä nauhalla syötteenä binääriluvun ja kirjoittaa toiselle nauhalle binäärilukua vastaavan määrän kirjainta $a$. Kolmatta nauhaa voit käyttää jos tarvitset (onkohan tää liian vaikea...).
+
+\item
+Esitä tilakaaviona kolminauhainen  Turing-kone, 
+mikä saa kahdellä ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee kolmannen nauhan  avulla syötelukujen kertolaskun (onkohan tää liian vaikea...).
+
+
+%
+%\item
+%Esitä tilakaaviona epädeterministinen Turingin kone, joka
+%tunnistaa aakkoston $\set{0,1,\#}$ kielen
+%\[\set{\# w_1\# w_2\#\ldots\# w_n\#\mid
+%\mbox{$w_i\in\set{0,1}^\ast$ kaikilla $i$ ja %
+%$w_i=w_j$ joillakin $i \neq j$}}.\]
+%
+%\iffalse
+%\item
+%\begin{enumerate}
+%\item {[Sipser Problem~3.15]}
+%Osoita, että Turing-ratkeavien kielten luokka on suljettu
+%yhdisteen, leikkauksen ja komplementin suhteen.
+%\item {[Sipser Problem~3.16]}
+%Osoita, että Turing-tunnistettavien kielten luokka on suljettu
+%yhdisteen ja leikkauksen suhteen.
+%Miksi edellisen kohdan konstruktio komplementille ei tässä
+%toimi?
+%\end{enumerate}
+%\fi
+%
+%\item {[Sipser Problem~3.9]}
+%Merkintä $k$-PDA tarkoittaa pinoautomaattia, jossa on
+%käytettävänä $k$ pinoa.
+%Siis 0-PDA on NFA ja 1-PDA on tavallinen PDA.
+%Osoita, että
+%\begin{enumerate}
+%\item
+%2-PDA pystyy tunnistamaan kieliä, joita 1-PDA ei pysty mutta
+%\item
+%minkä tahansa 3-PDA:n tunnistama kieli voidaan tunnistaa
+%2-PDA:lla.
+%\end{enumerate}
+%{\em Vihje:} Simuloi Turingin koneen nauhaa kahdella pinolla.
+%Esitä ratkaisun periaate pseudokoodilla tms.\ menemättä
+%automaattiformalismin yksityiskohtiin.
+%
+%\item {[Sipser Exercise 3.14]}
+%{\em Jonoautomaatti} on muuten kuin pinoautomaatti,
+%mutta pino on korvattu jonolla.
+%Jonoon voidaan kohdistaa kahdenlaisia operaatioita:
+%\begin{itemize}
+%\item
+%$\mbox{\sc Enqueue}(a)$ kirjoittaa merkin $a$ jonon loppuun ja
+%\item
+%$\mbox{\sc Dequeue}$ poistaa jonon ensimmäisen merkin ja
+%palauttaa sen arvonaan.
+%\end{itemize}
+%Pinoautomaatin tapaan syöte on luettavissa merkki kerrallaan.
+%Sovitaan, että syötteessä on aina loppumerkkinä
+%(mutta ei muualla) tyhjämerkki $\square$.
+%Turingin koneen tapaan pinoautomaatti
+%hyväksyy syötteen siirtymällä erilliseen hyväksyvään tilaan.
+%
+%Osoita, että mikä tahansa Turing-tunnistettava kieli voidaan
+%tunnistaa deterministisellä jonoautomaatilla.
+%Perusteluksi riittää esittää sopivan tasoisena
+%pseudokoodina, miten Turingin konetta voidaan simuloida
+%jonoa käyttäen.
+%
+
+\end{enumerate}
+\vfill
+
+\centerline{\bf Tehtävän~1 kaaviot seuraavalla sivulla!}
+
+\newpage
+
+%% Tehtävän 1.(a) deterministinen Turingin kone:
+%% \begin{center}
+%% \input{pics/TMesim02.pspdftex}
+%% \end{center}
+%% Tehtävän 1.(b) epädeterministinen Turingin kone:
+%% \begin{center}
+%% \input{pics/NDTMesim01.pspdftex}
+%% \end{center}
+
+
+\end{document}
