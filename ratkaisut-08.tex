@@ -129,14 +129,73 @@ a_2\rightarrow b_2,D_2
   \item 
     Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan loppuun eli
     syötteen oikealle puolelle.
+%
+    \begin{centerautomata}
+      \node[initial,state]   (q0)               {$q_0$};
+      \node[accepting,state] (q1) [right of=q0] {$q_1$};
+
+      \path
+      (q0) edge [loop above] node {$a,b \to R$} (q0)
+      (q0) edge              node {$\_ \to S$}  (q1);
+    \end{centerautomata}
   \item
     Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan alkuun eli
     vasempaan laitaan.
+%
+    \begin{centerautomata}
+      \node[initial,state]   (q0)               {$q_0$};
+      \node[state]           (q1) [right of=q0] {$q_1$};
+      \node[state]           (q2) [below of=q1] {$q_2$};
+      \node[accepting,state] (q3) [right of=q1] {$q_3$};
+
+      \path
+      (q0) edge node {$\begin{aligned}
+                         a & \to \bar{a}, L \\
+                         b & \to \bar{b}, L \\
+                         \_ & \to \bar{\_}, L
+                       \end{aligned}$} (q1)
+      (q1) edge node {$\begin{aligned}
+                         a & \to R \\
+                         b & \to R \\
+                         \_ & \to R
+                       \end{aligned}$} (q2)
+      (q2) edge node {$\begin{aligned}
+                         \bar{a} & \to a, L \\
+                         \bar{b} & \to b, L \\
+                         \bar{\_} & \to \_, L
+                       \end{aligned}$} (q0)
+      (q1) edge node {$\begin{aligned}
+                         \bar{a} & \to a, S \\
+                         \bar{b} & \to b, S \\
+                         \bar{\_} & \to \_, S
+                       \end{aligned}$} (q3);
+    \end{centerautomata}
   \item
     Esitä tilakaaviona Turing-kone, mikä siirtää syötteensä yhdellä paikalla
     oikealle.
+%
+    \begin{centerautomata}
+      \node[initial right,state] (q0)                                   {$q_0$};
+      \node[state]               (qa) [above right=1.4cm and 4cm of q0] {$q_a$};
+      \node[state]               (qb) [below right=1.4cm and 4cm of q0] {$q_b$};
+      \node[accepting,state]     (a)  [left of=q0]                      {$q_{accept}$};
+
+      \path
+      (q0) edge              node        {$a \to \_,R$}  (qa)
+      (q0) edge              node        {$\_ \to R$}    (a)
+      (q0) edge              node [swap] {$b \to \_,R$}  (qb)
+      (qa) edge [loop above] node        {$a \to a, R$}  (qa)
+      (qa) edge [bend left]  node        {$b \to a, R$}  (qb)
+      (qa) edge [bend right] node [swap] {$\_ \to a, R$} (a)
+      (qb) edge [bend left]  node        {$a \to b, R$}  (qa)
+      (qb) edge [loop below] node        {$b \to b, R$}  (qb)
+      (qb) edge [bend left]  node        {$\_ \to b, R$} (a);
+    \end{centerautomata}
   \item
     Esitä tilakaaviona Turing-kone, mikä kääntää syötteensä toisin päin.
+    \begin{centerautomata}
+      \node[initial,state] (q0) {$q_0$};
+    \end{centerautomata}
   \end{enumerate}
 
 \item
@@ -148,16 +207,28 @@ a_2\rightarrow b_2,D_2
     \begin{enumerate}
     \item
       Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan alussa.
+%
+    \begin{centerautomata}
+    \end{centerautomata}
     \item
       Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan lopussa.
+%
+    \begin{centerautomata}
+    \end{centerautomata}
     \end{enumerate}
   \item
     Esitä tilakaaviona Turing-kone, mikä vähentää yhdellä syötteenään
     saamaansa binäärilukua.
+%
+    \begin{centerautomata}
+    \end{centerautomata}
   \item
     Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
     ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee
     kolmannelle nauhalle syötelukujen summan.
+%
+    \begin{centerautomata}
+    \end{centerautomata}
   \end{enumerate}
 
 \item 
