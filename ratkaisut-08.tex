@@ -123,6 +123,31 @@ a_2\rightarrow b_2,D_2
 %% \input{pics/t11t3.pspdftex}
 %% \end{center}
 
+\newcommand{\doubletrans}[6]
+{$\left[\begin{array}{c}\trans{#1}{#2}{#3} \\ \trans{#4}{#5}{#6}\end{array}\right]$}
+
+\newcommand{\trans}[3]{#1 \to #2 \text{, } #3}
+
+\newcommand{\spc}{\textvisiblespace}
+
+\begin{centerautomata}
+    \node[initial,state] (qstart) {$q_{\text{start}}$};
+    \node[state] (qloop1) [above right of=qstart] {$q_1$};
+    \node[state] (qloop2) [right=4cm of qloop1] {$q_2$};
+    \node[state] (qloop3) [below=2.96cm of qloop2] {$q_3$};
+    \node[state,accepting] (qaccept) [below right of=qstart] {$q_{\text{accept}}$};
+
+    \path
+    (qstart) edge              node        {\doubletrans{a}   {a}   {S}{\spc}{\spc}{S}} (qloop1)
+    (qloop1) edge [loop above] node        {\doubletrans{a}   {a}   {R}{\spc}{a}   {R}} (qloop2)
+    (qloop1) edge              node        {\doubletrans{b}   {b}   {S}{\spc}{\spc}{L}} (qloop2)
+    (qloop2) edge [loop above] node        {\doubletrans{b}   {b}   {R}{a}   {b}   {L}} (qloop2)
+    (qloop2) edge              node        {\doubletrans{c}   {c}   {S}{b}   {b}   {S}} (qloop3)
+    (qloop3) edge [loop right] node        {\doubletrans{c}   {c}   {R}{b}   {c}   {R}} (qloop3)
+    (qloop3) edge              node [swap] {\doubletrans{\spc}{\spc}{S}{\spc}{\spc}{S}} (qaccept)
+    ;
+\end{centerautomata}
+
 \item
   Merkkijono-operaatioita. Olkoon syöteaakkosto $\set{a,b}$
   \begin{enumerate}
