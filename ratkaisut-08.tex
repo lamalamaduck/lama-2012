@@ -87,7 +87,7 @@ ominaisuutta ratkaisuissasi.
     (q2) edge [loop above] node {$a,b,\bar{c} \to L$} (q2)
     (q2) edge              node {$\bar{a} \to R$}     (q0);
     \path
-    (q0) edge node {$\_,b \to S$} (q3);
+    (q0) edge node {$\spc,b \to S$} (q3);
     \path
     (q3) edge              node {$b \to \bar{b}, R$}        (q4)
     (q4) edge [loop below] node {$b,\bar{c},\bar{d} \to R$} (q4)
@@ -95,9 +95,9 @@ ominaisuutta ratkaisuissasi.
     (q5) edge [loop below] node {$b,\bar{c},\bar{d} \to L$} (q5)
     (q5) edge              node {$\bar{b} \to R$}           (q3);
     \path
-    (q3) edge              node {$\_,\bar{c},\bar{d} \to R$} (q6)
+    (q3) edge              node {$\spc,\bar{c},\bar{d} \to R$} (q6)
     (q6) edge [loop above] node {$\bar{c},\bar{d} \to R$}    (q6)
-    (q6) edge              node {$\_ \to S$}                 (a);
+    (q6) edge              node {$\spc \to S$}                 (a);
   \end{centerautomata}
 
   Automaatti koostuu kolmesta osasta. Tilasta $q_0$ lähtevässä silmukassa
@@ -169,14 +169,93 @@ Idea tässä Turingin koneessa on seuraava:
   \item 
     Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan loppuun eli
     syötteen oikealle puolelle.
+%
+    \begin{centerautomata}
+      \node[initial,state]   (q0)               {$q_0$};
+      \node[accepting,state] (q1) [right of=q0] {$q_1$};
+
+      \path
+      (q0) edge [loop above] node {$a,b \to R$} (q0)
+      (q0) edge              node {$\spc \to S$}  (q1);
+    \end{centerautomata}
   \item
     Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan alkuun eli
     vasempaan laitaan.
+%
+    \begin{centerautomata}
+      \node[initial,state]   (q0)               {$q_0$};
+      \node[state]           (q1) [right of=q0] {$q_1$};
+      \node[state]           (q2) [below of=q1] {$q_2$};
+      \node[accepting,state] (q3) [right of=q1] {$q_3$};
+
+      \path
+      (q0) edge node {$\begin{aligned}
+                         a & \to \bar{a}, L \\
+                         b & \to \bar{b}, L \\
+                         \spc & \to \bar{\spc}, L
+                       \end{aligned}$} (q1)
+      (q1) edge node {$\begin{aligned}
+                         a & \to R \\
+                         b & \to R \\
+                         \spc & \to R
+                       \end{aligned}$} (q2)
+      (q2) edge node {$\begin{aligned}
+                         \bar{a} & \to a, L \\
+                         \bar{b} & \to b, L \\
+                         \bar{\spc} & \to \spc, L
+                       \end{aligned}$} (q0)
+      (q1) edge node {$\begin{aligned}
+                         \bar{a} & \to a, S \\
+                         \bar{b} & \to b, S \\
+                         \bar{\spc} & \to \spc, S
+                       \end{aligned}$} (q3);
+    \end{centerautomata}
   \item
     Esitä tilakaaviona Turing-kone, mikä siirtää syötteensä yhdellä paikalla
     oikealle.
+%
+    \begin{centerautomata}
+      \node[initial right,state] (q0)                                   {$q_0$};
+      \node[state]               (qa) [above right=1.4cm and 4cm of q0] {$q_a$};
+      \node[state]               (qb) [below right=1.4cm and 4cm of q0] {$q_b$};
+      \node[accepting,state]     (a)  [left of=q0]                      {$q_{accept}$};
+
+      \path
+      (q0) edge              node        {$a \to \spc,R$}  (qa)
+      (q0) edge              node        {$\spc \to R$}    (a)
+      (q0) edge              node [swap] {$b \to \spc,R$}  (qb)
+      (qa) edge [loop above] node        {$a \to a, R$}  (qa)
+      (qa) edge [bend left]  node        {$b \to a, R$}  (qb)
+      (qa) edge [bend right] node [swap] {$\spc \to a, R$} (a)
+      (qb) edge [bend left]  node        {$a \to b, R$}  (qa)
+      (qb) edge [loop below] node        {$b \to b, R$}  (qb)
+      (qb) edge [bend left]  node        {$\spc \to b, R$} (a);
+    \end{centerautomata}
   \item
     Esitä tilakaaviona Turing-kone, mikä kääntää syötteensä toisin päin.
+    \begin{centerautomata}
+      \node[initial,state] (q0) {$q_0$};
+      \node[state]         (q1) [below of=q0] {$q_1$};
+      \node[state]         (q2) [below of=q1] {$q_2$};
+      \node[accepting,state] (a) [below of=q2] {$q_{accept}$};
+
+      \path
+      (q0) edge [loop above] node {\doubletrans{a,b}{a,b}{R}{\spc}{\#}{R}} (q0)
+      (q0) edge              node {\doubletrans{\spc}{\spc}{S}{\spc}{\spc}{S}} (q1)
+      (q1) edge [loop left]  node {siirrä nauhan 2 lukupää alkuun} (q1)
+      (q1) edge              node {\doubletrans{\spc}{\spc}{L}{\#}{\#}{S}} (q2)
+      (q2) edge [loop left]  node {\doubletrans{a}{a}{L}{\#}{a}{R}} (q2)
+      (q2) edge [loop right] node {\doubletrans{b}{b}{L}{\#}{b}{R}} (q2)
+      (q2) edge              node {\doubletrans{a,b}{a,b}{S}{\spc}{\spc}{S}} (a);
+    \end{centerautomata}
+
+    Aluksi siirrytään syötteen sisältävällä ensimmäisellä nauhalla syötteen
+    jälkeiseen tyhjään merkkiin. Samalla kirjoitetaan toiselle nauhalle
+    syötteen pituutta vastaava määrä $#$ merkkejä. Seuraavaksi siirretään
+    toisen nauhan lukupää nauhan alkuun ja tämän jälkeen kopioidaan syöte
+    ensimmäiseltä nauhalta lopusta alkuun toiselle nauhalle. Tämä kääntää
+    syötteen. Toiselle nauhalle kirjoitetut $#$-merkit kertovat milloin
+    kopiointi lopetetaan.
   \end{enumerate}
 
 \item
@@ -188,16 +267,28 @@ Idea tässä Turingin koneessa on seuraava:
     \begin{enumerate}
     \item
       Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan alussa.
+%
+    \begin{centerautomata}
+    \end{centerautomata}
     \item
       Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan lopussa.
+%
+    \begin{centerautomata}
+    \end{centerautomata}
     \end{enumerate}
   \item
     Esitä tilakaaviona Turing-kone, mikä vähentää yhdellä syötteenään
     saamaansa binäärilukua.
+%
+    \begin{centerautomata}
+    \end{centerautomata}
   \item
     Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
     ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee
     kolmannelle nauhalle syötelukujen summan.
+%
+    \begin{centerautomata}
+    \end{centerautomata}
   \end{enumerate}
 
 \item 
