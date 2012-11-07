@@ -12,6 +12,7 @@
 \usepackage{pgf}
 \usepackage{tikz}
 \usepackage{tikz-qtree}
+\usepackage{wasysym}
 \usetikzlibrary{arrows,automata,positioning}
 
 \setenumerate{listparindent=\parindent}
@@ -47,8 +48,8 @@ $\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
 
 \newcommand{\spc}{\text{\textvisiblespace}}
 
-\newcolumntype{W}{>{\centering\arraybackslash}m{5cm} }
-\newcolumntype{V}{>{\centering\arraybackslash}m{2cm} }
+\newcolumntype{W}{>{\centering\arraybackslash}m{5cm}}
+\newcolumntype{V}{>{\centering\arraybackslash}m{2cm}}
 
 \begin{document}
 
@@ -389,6 +390,7 @@ Idea tässä Turingin koneessa on seuraava:
           ;
       \end{centerautomata}
 
+      Lamatonttu toivottaa hyvää joulua. \smiley
 
     \end{enumerate}
   \item
@@ -427,15 +429,84 @@ Idea tässä Turingin koneessa on seuraava:
 
 %
     \begin{centerautomata}
-        \node[initial,state] (start) {$q_{\text{start}}$};
+        \node[initial right,state] (start) {$q_{\text{start}}$};
         \node[state] (q1) [above right of=start] {$q_1$};
-        \node[state] (q2) [below right of=start] {$q_2$};
-        \node[state,accepting] (accept) [below of=start] {$q_{\text{accept}}$};
+        \node[state] (q2) [below right of=q1]    {$q_2$};
+        \node[state] (q3) [below right of=start] {$q_3$};
+        \node[state,accepting] (accept) [left=4cm of start] {$q_{\text{accept}}$};
 
         \path
-        (start) edge node [swap] {\doubletranss{0,1,\spc \to R}{\spc \to S}} (accept)
+        (start) edge
+                node [swap]
+                {\doubletranss{0,1,\spc \to S}{\spc \to S}} (accept)
+        (start) edge [bend left]
+                node
+                {\doubletranss{0,1,\spc \to S}{0,1 \to S}} (q1)
+        (q1) edge [bend left, text width=4cm]
+             node
+             {kasvata ensimmäisen nauhan lukua yhdellä} (q2)
+        (q2) edge [bend left, text width=4cm]
+             node
+             {vähennä toisen nauhan luvusta 1} (q3)
+        (q3) edge [bend left, text width=4cm]
+             node
+             {kelaa nauhat alkuun} (start);
+    \end{centerautomata}
+
+    Vaihtoehtoisesti tämän voi tehdä kolmella nauhalla tavallisella allekainlaskumenetelmällä.
+
+    \begin{centerautomata}[1.2]
+        \node[initial above,state] (q0) {$q_0$};
+        \node[state] (q1) [right=2.5cm of q0] {$q_1$};
+        \node[state,accepting] (accept) [below right=4.5cm and 0.95cm of q0] {$q_{\text{accept}}$};
+
+        \path
+        (q0) edge [loop left]  node {\begin{tabular}{rl}
+                                       \tripletrans{0, \spc \to R}
+                                                   {0, \to R}
+                                                   {\trans{\spc}{0}{R}} &
+                                       \tripletrans{0 \to R}
+                                                   {\spc, \to R}
+                                                   {\trans{\spc}{0}{R}} \\
+                                       \tripletrans{1 \to R}
+                                                   {0,\spc \to R}
+                                                   {\trans{\spc}{1}{R}} &
+                                       \tripletrans{0,\spc \to R}
+                                                   {1 \to R}
+                                                   {\trans{\spc}{1}{R}}
+                                     \end{tabular}} (q0)
+        (q0) edge [bend right] node [swap] {\tripletrans{1 \to R}
+                                                        {1 \to R}
+                                                        {\trans{\spc}{0}{R}}} (q1)
+        (q1) edge [bend right] node [swap] {\begin{tabular}{c}
+                                              \tripletrans{0,\spc \to R}
+                                                          {0 \to R}
+                                                          {\trans{\spc}{0}{R}} \\
+                                              \tripletrans{\spc \to R}
+                                                          {0 \to R}
+                                                          {\trans{\spc}{0}{R}}
+                                            \end{tabular}} (q0)
+        (q1) edge [loop right] node {\begin{tabular}{c}
+                                       \tripletrans{1 \to R}
+                                                   {1 \to R}
+                                                   {\trans{\spc}{1}{R}} \\
+                                       \tripletrans{1 \to R}
+                                                   {0,\spc \to R}
+                                                   {\trans{\spc}{0}{R}} \\
+                                       \tripletrans{0,\spc \to R}
+                                                   {1 \to R}
+                                                   {\trans{\spc}{0}{R}}
+                                     \end{tabular}} (q1)
+        (q0) edge [bend right, near end] node [swap] {\tripletrans{\spc \to S}
+                                                     {\spc \to S}
+                                                     {\spc \to S}} (accept)
+        (q1) edge [bend left, near end] node {\tripletrans{\spc \to S}
+                                                          {\spc \to S}
+                                                          {\trans{\spc}{1}{S}}} (accept)
         ;
     \end{centerautomata}
+
+    Tilassa $q_1$ summassa on ylivuotobittinä 1 ja tilassa $q_0$ ylivuotobittinä on 0.
   \end{enumerate}
 
 \item 
