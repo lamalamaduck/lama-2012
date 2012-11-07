@@ -3,9 +3,11 @@
 \usepackage[finnish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=2cm]{geometry}
-\usepackage{amsfonts,amsmath,amssymb,amsthm,enumitem}
+\usepackage{amsfonts,amssymb,amsthm,enumitem}
+\usepackage{mathtools}
 \usepackage{microtype}
 \usepackage{array}
+\usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{pgf}
 \usepackage{tikz}
@@ -29,18 +31,21 @@
 {\begin{center}\begin{automata}[#1]}%
 {\end{automata} \end{center}}
 
-\newcommand{\doubletrans}[6]
-{$\left[\begin{array}{c}\trans{#1}{#2}{#3}%
-      \\ \trans{#4}{#5}{#6}\end{array}\right]$}
-
-\newcommand{\tripletrans}[3]{%
-$\left[\begin{array}{c} #1 \\ #2 \\ #3 \end{array}\right]$
-}
-
 \newcommand{\trans}[3]{#1 \to #2 \text{, } #3}
 
-\newcommand{\spc}{\text{\textvisiblespace}}
+\newcommand{\doubletranss}[2]{%
+$\begin{bmatrix}#1 \\ #2 \end{bmatrix}$%
+}
 
+\newcommand{\doubletrans}[6]{%
+\doubletranss{\trans{#1}{#2}{#3}}{\trans{#4}{#5}{#6}}%
+}
+
+\newcommand{\tripletrans}[3]{%
+$\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
+}
+
+\newcommand{\spc}{\text{\textvisiblespace}}
 
 \newcolumntype{W}{>{\centering\arraybackslash}m{5cm} }
 \newcolumntype{V}{>{\centering\arraybackslash}m{2cm} }
@@ -144,15 +149,16 @@ a_2\rightarrow b_2,D_2
     \node[state,accepting] (qaccept) [below right of=qstart] {$q_{\text{accept}}$};
 
     \path
-    (qstart) edge              node        {\doubletrans{a}   {a}   {S}{\spc}{\spc}{S}} (qloop1)
-    (qstart) edge              node [swap] {\doubletrans{\spc}{\spc}{S}{\spc}{\spc}{S}} (qaccept)
-    (qloop1) edge [loop above] node        {\doubletrans{a}   {a}   {R}{\spc}{a}   {R}} (qloop2)
-    (qloop1) edge              node        {\doubletrans{b}   {b}   {S}{\spc}{\spc}{L}} (qloop2)
-    (qloop2) edge [loop above] node        {\doubletrans{b}   {b}   {R}{a}   {b}   {L}} (qloop2)
-    (qloop2) edge              node        {\doubletrans{c}   {c}   {S}{b}   {b}   {S}} (qloop3)
-    (qloop3) edge [loop below] node        {\doubletrans{c}   {c}   {R}{b}   {c}   {R}} (qloop3)
-    (qloop3) edge              node [swap] {\doubletrans{\spc}{\spc}{S}{\spc}{\spc}{S}} (qaccept)
-    ;
+    (qstart) edge              node        {\doubletranss{a \to S}{\spc \to S}} (qloop1)
+    (qstart) edge              node [swap] {\doubletranss{\spc \to S}{\spc \to S}} (qaccept)
+    (qloop1) edge [loop above] node        {\doubletranss{a \to R}{\trans{\spc}{a}{R}}} (qloop2)
+    (qloop1) edge              node        {\doubletranss{b \to S}{\spc \to L}} (qloop2)
+    (qloop2) edge [loop above] node        {\doubletranss{b \to R}{\trans{a}{b}{L}}} (qloop2)
+    (qloop2) edge              node        {\doubletranss{c \to S}{b \to S}} (qloop3)
+    (qloop3) edge [loop below] node        {\doubletranss{c \to R}{\trans{b}{c}{R}}} (qloop3)
+    (qloop3) edge
+             node [swap]
+             {\doubletranss{\spc \to S}{\spc \to S}} (qaccept);
 \end{centerautomata}
 
 Idea tässä Turingin koneessa on seuraava:
@@ -229,11 +235,11 @@ Idea tässä Turingin koneessa on seuraava:
       (q0) edge              node        {$a \to \spc,R$}  (qa)
       (q0) edge              node        {$\spc \to R$}    (a)
       (q0) edge              node [swap] {$b \to \spc,R$}  (qb)
-      (qa) edge [loop above] node        {$a \to a, R$}  (qa)
+      (qa) edge [loop above] node        {$a \to R$}  (qa)
       (qa) edge [bend left]  node        {$b \to a, R$}  (qb)
       (qa) edge [bend right] node [swap] {$\spc \to a, R$} (a)
       (qb) edge [bend left]  node        {$a \to b, R$}  (qa)
-      (qb) edge [loop below] node        {$b \to b, R$}  (qb)
+      (qb) edge [loop below] node        {$b \to R$}  (qb)
       (qb) edge [bend left]  node        {$\spc \to b, R$} (a);
     \end{centerautomata}
   \item
@@ -248,28 +254,25 @@ Idea tässä Turingin koneessa on seuraava:
       \path
       (q0) edge [loop above,looseness=12]
            node
-           {\doubletrans{a,b}{a,b}{R}{\spc}{\#}{R}} (q0)
+           {\doubletranss{a,b \to R}{\trans{\spc}{\#}{R}}} (q0)
       (q0) edge
            node
-           {\doubletrans{\spc}{\spc}{S}{\spc}{\spc}{S}} (q1)
+           {\doubletranss{\spc \to S}{\spc \to S}} (q1)
       (q1) edge
            node
            {siirrä nauhan 2 lukupää alkuun} (q2)
       (q2) edge
            node [swap]
-           {\doubletrans{\spc}{\spc}{L}{\#}{\#}{S}} (q3)
+           {\doubletranss{\spc \to L}{\# \to S}} (q3)
       (q3) edge [loop above,looseness=12]
            node
-           {\doubletrans{a}{a}{L}{\#}{a}{R}} (q3)
+           {\doubletranss{a \to L}{\trans{\#}{a}{R}}} (q3)
       (q3) edge [loop below,looseness=12]
            node
-           {\doubletrans{b}{b}{L}{\#}{b}{R}} (q3)
+           {\doubletranss{b \to L}{\trans{\#}{b}{R}}} (q3)
       (q3) edge [bend left]
            node
-           {\begin{tabular}{l}
-               \doubletrans{a}{a}{S}{\spc}{\spc}{S} \\
-               \doubletrans{b}{b}{S}{\spc}{\spc}{S}
-           \end{tabular}} (a);
+           {\doubletranss{a,b \to S}{\spc \to S}} (a);
     \end{centerautomata}
 
     Aluksi siirrytään syötteen sisältävällä ensimmäisellä nauhalla syötteen
@@ -422,9 +425,6 @@ Idea tässä Turingin koneessa on seuraava:
             lukue yhdellä.
     \end{enumerate}
 
-
-    \newcommand{\doubletranss}[2]
-    {$\left[\begin{array}{c} #1 \\ #2 \end{array}\right]$}
 %
     \begin{centerautomata}
         \node[initial,state] (start) {$q_{\text{start}}$};
