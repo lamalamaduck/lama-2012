@@ -30,7 +30,12 @@
 {\end{automata} \end{center}}
 
 \newcommand{\doubletrans}[6]
-{$\left[\begin{array}{c}\trans{#1}{#2}{#3} \\ \trans{#4}{#5}{#6}\end{array}\right]$}
+{$\left[\begin{array}{c}\trans{#1}{#2}{#3}%
+      \\ \trans{#4}{#5}{#6}\end{array}\right]$}
+
+\newcommand{\tripletrans}[3]{%
+$\left[\begin{array}{c} #1 \\ #2 \\ #3 \end{array}\right]$
+}
 
 \newcommand{\trans}[3]{#1 \to #2 \text{, } #3}
 
@@ -233,21 +238,38 @@ Idea tässä Turingin koneessa on seuraava:
     \end{centerautomata}
   \item
     Esitä tilakaaviona Turing-kone, mikä kääntää syötteensä toisin päin.
-    \begin{centerautomata}
+    \begin{centerautomata}[4]
       \node[initial,state] (q0) {$q_0$};
-      \node[state]         (q1) [below of=q0] {$q_1$};
+      \node[state]         (q1) [right of=q0] {$q_1$};
       \node[state]         (q2) [below of=q1] {$q_2$};
-      \node[state]         (q3) [below of=q2] {$q_3$};
-      \node[accepting,state] (a) [below of=q3] {$q_{accept}$};
+      \node[state]         (q3) [left of=q2] {$q_3$};
+      \node[accepting,state] (a) [left of=q0] {$q_{accept}$};
 
       \path
-      (q0) edge [loop above] node {\doubletrans{a,b}{a,b}{R}{\spc}{\#}{R}} (q0)
-      (q0) edge              node {\doubletrans{\spc}{\spc}{S}{\spc}{\spc}{S}} (q1)
-      (q1) edge              node {siirrä nauhan 2 lukupää alkuun} (q2)
-      (q2) edge              node {\doubletrans{\spc}{\spc}{L}{\#}{\#}{S}} (q3)
-      (q3) edge [loop left]  node {\doubletrans{a}{a}{L}{\#}{a}{R}} (q3)
-      (q3) edge [loop right] node {\doubletrans{b}{b}{L}{\#}{b}{R}} (q3)
-      (q3) edge              node {\doubletrans{a,b}{a,b}{S}{\spc}{\spc}{S}} (a);
+      (q0) edge [loop above,looseness=12]
+           node
+           {\doubletrans{a,b}{a,b}{R}{\spc}{\#}{R}} (q0)
+      (q0) edge
+           node
+           {\doubletrans{\spc}{\spc}{S}{\spc}{\spc}{S}} (q1)
+      (q1) edge
+           node
+           {siirrä nauhan 2 lukupää alkuun} (q2)
+      (q2) edge
+           node [swap]
+           {\doubletrans{\spc}{\spc}{L}{\#}{\#}{S}} (q3)
+      (q3) edge [loop above,looseness=12]
+           node
+           {\doubletrans{a}{a}{L}{\#}{a}{R}} (q3)
+      (q3) edge [loop below,looseness=12]
+           node
+           {\doubletrans{b}{b}{L}{\#}{b}{R}} (q3)
+      (q3) edge [bend left]
+           node
+           {\begin{tabular}{l}
+               \doubletrans{a}{a}{S}{\spc}{\spc}{S} \\
+               \doubletrans{b}{b}{S}{\spc}{\spc}{S}
+           \end{tabular}} (a);
     \end{centerautomata}
 
     Aluksi siirrytään syötteen sisältävällä ensimmäisellä nauhalla syötteen
@@ -400,8 +422,6 @@ Idea tässä Turingin koneessa on seuraava:
             lukue yhdellä.
     \end{enumerate}
 
-    \newcommand{\tripletrans}[3]
-    {$\left[\begin{array}{c} #1 \\ #2 \\ #3 \end{array}\right]$}
 
     \newcommand{\doubletranss}[2]
     {$\left[\begin{array}{c} #1 \\ #2 \end{array}\right]$}
@@ -421,8 +441,95 @@ Idea tässä Turingin koneessa on seuraava:
 \item 
   Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa yhdellä nauhalla
   syötteenä binääriluvun ja kirjoittaa toiselle nauhalle binäärilukua
-  vastaavan määrän kirjainta $a$. Kolmatta nauhaa voit käyttää jos tarvitset
-  (onkohan tää liian vaikea...).
+  vastaavan määrän kirjainta $a$. Kolmatta nauhaa voit käyttää jos tarvitset.
+
+  \begin{centerautomata}[5]
+    \node[state]           (q1) [right of=q0] {$q_1$};
+    \node[initial,state]   (q0) [above left=1cm and 4cm of q1] {$q_0$};
+    \node[state]           (q2) [above right=4cm and 2cm of q1] {$q_2$};
+    \node[state]           (q3) [above left=2cm and 2cm of q2] {$q_3$};
+    \node[state]           (q4) [above right=2cm and 2cm of q2] {$q_4$};
+    \node[state]           (q5) [right=5cm of q1] {$q_5$};
+    \node[state]           (q6) [below right=4cm and 2cm of q1] {$q_6$};
+    \node[accepting,state] (a)  [below=2cm of q0] {$q_{accept}$};
+
+    \path
+    (q0) edge [bend right=15,very near start]
+         node
+         {\tripletrans{\spc \to S}
+                      {\spc \to S}
+                      {\trans{\spc}{a}{S}}} (q1)
+    (q1) edge [loop above]
+         node
+         {\tripletrans{1 \to S}
+                      {\trans{\spc}{a}{R}}
+                      {a \to R}} (q1)
+    (q1) edge [loop below]
+         node
+         {\tripletrans{0 \to S}
+                      {\spc \to S}
+                      {a \to R}} (q1)
+    (q1) edge [bend right=20]
+         node [swap]
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\spc \to L}} (q2)
+    (q2) edge [bend left=20]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {a \to R}} (q3)
+    (q3) edge [loop above]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\bar{a},x \to R}} (q3)
+    (q3) edge
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\trans{\spc}{x}{L}}} (q4)
+    (q4) edge [loop above]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\bar{a},x \to L}} (q4)
+    (q4) edge [bend left=20]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\trans{a}{\bar{a}}{L}}} (q2)
+    (q2) edge [bend left=20,near end]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\bar{a} \to R}} (q5)
+    (q5) edge [loop right]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\bar{a},x \to R}} (q5)
+    (q5) edge [bend left=20,near start]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\spc \to L}} (q6)
+    (q6) edge [loop below]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\trans{\bar{a},x}{a}{L}}} (q6)
+    (q6) edge [bend right=20]
+         node [swap]
+         {\tripletrans{0,1 \to R}
+                      {\spc \to S}
+                      {a \to L}} (q1)
+    (q1) edge [bend right=15,very near end]
+         node
+         {\tripletrans{\spc \to S}
+                      {\spc \to S}
+                      {a \to S}} (a);
+  \end{centerautomata}
 
 \item
   Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
