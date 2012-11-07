@@ -237,16 +237,17 @@ Idea tässä Turingin koneessa on seuraava:
       \node[initial,state] (q0) {$q_0$};
       \node[state]         (q1) [below of=q0] {$q_1$};
       \node[state]         (q2) [below of=q1] {$q_2$};
-      \node[accepting,state] (a) [below of=q2] {$q_{accept}$};
+      \node[state]         (q3) [below of=q2] {$q_3$};
+      \node[accepting,state] (a) [below of=q3] {$q_{accept}$};
 
       \path
       (q0) edge [loop above] node {\doubletrans{a,b}{a,b}{R}{\spc}{\#}{R}} (q0)
       (q0) edge              node {\doubletrans{\spc}{\spc}{S}{\spc}{\spc}{S}} (q1)
-      (q1) edge [loop left]  node {siirrä nauhan 2 lukupää alkuun} (q1)
-      (q1) edge              node {\doubletrans{\spc}{\spc}{L}{\#}{\#}{S}} (q2)
-      (q2) edge [loop left]  node {\doubletrans{a}{a}{L}{\#}{a}{R}} (q2)
-      (q2) edge [loop right] node {\doubletrans{b}{b}{L}{\#}{b}{R}} (q2)
-      (q2) edge              node {\doubletrans{a,b}{a,b}{S}{\spc}{\spc}{S}} (a);
+      (q1) edge              node {siirrä nauhan 2 lukupää alkuun} (q2)
+      (q2) edge              node {\doubletrans{\spc}{\spc}{L}{\#}{\#}{S}} (q3)
+      (q3) edge [loop left]  node {\doubletrans{a}{a}{L}{\#}{a}{R}} (q3)
+      (q3) edge [loop right] node {\doubletrans{b}{b}{L}{\#}{b}{R}} (q3)
+      (q3) edge              node {\doubletrans{a,b}{a,b}{S}{\spc}{\spc}{S}} (a);
     \end{centerautomata}
 
     Aluksi siirrytään syötteen sisältävällä ensimmäisellä nauhalla syötteen
@@ -264,30 +265,156 @@ Idea tässä Turingin koneessa on seuraava:
   \item
     Esitä tilakaaviona Turing-kone, mikä kasvattaa yhdellä syötteenään
     saamaansa binäärilukua.
+
+    Binäärilukua voi kasvattaa yhdellä seuraavasti:
+    \begin{enumerate}[label=\arabic*)]
+        \item lähde liikkeelle vähiten merkitsevästä bitistä
+        \item muuta jokainen matkalla vastaan tuleva ykkönen nollaksi
+        \item muuta ensimmäinen nolla ykköseksi ja lopeta
+    \end{enumerate}
+
     \begin{enumerate}
     \item
       Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan alussa.
 %
-    \begin{centerautomata}
+    \begin{centerautomata}[3.5]
+        \node[initial,state] (start) {$q_{\text{start}}$};
+        \node[state,accepting] (accept) [right of=start] {$q_{\text{accept}}$};
+
+        \path
+        (start) edge [loop above] node {$1 \to 0, R$} (start)
+        (start) edge node {$0,\spc \to 1, R$} (accept);
     \end{centerautomata}
+
+    Automaatti noudattaa yllä kuvattua ideaa. Vähiten merkitsevät ykköset
+    muutetaan nolliksi kunnes tulee vastaan nolla, joka muutetaan ykköseksi.
+    Jos luvussa ei ole nollia, lisätään loppuun yksi ykkönen.
+
     \item
       Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan lopussa.
-%
-    \begin{centerautomata}
-    \end{centerautomata}
+
+      Ensimmäinen idea olisi kelata nauha loppuun ja toimia sen jälkeen kuten
+      äsken, mutta päinvastaiseen suuntaan.
+
+      \begin{centerautomata}
+          \node[initial,state] (start) {$q_{\text{start}}$};
+          \node[state] (q1) [right of=start] {$q_1$};
+          \node[state,accepting] (accept) [right of=q1] {$q_{\text{accept}}$};
+
+          \path
+          (start) edge [loop above] node {$0,1 \to R$} (start)
+          (start) edge node {$\spc \to L$} (q1)
+          (q1) edge [loop above] node {$1 \to 0, L$} (q1)
+          (q1) edge node {$0 \to 1, L$} (accept);
+      \end{centerautomata}
+
+      Tässä tulee kuitenkin ongelmaksi tapaus, jossa luvussa on pelkkiä ykkösiä,
+      jolloin lukua pitäisi pidentää.
+
+      Korjataan Turingin konetta seuraavasti. Siirretään ensin kaikkia alkioita
+      oikealle yhden askeleen verran ja jätetään nauhan alkuun tyhjä merkki.
+      Tämän jälkeen voidaan toimia kuten äsken ja tarvittaessa siirtää lopuksi
+      alkioita nauhalla yhden askeleen vasemmalle.
+
+      \begin{centerautomata}[3]
+          \node[initial,state] (r0) {$r_0$};
+          \node[state] (r2) [below left of=r0] {$r_2$};
+          \node[state] (r1) [below right of=r0] {$r_1$};
+
+          \node[state] (s1) [below=4.5cm of r0] {$s_1$};
+          \node[state] (s2) [right of=s1] {$s_2$};
+
+          \node[state] (t0) [below=2.2cm of s1] {$t_0$};
+          \node[state] (t1) [right of=t0] {$t_1$};
+
+          \node[state] (u0) [below=3cm of t1] {$u_0$};
+          \node[state] (u1) [left of=u0] {$u_1$};
+          \node[state] (u2) [below of=u1] {$u_2$};
+
+          \node[accepting,state] (accept) [left of=t0] {$q_{\text{accept}}$};
+
+          \path
+          (r0) edge node {$\trans{0}{\spc}{R}$} (r1)
+          (r0) edge node [swap] {$\trans{1}{\spc}{R}$} (r2)
+          (r1) edge [loop right] node {$\trans{0}{0}{R}$} (r1)
+          (r1) edge [bend left] node {$\trans{1}{0}{R}$} (r2)
+          (r2) edge [loop left] node {$\trans{1}{1}{R}$} (r2)
+          (r2) edge [bend left] node [swap] {$\trans{0}{1}{R}$} (r1)
+
+          (r2) edge [bend right] node [swap] {$\trans{\spc}{1}{S}$} (s1)
+          (r1) edge [bend left] node  {$\trans{\spc}{0}{S}$} (s1)
+
+          (s1) edge [loop below] node {$1 \to 0, L$} (s1)
+          (s1) edge node [swap] {$0 \to 1, L$} (s2)
+
+          (s2) edge node {kelaa nauha alkuun} (t0)
+          (t0) edge node {$0,1 \to S$} (accept)
+          (t0) edge node {$\trans{\spc}{\spc}{S}$} (t1)
+          (t1) edge [bend left] node {kelaa nauha loppuun} (u0)
+
+          (u0) edge node [swap] {$\trans{0}{\spc}{L}$} (u1)
+          (u0) edge [bend left] node {$\trans{1}{\spc}{L}$} (u2)
+          (u1) edge [bend right] node [swap] {$\trans{1}{0}{L}$} (u2)
+          (u1) edge [loop above] node {$\trans{0}{0}{L}$} (u1)
+          (u2) edge [bend right] node [swap] {$\trans{0}{1}{L}$} (u1)
+          (u2) edge [loop below] node {$\trans{1}{1}{L}$} (u2)
+
+          (u1) edge node {$\trans{\spc}{0}{S}$} (accept)
+          (u2) edge [bend left=50] node {$\trans{\spc}{1}{S}$} (accept)
+          ;
+      \end{centerautomata}
+
+
     \end{enumerate}
   \item
     Esitä tilakaaviona Turing-kone, mikä vähentää yhdellä syötteenään
     saamaansa binäärilukua.
-%
+
+    Vähiten merkitsevä bitti vasemmalla.
+
     \begin{centerautomata}
+        \node[initial,state]   (start)                   {$q_{\text{start}}$};
+        \node[state]           (q0)     [right of=start] {$q_0$};
+        \node[state]           (q1)     [right of=q0]    {$q_1$};
+        \node[state,accepting] (accept) [right of=q1]    {$q_{\text{accept}}$};
+
+        \path
+        (start) edge [loop above] node {$\trans{0}{1}{R}$}    (start)
+        (start) edge              node {$\trans{1}{0}{R}$}    (q0)
+        (q0)    edge [loop above] node {$0,1 \to R$}          (q0)
+        (q0)    edge              node {$\spc \to L$}         (q1)
+        (q1)    edge [loop above] node {$\trans{0}{\spc}{L}$} (q1)
+        (q1)    edge              node {$1,\spc \to S$}       (accept);
     \end{centerautomata}
+
   \item
     Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
     ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee
     kolmannelle nauhalle syötelukujen summan.
+
+    Tehdään ensin a- ja b-kohtia käyttäen kaksinauhainen Turingin kone, joka
+    laskee summan ensimmäiselle nauhalle. Idea on seuraava:
+    \begin{enumerate}[label=\arabic*)]
+        \item Jos toisella nauhalla on 0, lopeta. Muuten toista seuraavaa:
+        \item Vähennä toisen nauhan lukua yhdellä ja kasvata ensimmäisen nauhan
+            lukue yhdellä.
+    \end{enumerate}
+
+    \newcommand{\tripletrans}[3]
+    {$\left[\begin{array}{c} #1 \\ #2 \\ #3 \end{array}\right]$}
+
+    \newcommand{\doubletranss}[2]
+    {$\left[\begin{array}{c} #1 \\ #2 \end{array}\right]$}
 %
     \begin{centerautomata}
+        \node[initial,state] (start) {$q_{\text{start}}$};
+        \node[state] (q1) [above right of=start] {$q_1$};
+        \node[state] (q2) [below right of=start] {$q_2$};
+        \node[state,accepting] (accept) [below of=start] {$q_{\text{accept}}$};
+
+        \path
+        (start) edge node [swap] {\doubletranss{0,1,\spc \to R}{\spc \to S}} (accept)
+        ;
     \end{centerautomata}
   \end{enumerate}
 
