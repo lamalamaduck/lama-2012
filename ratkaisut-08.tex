@@ -602,26 +602,110 @@ Idea tässä Turingin koneessa on seuraava:
                       {a \to S}} (a);
   \end{centerautomata}
 
+  Tämä Turing-kone pitää nauhalla 3 kirjaa kulloinkin käsittelyssä olevaa
+  bittiä vastaavasta kahden potenssista. Aluks nauhalla 3 on siis vain yksi
+  $a$, ja jokaisen käsitellyn bitin jälkeen nauhan sisältö käydään
+  kaksinkertaistamassa.
+
+  Nyt bittien käsittely on helppoa. Jos bitti on $1$, kopioidaan nauhan 3
+  sisältö nauhalle 2 ja kaksinkertaistetaan nauhan 3 sisältö. Jos bitti on
+  $0$, ei kopioida mitään, mutta muistetaan kuitenkin käydä
+  kaksinkertaistamassa nauhan 3 sisältö.
+
+  Nauhan 3 sisällön kaksinkertaistaminen tehdään niin, että merkitään jokainen
+  jo kaksinkertaistettu $a$ viivalla, ja kirjoitetaan uudet merkit aluksi
+  merkkeinä $x$. Näin voidaan erottaa mitkä merkit ovat vanhoja, ja mitkä
+  uusia. Lopuksi poistetaan kaikki merkinnät ja korvataan $x$ merkit $a$
+  merkeillä.
+
+  Toinen tapa ratkaista ongelma on käyttää aikaisemmin toteutettua yhdellä
+  vähentämistä. Kirjoitetaan nauhalle 2 merkki $a$ joka kerta kun vähennämme
+  nauhan 1 lukua yhdellä. Tätä jatketaan kunnes nauhan 1 luku on vähentynyt
+  nollaan.
+
+  \begin{centerautomata}
+    \node[initial, state]   (qstart)                    {$q_{\text{start}}$};
+    \node[accepting, state] (qaccept) [right=of qstart] {$q_{\text{accept}}$};
+
+      \path
+      (qstart) edge [loop above] node {\doubletranss{\text{vähennä luvusta 1}}
+                                       {\spc \to a, R}} (qstart)
+      (qstart) edge node {\doubletranss{\spc \to S}
+                                       {\spc \to S}} (qaccept);
+  \end{centerautomata}
+
+  Tehtävän 5, kohdan b\) Turing-kone teki yhdellä vähentämisen site, että
+  nauha tyhjenee kun luku vähenee nollaan. Näin ollen voimme helposti
+  tarkistaa milloin luku on nolla vain katsomalla onko nauha 1 tyhjä. Oletamme
+  lisäksi, että syötteenä saadussa luvussa nollan ainut laillinen esitysmuoto
+  on tyhjä nauha.
+
 \item
   Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
   ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee kolmannen
   nauhan avulla syötelukujen kertolaskun (onkohan tää liian vaikea...).
+
+  Muistutetaan ensin mieleen miten allekkain kertominen toimii. Kerrottavaa
+  kerrotaan jokaisella kertojan numerolla. Saadut välitulokset taulukoidaan
+  siten, että oikea reuna on tasattu sen numeron kohdalle jolla kerrottaessa
+  tulos saatiin. Lopuksi välitulokset lasketaan yhteen.
+
+  \begin{center}
+    \begin{tabular}{cccccc}
+      &&       &1&0&1 \\
+      &&$\cdot$&1&1&0 \\
+      \hline 
+      &&       &0&0&0 \\
+      &&      1&0&1&  \\
+      +&    1&0&1&&   \\
+      \hline
+      &    1&1&1&1&0
+    \end{tabular}
+  \end{center}
+
+  Huomataan, että yhteenlaskua voi suorittaa myös juoksevasti, siis laskemalla
+  välituloksia yhteen sitä mukaan kun niitä lasketaan. Lisäksi yhdellä bitillä
+  kertominen on helppoa: $1 \cdot a = a$ ja $0 \cdot a = 0$. Tärkein huomio on
+  kuitenkin se, että oikeanlaisen tasauksen saa aikaan myös lisäämällä luvun
+  alkuun nollia.
+
+  Oletetaan, että luvut ovat nauhoilla vähiten merkitsevä bitti vasemassa
+  reunassa, ja suoritetaan allekkain kertominen.
+
+  \begin{centerautomata}
+    \node[initial, state]   (qstart)                    {$q_{\text{start}}$};
+    \node[state]            (q1)      [right=14em of qstart.mid] {$q_1$};
+    \node[state]            (q0)      [above= of qstart.mid] {$q_0$};
+    \node[accepting, state] (qaccept) [below=of qstart] {$q_{\text{accept}}$};
+
+    \path
+    (qstart) edge [bend right] node [swap] {\tripletrans{0,1, \spc \to S}
+                                    {0 \to R}
+                                    {0,1,\spc \to S}} (q0)
+    (qstart) edge node [swap] {\tripletrans{0,1, \spc \to S}
+                                    {1 \to R}
+                                    {0,1,\spc \to S}} (q1)
+    (q1)     edge [bend right,text width=12em]
+             node [swap]
+             {laske yhteen nauhojen 1 ja 3 luvut nauhalle 3}
+             (q0)
+    (q0)     edge [bend right,text width=12em]
+             node [swap]
+             {siirrä nauhan 1 sisältöä oikealle ja lisää nauhan alkuun 0}
+             (qstart)
+    (qstart) edge node [swap] {\tripletrans{0,1,\spc \to S}
+                                    {\spc \to S}
+                                    {0,1,\spc \to S}} (qaccept);
+  \end{centerautomata}
+
+  Automaatti käy läpi nauhalla 2 olevaa kertojaa bitti kerrallaan. Jos bitti
+  on 1, lisätään nauhan 1 sisältö nauhalla 3 pidettävään tulokseen. Jos bitti
+  on 0, ei tehdä lisäystä. Siirrytään kertojassa seuraavaan bittiin. Tämän
+  jälkeen käydään siirtämässä nauhalla 1 olevaa kerrottavaa yksi askel
+  oikealle, ja lisätään luvun alkuun jääneeseen tyhjään paikkaan 0. Tämä
+  vastaa allekkainkertomisessa seuraavan välituloksen tasaamista pykälää
+  vasemmalle. Toistetaan edellä kuvattua kunnes kaikki kertojan bitit on käyty
+  läpi.
 \end{enumerate}
-
-%% \vfill
-
-%% \centerline{\bf Tehtävän~1 kaaviot seuraavalla sivulla!}
-
-%% \newpage
-
-%% Tehtävän 1.(a) deterministinen Turingin kone:
-%% \begin{center}
-%% \input{pics/TMesim02.pspdftex}
-%% \end{center}
-%% Tehtävän 1.(b) epädeterministinen Turingin kone:
-%% \begin{center}
-%% \input{pics/NDTMesim01.pspdftex}
-%% \end{center}
-
 
 \end{document}
