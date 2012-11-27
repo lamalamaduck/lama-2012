@@ -72,9 +72,79 @@ ominaisuutta ratkaisuissasi.
   \item
     Esitä Jyrkin luentojen sivun 230 deterministisen Turingin koneen laskenta
     (ts.\ tilanteiden jono) syötteellä 001001.
+
+    \begin{align*}
+         q_0 001001  &&  abbA q_5 AB    \\
+        a q_1 01001  &&  abbAA q_5 B    \\
+        a0 q_1 1001  &&  abbAAB q_5     \\
+        a01 q_1 001  &&  abbAA q_6 B    \\
+        a010 q_1 01  &&  abbA q_9 AX    \\
+        a0100 q_1 1  &&  abb q_9 AAX    \\
+        a01001 q_1   &&  ab q_9 bAAX    \\
+        a0100 q_2 1  &&  abX q_{10} AAX \\
+        a010 q_3 0B  &&  abXA q_8 AX    \\
+        a01 q_4 00B  &&  abXAA q_8 X    \\
+        a0 q_1 100B  &&  abXA q_6 AX    \\
+        a q_1 0100B  &&  abX q_7 AXX    \\
+         q_1 a0100B  &&  ab q_7 XAXX    \\
+        a q_0 0100B  &&  a q_7 bXAXX    \\
+        ab q_1 100B  &&  aX q_{10} XAXX \\
+        ab1 q_1 00B  &&  aXX q_{10} AXX \\
+        ab10 q_1 0B  &&  aXXA q_8 XX    \\
+        ab100 q_1 B  &&  aXX q_6 AXX    \\
+        ab10 q_2 0B  &&  aX q_7 XXXX    \\
+        ab1 q_3 0AB  &&  a q_7 XXXXX    \\
+        ab q_4 10AB  &&   q_7 aXXXXX    \\
+        a q_4 b10AB  &&   q_{10} XXXXXX \\
+        ab q_0 10AB  &&  X q_{10} XXXXX \\
+        abb q_1 0AB  &&  XX q_{10} XXXX \\
+        abb0 q_1 AB  &&  XXX q_{10} XXX \\
+        abb q_2 0AB  &&  XXXX q_{10} XX \\
+        ab q_2 bAAB  &&  XXXXX q_{10} X \\
+        abb q_5 AAB  &&  XXXXXX q_{10}  \\
+                     && \text{acc} 
+    \end{align*}
   \item
     Esitä Jyrkin luentojen sivun 241 epädeterministiselle Turingin koneelle
     yksi hyväksyvä ja yksi hylkäävä laskenta syötteellä 001001.
+
+    \begin{alignat}{13}
+      q_0  &&  0    &&  0    && 1      &&  0      && 0      && 1      \\
+      \spc &&  q_1  &&  0    && 1      &&  0      && 0      && 1      \\
+      \spc &&  0    &&  q_1  && 1      &&  0      && 0      && 1      \\
+      \spc &&  0    &&  1    && q_1    &&  0      && 0      && 1      \\
+      \spc &&  0    &&  q_2  && 1      &&  X      && 0      && 1      \\
+      \spc &&  q_2  &&  0    && 1      &&  X      && 0      && 1      \\
+      q_2  &&  \spc &&  0    && 1      &&  X      && 0      && 1      \\
+      \spc &&  q_3  &&  0    && 1      &&  X      && 0      && 1      \\
+      \spc &&  \spc &&  q_4  && 1      &&  X      && 0      && 1      \\
+      \spc &&  \spc &&  1    && q_4    &&  X      && 0      && 1      \\
+      \spc &&  \spc &&  1    && X      &&  q_5    && 0      && 1      \\
+      \spc &&  \spc &&  1    && q_9    &&  X      && X      && 1      \\
+      \spc &&  \spc &&  q_9  && 1      &&  X      && X      && 1      \\
+      \spc &&  q_2  &&  \spc && 1      &&  X      && X      && 1      \\
+      \spc &&  \spc &&  q_3  && 1      &&  X      && X      && 1      \\
+      \spc &&  \spc &&  \spc && q_7    &&  X      && X      && 1      \\
+      \spc &&  \spc &&  \spc && X      &&  q_8    && X      && 1      \\
+      \spc &&  \spc &&  \spc && X      &&  X      && q_8    && 1      \\
+      \spc &&  \spc &&  \spc && X      &&  q_9    && X      && X      \\
+      \spc &&  \spc &&  \spc && q_9    &&  X      && X      && X      \\
+      \spc &&  \spc &&  q_9  && \spc   &&  X      && X      && X      \\
+      \spc &&  \spc &&  \spc && q_{10} &&  X      && X      && X      \\
+      \spc &&  \spc &&  \spc && X      &&  q_{10} && X      && X      \\
+      \spc &&  \spc &&  \spc && X      &&  X      && q_{10} && X      \\
+      \spc &&  \spc &&  \spc && X      &&  X      && X      && q_{10} \\
+      \text{acc} &&&&&&
+    \end{alignat}
+
+    \begin{alignat}{7}
+      q_0  &&  0    &&  0      &&  1 &&  0 &&  0 &&  1 \\
+      \spc &&  q_1  &&  0      &&  1 &&  0 &&  0 &&  1 \\
+      q_2  &&  \spc &&  X      &&  1 &&  0 &&  0 &&  1 \\
+      \spc &&  q_3  &&  X      &&  1 &&  0 &&  0 &&  1 \\
+      \spc &&  X    &&  q_{10} &&  1 &&  0 &&  0 &&  1 \\
+      \text{reject} &&&&&&&&&&&&
+    \end{alignat}
   \end{enumerate}
   
 \item
