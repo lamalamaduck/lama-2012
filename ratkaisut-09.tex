@@ -1,0 +1,189 @@
+\documentclass[finnish,11pt,draft]{article}
+
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsfonts,amssymb,amsthm,enumitem}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{wasysym}
+\usetikzlibrary{arrows,automata,positioning}
+
+\setenumerate{listparindent=\parindent}
+
+\newtheorem*{claim}{Väite}
+
+\newcommand{\set}[1]{{\left\{ #1 \right\}}}
+\newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\ve}{\varepsilon}
+
+\newenvironment{automata}[1][2.8]%
+{\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=#1cm,semithick]}%
+{\end{tikzpicture}}
+
+\newenvironment{centerautomata}[1][2.8]%
+{\begin{center}\begin{automata}[#1]}%
+{\end{automata} \end{center}}
+
+\newcommand{\trans}[3]{#1 \to #2 \text{, } #3}
+
+\newcommand{\doubletranss}[2]{%
+$\begin{bmatrix}#1 \\ #2 \end{bmatrix}$%
+}
+
+\newcommand{\doubletrans}[6]{%
+\doubletranss{\trans{#1}{#2}{#3}}{\trans{#4}{#5}{#6}}%
+}
+
+\newcommand{\tripletrans}[3]{%
+$\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
+}
+
+\newcommand{\spc}{\text{\textvisiblespace}}
+
+\newcolumntype{W}{>{\centering\arraybackslash}m{5cm}}
+\newcolumntype{V}{>{\centering\arraybackslash}m{2cm}}
+
+\begin{document}
+
+\subsection*{582206 Laskennan mallit, syksy 2012 \\
+  \textmd{9. harjoitusten malliratkaisut \\
+    Juhana Laurinharju ja Jani Rahkola}}
+
+\begin{enumerate}
+\item
+  Esitä tilakaaviona epädeterministinen Turingin kone, joka tunnistaa
+  aakkoston $\set{0,1,\#}$ kielen
+%
+  \begin{equation*}
+    \set{\# w_1\# w_2\# \dots \# w_n\# \mid w_i \in \set{0,1}^* \text{
+        kaikilla } i \text{ ja } w_i = w_j \text{ joillakin } i \neq j}.
+  \end{equation*}
+
+  \begin{centerautomata}
+    \node[initial above,state] (qstart)               {$q_{\text{start}}$};
+    \node[state]         (q0) [right=of qstart] {$q_0$};
+    \node[state]         (q1) [left=of qstart] {$q_1$};
+    \node[state]         (q2) [below=of q1] {$q_2$};
+    \node[state]         (q3) [below=of q2] {$q_3$};
+    \node[state]         (q00) [below left=of q3] {$q_{00}$};
+    \node[state]         (q01) [below=of q00] {$q_{01}$};
+
+    \node[state]         (q10) [below right=of q3] {$q_{10}$};
+    \node[state]         (q11) [below=of q10] {$q_{11}$};
+
+    \node[state]         (q4) [below right=of q01] {$q_{4}$};
+    \node[state]         (q5) [above=of q4] {$q_{5}$};
+
+    \node[state]         (qh0) [right=of q3] {$q_{\#0}$};
+    \node[state]         (qh1) [right=of qh0] {$q_{\#1}$};
+    \node[accepting,state] (qaccept) [below=of qh1] {$q_{\text{accept}}$};
+
+    \path
+    (qstart) edge [bend left]  node {$\# \to R$}                (q0)
+    (q0)     edge [loop above] node {$0,1,\# \to R$}            (q0)
+    (q0)     edge [bend left]  node {$\spc \to L$}              (qstart)
+    (qstart) edge              node {$\# \to S$}                (q1)
+    (q1)     edge [loop above] node {$0,1,\# \to L$}            (q1)
+    (q1)     edge              node {$\trans{\#}{\bar{\#}}{L}$} (q2)
+    (q2)     edge [loop left]  node {$0,1,\# \to L$}            (q2)
+    (q2)     edge              node [swap] {$\trans{\#}{\bar{\#}}{R}$} (q3)
+
+    (q3)     edge              node [swap] {$\trans{0}{\bar{0}}{R}$}   (q00)
+    (q00)    edge [loop left]  node {$0,1,\# \to R$}            (q00)
+    (q00)    edge              node [swap] {$\bar{\#} \to R$}          (q01)
+    (q01)    edge [loop left]  node {$\bar{0},\bar{1} \to R$}   (q01)
+    (q01)    edge              node [swap] {$\trans{0}{\bar{0}}{L}$}   (q4)
+
+    (q3)     edge              node {$\trans{1}{\bar{1}}{R}$}   (q10)
+    (q10)    edge [loop right] node {$0,1,\# \to R$}            (q10)
+    (q10)    edge              node {$\bar{\#} \to R$}          (q11)
+    (q11)    edge [loop right] node {$\bar{0},\bar{1} \to R$}   (q11)
+    (q11)    edge              node {$\trans{1}{\bar{1}}{L}$}   (q4)
+
+    (q4)     edge [loop below] node {$\bar{0},\bar{1} \to L$}   (q4)
+    (q4)     edge              node {$\bar{\#} \to L$}          (q5)
+    (q5)     edge [loop right] node {$0,1,\# \to L$}            (q5)
+    (q5)     edge              node {$\bar{0},\bar{1} \to R$}   (q3)
+
+
+    (q3)     edge              node {$\# \to R$}                (qh0)
+    (qh0)    edge [loop above] node {$0,1,\# \to R$}            (qh0)
+    (qh0)    edge              node {$\bar{\#} \to R$}          (qh1)
+    (q3)     edge [bend left=60]  node {$\bar{\#} \to R$}          (qh1)
+    (qh1)    edge [loop above] node {$\bar{0},\bar{1} \to R$}   (qh1)
+    (qh1)    edge              node {$\# \to S$}                (qaccept);
+  \end{centerautomata}
+
+\item
+  {[Sipser Problem~3.9]} Merkintä $k$-PDA tarkoittaa pinoautomaattia, jossa on
+  käytettävänä $k$ pinoa. Siis 0-PDA on NFA ja 1-PDA on tavallinen PDA.
+  Osoita, että
+%
+  \begin{enumerate}
+  \item
+    2-PDA pystyy tunnistamaan kieliä, joita 1-PDA ei pysty mutta
+  \item
+    minkä tahansa 3-PDA:n tunnistama kieli voidaan tunnistaa
+    2-PDA:lla.
+  \end{enumerate}
+%
+  \emph{Vihje:} Simuloi Turingin koneen nauhaa kahdella pinolla. Esitä
+  ratkaisun periaate pseudokoodilla tms.\ menemättä automaattiformalismin
+  yksityiskohtiin.
+
+\item
+  {[Sipser Exercise 3.14]} \emph{Jonoautomaatti} on muuten kuin
+  pinoautomaatti, mutta pino on korvattu jonolla. Jonoon voidaan kohdistaa
+  kahdenlaisia operaatioita:
+%
+  \begin{itemize}
+  \item
+    $\textsc{Enqueue}\left(a\right)$ kirjoittaa merkin $a$ jonon loppuun ja
+  \item
+    \textsc{Dequeue} poistaa jonon ensimmäisen merkin ja palauttaa sen
+    arvonaan.
+  \end{itemize}
+%
+  Pinoautomaatin tapaan syöte on luettavissa merkki kerrallaan. Sovitaan, että
+  syötteessä on aina loppumerkkinä (mutta ei muualla) tyhjämerkki $\spc$.
+  Turingin koneen tapaan pinoautomaatti hyväksyy syötteen siirtymällä
+  erilliseen hyväksyvään tilaan.
+
+  Osoita, että mikä tahansa Turing-tunnistettava kieli voidaan tunnistaa
+  deterministisellä jonoautomaatilla. Perusteluksi riittää esittää sopivan
+  tasoisena pseudokoodina, miten Turingin konetta voidaan simuloida jonoa
+  käyttäen.
+
+\item
+  {[Sipser Problem 3.15]} Näytä että ratkeavien kielten joukko on suljettu
+  seuraavien operaatioiden suhteen.
+%
+  \begin{enumerate}
+  \item Yhdiste
+  \item Ketjutus
+  \item Tähti
+  \item Komplementti
+  \item Leikkaus
+  \end{enumerate}
+
+\item
+  {[Sipser Problem 3.16]} Näytä että Turin-tunnistettavien kielten joukko on
+  suljettu seuraavien operaatioiden suhteen.
+%
+  \begin{enumerate}
+  \item Yhdiste
+  \item Ketjutus
+  \item Tähti
+  \item Leikkaus
+  \end{enumerate}
+\end{enumerate}
+
+\end{document}
