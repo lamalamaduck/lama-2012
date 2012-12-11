@@ -1,0 +1,781 @@
+\documentclass[finnish,11pt,draft]{article}
+
+\usepackage[finnish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsfonts,amssymb,amsthm,enumitem}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{wasysym}
+\usetikzlibrary{arrows,automata,positioning}
+
+\setenumerate{listparindent=\parindent}
+
+\newtheorem*{claim}{Väite}
+
+\newcommand{\set}[1]{{\left\{ #1 \right\}}}
+\newcommand{\ceil}[1]{{\left\lceil#1\right\rceil}}
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\ve}{\varepsilon}
+
+\newenvironment{automata}[1][2.8]%
+{\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=#1cm,semithick]}%
+{\end{tikzpicture}}
+
+\newenvironment{centerautomata}[1][2.8]%
+{\begin{center}\begin{automata}[#1]}%
+{\end{automata} \end{center}}
+
+\newcommand{\trans}[3]{#1 \to #2 \text{, } #3}
+
+\newcommand{\doubletranss}[2]{%
+$\begin{bmatrix}#1 \\ #2 \end{bmatrix}$%
+}
+
+\newcommand{\doubletrans}[6]{%
+\doubletranss{\trans{#1}{#2}{#3}}{\trans{#4}{#5}{#6}}%
+}
+
+\newcommand{\tripletrans}[3]{%
+$\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
+}
+
+\newcommand{\spc}{\text{\textvisiblespace}}
+
+\newcolumntype{W}{>{\centering\arraybackslash}m{5cm}}
+\newcolumntype{V}{>{\centering\arraybackslash}m{2cm}}
+
+\begin{document}
+
+\subsection*{582206 Laskennan mallit, syksy 2012 \\
+  \textmd{8. harjoitusten malliratkaisut \\
+    Juhana Laurinharju ja Jani Rahkola}}
+
+Moninauhaisissa koneissa $S$-siirtymä eĺi siirtymä missä ei nauha päätä
+siirretä mihinkään on usein hyö\-dyl\-li\-nen. Koska tämä ominaisuus ei muuta
+Turing-koneen kielentunnistusominaisuuksia, voit vapaasti käyttää tätä
+ominaisuutta ratkaisuissasi.
+
+\begin{enumerate}
+\item
+  Tehtävässä tarkastellaan Jyrkin luentojen sivuilla~230 ja 241 esitettyjä
+  determinististä ja e\-pä\-de\-ter\-mi\-nis\-tis\-tä Turingin konetta
+  kielelle $\set{ww\mid w\in\set{0,1}^\ast}$. Koneiden kaavioesitykset on myös
+  annettu seuraavalla sivulla.
+  \begin{enumerate}
+  \item
+    Esitä Jyrkin luentojen sivun 230 deterministisen Turingin koneen laskenta
+    (ts.\ tilanteiden jono) syötteellä 001001.
+
+    \begin{align*}
+         q_0 001001  &&  abbA q_5 AB    \\
+        a q_1 01001  &&  abbAA q_5 B    \\
+        a0 q_1 1001  &&  abbAAB q_5     \\
+        a01 q_1 001  &&  abbAA q_6 B    \\
+        a010 q_1 01  &&  abbA q_9 AX    \\
+        a0100 q_1 1  &&  abb q_9 AAX    \\
+        a01001 q_1   &&  ab q_9 bAAX    \\
+        a0100 q_2 1  &&  abX q_{10} AAX \\
+        a010 q_3 0B  &&  abXA q_8 AX    \\
+        a01 q_4 00B  &&  abXAA q_8 X    \\
+        a0 q_1 100B  &&  abXA q_6 AX    \\
+        a q_1 0100B  &&  abX q_7 AXX    \\
+         q_1 a0100B  &&  ab q_7 XAXX    \\
+        a q_0 0100B  &&  a q_7 bXAXX    \\
+        ab q_1 100B  &&  aX q_{10} XAXX \\
+        ab1 q_1 00B  &&  aXX q_{10} AXX \\
+        ab10 q_1 0B  &&  aXXA q_8 XX    \\
+        ab100 q_1 B  &&  aXX q_6 AXX    \\
+        ab10 q_2 0B  &&  aX q_7 XXXX    \\
+        ab1 q_3 0AB  &&  a q_7 XXXXX    \\
+        ab q_4 10AB  &&   q_7 aXXXXX    \\
+        a q_4 b10AB  &&   q_{10} XXXXXX \\
+        ab q_0 10AB  &&  X q_{10} XXXXX \\
+        abb q_1 0AB  &&  XX q_{10} XXXX \\
+        abb0 q_1 AB  &&  XXX q_{10} XXX \\
+        abb q_2 0AB  &&  XXXX q_{10} XX \\
+        ab q_2 bAAB  &&  XXXXX q_{10} X \\
+        abb q_5 AAB  &&  XXXXXX q_{10}  \\
+                     && \text{acc} 
+    \end{align*}
+  \item
+    Esitä Jyrkin luentojen sivun 241 epädeterministiselle Turingin koneelle
+    yksi hyväksyvä ja yksi hylkäävä laskenta syötteellä 001001.
+
+    \begin{alignat}{13}
+      q_0  &&  0    &&  0    && 1      &&  0      && 0      && 1      \\
+      \spc &&  q_1  &&  0    && 1      &&  0      && 0      && 1      \\
+      \spc &&  0    &&  q_1  && 1      &&  0      && 0      && 1      \\
+      \spc &&  0    &&  1    && q_1    &&  0      && 0      && 1      \\
+      \spc &&  0    &&  q_2  && 1      &&  X      && 0      && 1      \\
+      \spc &&  q_2  &&  0    && 1      &&  X      && 0      && 1      \\
+      q_2  &&  \spc &&  0    && 1      &&  X      && 0      && 1      \\
+      \spc &&  q_3  &&  0    && 1      &&  X      && 0      && 1      \\
+      \spc &&  \spc &&  q_4  && 1      &&  X      && 0      && 1      \\
+      \spc &&  \spc &&  1    && q_4    &&  X      && 0      && 1      \\
+      \spc &&  \spc &&  1    && X      &&  q_5    && 0      && 1      \\
+      \spc &&  \spc &&  1    && q_9    &&  X      && X      && 1      \\
+      \spc &&  \spc &&  q_9  && 1      &&  X      && X      && 1      \\
+      \spc &&  q_2  &&  \spc && 1      &&  X      && X      && 1      \\
+      \spc &&  \spc &&  q_3  && 1      &&  X      && X      && 1      \\
+      \spc &&  \spc &&  \spc && q_7    &&  X      && X      && 1      \\
+      \spc &&  \spc &&  \spc && X      &&  q_8    && X      && 1      \\
+      \spc &&  \spc &&  \spc && X      &&  X      && q_8    && 1      \\
+      \spc &&  \spc &&  \spc && X      &&  q_9    && X      && X      \\
+      \spc &&  \spc &&  \spc && q_9    &&  X      && X      && X      \\
+      \spc &&  \spc &&  q_9  && \spc   &&  X      && X      && X      \\
+      \spc &&  \spc &&  \spc && q_{10} &&  X      && X      && X      \\
+      \spc &&  \spc &&  \spc && X      &&  q_{10} && X      && X      \\
+      \spc &&  \spc &&  \spc && X      &&  X      && q_{10} && X      \\
+      \spc &&  \spc &&  \spc && X      &&  X      && X      && q_{10} \\
+      \text{acc} &&&&&&
+    \end{alignat}
+
+    \begin{alignat}{7}
+      q_0  &&  0    &&  0      &&  1 &&  0 &&  0 &&  1 \\
+      \spc &&  q_1  &&  0      &&  1 &&  0 &&  0 &&  1 \\
+      q_2  &&  \spc &&  X      &&  1 &&  0 &&  0 &&  1 \\
+      \spc &&  q_3  &&  X      &&  1 &&  0 &&  0 &&  1 \\
+      \spc &&  X    &&  q_{10} &&  1 &&  0 &&  0 &&  1 \\
+      \text{reject} &&&&&&&&&&&&
+    \end{alignat}
+  \end{enumerate}
+  
+\item
+  Esitä tilakaaviona kielen $\set{a^ib^jc^id^j\mid i,j\in \Nat}$ tunnistava
+  deterministinen yksinauhainen Turingin kone.
+
+  \begin{centerautomata}
+    \node[initial,state] (q0)                      {$q_0$};
+    \node[state]         (q1)  [above left of=q0]  {$q_1$};
+    \node[state]         (q2)  [above right of=q0] {$q_2$};
+    \node[state]         (q3)  [below=1.4cm of q0] {$q_3$};
+    \node[state]         (q4)  [below right of=q3] {$q_4$};
+    \node[state]         (q5)  [below left of=q3]  {$q_5$};
+    \node[state]         (q6)  [right=2.8cm of q3] {$q_6$};
+    \node[accepting,state] (a) [right of=q6]       {$q_{accept}$};
+
+    \path
+    (q0) edge              node {$a \to \bar{a},R$}   (q1)
+    (q1) edge [loop above] node {$a,b,\bar{c} \to R$} (q1)
+    (q1) edge              node {$c \to \bar{c}, L$}  (q2)
+    (q2) edge [loop above] node {$a,b,\bar{c} \to L$} (q2)
+    (q2) edge              node {$\bar{a} \to R$}     (q0);
+    \path
+    (q0) edge node {$\spc,b \to S$} (q3);
+    \path
+    (q3) edge              node {$b \to \bar{b}, R$}        (q4)
+    (q4) edge [loop below] node {$b,\bar{c},\bar{d} \to R$} (q4)
+    (q4) edge              node {$d \to \bar{d}, L$}        (q5)
+    (q5) edge [loop below] node {$b,\bar{c},\bar{d} \to L$} (q5)
+    (q5) edge              node {$\bar{b} \to R$}           (q3);
+    \path
+    (q3) edge              node {$\spc,\bar{c},\bar{d} \to R$} (q6)
+    (q6) edge [loop above] node {$\bar{c},\bar{d} \to R$}    (q6)
+    (q6) edge              node {$\spc \to S$}                 (a);
+  \end{centerautomata}
+
+  Automaatti koostuu kolmesta osasta. Tilasta $q_0$ lähtevässä silmukassa
+  tarkistetaan, että $c$ merkkejä on vähintään yhtä monta kuin $a$ merkkejä.
+  Tilasta $q_3$ lähtevässä silmukassa puolestaan tarkistetaan, että $d$
+  merkkejä on vähintään yhtä monta kuin $b$ merkkejä. Tämä tehdään
+  merkitsemällä käsitelty $a$-merkki (vastaavasti $b$-merkki) viivalla,
+  etsimällä seuraava merkitsemätön $c$-merkki (vastaavasti $d$-merkki) ja
+  merkitsemällä sekin. Jos näin tehtäessä $c$ tai $d$ merkit loppuivat kesken,
+  siirrytään virhetilaan (jota ei selvyyden vuoksi piirretty kuvaan).
+
+  Lopuksi tarkistetaan, että yhtään $c$ tai $d$ merkkiä ei jäänyt
+  merkkaamatta. Tämä tehdään aloittamalla viimeisestä $b$-merkkiä seuraavasta
+  merkistä, ja sallimalla vain merkattuja $c$ ja $d$ merkkejä. Kun koko syöte
+  on luettu, siirrytään hyväksyvään tilaan.
+
+\item
+  Esitä tilakaaviona kaksinauhainen Turingin kone, joka tunnistaa kielen
+  $\set{a^nb^nc^n\mid n\in N}$. Sopiva tapa merkitä kaksinauhaisen koneen
+  siirtymä $\delta(r,a_1,a_2)=(s,b_1,b_2,D_1,D_2)$ on esim.
+
+  \newcommand{\twotrans}
+{\left[\begin{array}{c}
+a_1\rightarrow b_1,D_1\\
+a_2\rightarrow b_2,D_2
+\end{array}\right]}
+
+\bigskip
+
+%% \begin{center}
+%% \input{pics/t11t3.pspdftex}
+%% \end{center}
+
+\begin{centerautomata}
+    \node[initial,state] (qstart) {$q_{\text{start}}$};
+    \node[state] (qloop1) [above right of=qstart] {$q_1$};
+    \node[state] (qloop2) [right=4cm of qloop1] {$q_2$};
+    \node[state] (qloop3) [below=2.968cm of qloop2] {$q_3$};
+    \node[state,accepting] (qaccept) [below right of=qstart] {$q_{\text{accept}}$};
+
+    \path
+    (qstart) edge              node        {\doubletranss{a \to S}{\spc \to S}} (qloop1)
+    (qstart) edge              node [swap] {\doubletranss{\spc \to S}{\spc \to S}} (qaccept)
+    (qloop1) edge [loop above] node        {\doubletranss{a \to R}{\trans{\spc}{a}{R}}} (qloop2)
+    (qloop1) edge              node        {\doubletranss{b \to S}{\spc \to L}} (qloop2)
+    (qloop2) edge [loop above] node        {\doubletranss{b \to R}{\trans{a}{b}{L}}} (qloop2)
+    (qloop2) edge              node        {\doubletranss{c \to S}{b \to S}} (qloop3)
+    (qloop3) edge [loop below] node        {\doubletranss{c \to R}{\trans{b}{c}{R}}} (qloop3)
+    (qloop3) edge
+             node [swap]
+             {\doubletranss{\spc \to S}{\spc \to S}} (qaccept);
+\end{centerautomata}
+
+Idea tässä Turingin koneessa on seuraava:
+\begin{enumerate}[label=\arabic*)]
+    \item kopioi kaikki $a$-merkit toiselle nauhalle
+    \item Jokaisen $b$-merkin kohdalla korvataan toisella nauhalla yksi
+        $a$-merkki $b$-merkillä. Tämä tehdään toisella nauhalla lopusta alkuun
+        päin.
+    \item Jos toisella nauhalla on vielä $a$-merkkejä jäljellä, hylätään.
+    \item Jokaisen $c$-merkin kohdalla korvataan toisen nauhan $b$-merkki
+        $c$-merkillä. Nyt toisella nauhalla liikutaan taas alusta loppuun päin.
+    \item Jos toisella nauhalla on nyt viimeinen $b$ korvattu $c$:llä, niin
+        hyväksytään. Muuten hylätään.
+\end{enumerate}
+
+\item
+  Merkkijono-operaatioita. Olkoon syöteaakkosto $\set{a,b}$
+  \begin{enumerate}
+  \item 
+    Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan loppuun eli
+    syötteen oikealle puolelle.
+%
+    \begin{centerautomata}
+      \node[initial,state]   (q0)               {$q_0$};
+      \node[accepting,state] (q1) [right of=q0] {$q_1$};
+
+      \path
+      (q0) edge [loop above] node {$a,b \to R$} (q0)
+      (q0) edge              node {$\spc \to S$}  (q1);
+    \end{centerautomata}
+  \item
+    Esitä tilakaaviona Turing-kone, mikä siirtää lukupään nauhan alkuun eli
+    vasempaan laitaan.
+%
+    \begin{centerautomata}
+      \node[initial,state]   (q0)               {$q_0$};
+      \node[state]           (q1) [right of=q0] {$q_1$};
+      \node[state]           (q2) [below of=q1] {$q_2$};
+      \node[accepting,state] (q3) [right of=q1] {$q_3$};
+
+      \path
+      (q0) edge node {$\begin{aligned}
+                         a & \to \bar{a}, L \\
+                         b & \to \bar{b}, L \\
+                         \spc & \to \bar{\spc}, L
+                       \end{aligned}$} (q1)
+      (q1) edge node {$\begin{aligned}
+                         a & \to R \\
+                         b & \to R \\
+                         \spc & \to R
+                       \end{aligned}$} (q2)
+      (q2) edge [bend left] node {$\begin{aligned}
+                                     \bar{a} & \to a, L \\
+                                     \bar{b} & \to b, L \\
+                                     \bar{\spc} & \to \spc, L
+                                   \end{aligned}$} (q0)
+      (q1) edge node {$\begin{aligned}
+                         \bar{a} & \to a, S \\
+                         \bar{b} & \to b, S \\
+                         \bar{\spc} & \to \spc, S
+                       \end{aligned}$} (q3);
+    \end{centerautomata}
+  \item
+    Esitä tilakaaviona Turing-kone, mikä siirtää syötteensä yhdellä paikalla
+    oikealle.
+%
+    \begin{centerautomata}
+      \node[initial right,state] (q0)                                   {$q_0$};
+      \node[state]               (qa) [above right=1.4cm and 4cm of q0] {$q_a$};
+      \node[state]               (qb) [below right=1.4cm and 4cm of q0] {$q_b$};
+      \node[accepting,state]     (a)  [left of=q0]                      {$q_{accept}$};
+
+      \path
+      (q0) edge              node        {$a \to \spc,R$}  (qa)
+      (q0) edge              node        {$\spc \to R$}    (a)
+      (q0) edge              node [swap] {$b \to \spc,R$}  (qb)
+      (qa) edge [loop above] node        {$a \to R$}  (qa)
+      (qa) edge [bend left]  node        {$b \to a, R$}  (qb)
+      (qa) edge [bend right] node [swap] {$\spc \to a, R$} (a)
+      (qb) edge [bend left]  node        {$a \to b, R$}  (qa)
+      (qb) edge [loop below] node        {$b \to R$}  (qb)
+      (qb) edge [bend left]  node        {$\spc \to b, R$} (a);
+    \end{centerautomata}
+  \item
+    Esitä tilakaaviona Turing-kone, mikä kääntää syötteensä toisin päin.
+    \begin{centerautomata}[4]
+      \node[initial,state] (q0) {$q_0$};
+      \node[state]         (q1) [right of=q0] {$q_1$};
+      \node[state]         (q2) [below of=q1] {$q_2$};
+      \node[state]         (q3) [left of=q2] {$q_3$};
+      \node[accepting,state] (a) [left of=q0] {$q_{accept}$};
+
+      \path
+      (q0) edge [loop above,looseness=12]
+           node
+           {\doubletranss{a,b \to R}{\trans{\spc}{\#}{R}}} (q0)
+      (q0) edge
+           node
+           {\doubletranss{\spc \to S}{\spc \to S}} (q1)
+      (q1) edge
+           node
+           {siirrä nauhan 2 lukupää alkuun} (q2)
+      (q2) edge
+           node [swap]
+           {\doubletranss{\spc \to L}{\# \to S}} (q3)
+      (q3) edge [loop above,looseness=12]
+           node
+           {\doubletranss{a \to L}{\trans{\#}{a}{R}}} (q3)
+      (q3) edge [loop below,looseness=12]
+           node
+           {\doubletranss{b \to L}{\trans{\#}{b}{R}}} (q3)
+      (q3) edge [bend left]
+           node
+           {\doubletranss{a,b \to S}{\spc \to S}} (a);
+    \end{centerautomata}
+
+    Aluksi siirrytään syötteen sisältävällä ensimmäisellä nauhalla syötteen
+    jälkeiseen tyhjään merkkiin. Samalla kirjoitetaan toiselle nauhalle
+    syötteen pituutta vastaava määrä $\#$ merkkejä. Seuraavaksi siirretään
+    toisen nauhan lukupää nauhan alkuun ja tämän jälkeen kopioidaan syöte
+    ensimmäiseltä nauhalta lopusta alkuun toiselle nauhalle. Tämä kääntää
+    syötteen. Toiselle nauhalle kirjoitetut $\#$-merkit kertovat milloin
+    kopiointi lopetetaan.
+  \end{enumerate}
+
+\item
+  Laskentoa Turing-koneella. Olkoon syöte aakkosto $\set{0,1}$.
+  \begin{enumerate}
+  \item
+    Esitä tilakaaviona Turing-kone, mikä kasvattaa yhdellä syötteenään
+    saamaansa binäärilukua.
+
+    Binäärilukua voi kasvattaa yhdellä seuraavasti:
+    \begin{enumerate}[label=\arabic*)]
+        \item lähde liikkeelle vähiten merkitsevästä bitistä
+        \item muuta jokainen matkalla vastaan tuleva ykkönen nollaksi
+        \item muuta ensimmäinen nolla ykköseksi ja lopeta
+    \end{enumerate}
+
+    \begin{enumerate}
+    \item
+      Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan alussa.
+%
+    \begin{centerautomata}[3.5]
+        \node[initial,state] (start) {$q_{\text{start}}$};
+        \node[state,accepting] (accept) [right of=start] {$q_{\text{accept}}$};
+
+        \path
+        (start) edge [loop above] node {$1 \to 0, R$} (start)
+        (start) edge node {$0,\spc \to 1, R$} (accept);
+    \end{centerautomata}
+
+    Automaatti noudattaa yllä kuvattua ideaa. Vähiten merkitsevät ykköset
+    muutetaan nolliksi kunnes tulee vastaan nolla, joka muutetaan ykköseksi.
+    Jos luvussa ei ole nollia, lisätään loppuun yksi ykkönen.
+
+    \item
+      Oleta että binääriluvun vähiten merkitsevät bitit ovat nauhan lopussa.
+
+      Ensimmäinen idea olisi kelata nauha loppuun ja toimia sen jälkeen kuten
+      äsken, mutta päinvastaiseen suuntaan.
+
+      \begin{centerautomata}
+          \node[initial,state] (start) {$q_{\text{start}}$};
+          \node[state] (q1) [right of=start] {$q_1$};
+          \node[state,accepting] (accept) [right of=q1] {$q_{\text{accept}}$};
+
+          \path
+          (start) edge [loop above] node {$0,1 \to R$} (start)
+          (start) edge node {$\spc \to L$} (q1)
+          (q1) edge [loop above] node {$1 \to 0, L$} (q1)
+          (q1) edge node {$0 \to 1, L$} (accept);
+      \end{centerautomata}
+
+      Tässä tulee kuitenkin ongelmaksi tapaus, jossa luvussa on pelkkiä ykkösiä,
+      jolloin lukua pitäisi pidentää.
+
+      Korjataan Turingin konetta seuraavasti. Siirretään ensin kaikkia alkioita
+      oikealle yhden askeleen verran ja jätetään nauhan alkuun tyhjä merkki.
+      Tämän jälkeen voidaan toimia kuten äsken ja tarvittaessa siirtää lopuksi
+      alkioita nauhalla yhden askeleen vasemmalle.
+
+      \begin{centerautomata}[3]
+          \node[initial,state] (r0) {$r_0$};
+          \node[state] (r2) [below left of=r0] {$r_2$};
+          \node[state] (r1) [below right of=r0] {$r_1$};
+
+          \node[state] (s1) [below=4.5cm of r0] {$s_1$};
+          \node[state] (s2) [right of=s1] {$s_2$};
+
+          \node[state] (t0) [below=2.2cm of s1] {$t_0$};
+          \node[state] (t1) [right of=t0] {$t_1$};
+
+          \node[state] (u0) [below=3cm of t1] {$u_0$};
+          \node[state] (u1) [left of=u0] {$u_1$};
+          \node[state] (u2) [below of=u1] {$u_2$};
+
+          \node[accepting,state] (accept) [left of=t0] {$q_{\text{accept}}$};
+
+          \path
+          (r0) edge node {$\trans{0}{\spc}{R}$} (r1)
+          (r0) edge node [swap] {$\trans{1}{\spc}{R}$} (r2)
+          (r1) edge [loop right] node {$\trans{0}{0}{R}$} (r1)
+          (r1) edge [bend left] node {$\trans{1}{0}{R}$} (r2)
+          (r2) edge [loop left] node {$\trans{1}{1}{R}$} (r2)
+          (r2) edge [bend left] node [swap] {$\trans{0}{1}{R}$} (r1)
+
+          (r2) edge [bend right] node [swap] {$\trans{\spc}{1}{S}$} (s1)
+          (r1) edge [bend left] node  {$\trans{\spc}{0}{S}$} (s1)
+
+          (s1) edge [loop below] node {$1 \to 0, L$} (s1)
+          (s1) edge node [swap] {$0 \to 1, L$} (s2)
+
+          (s2) edge node {kelaa nauha alkuun} (t0)
+          (t0) edge node {$0,1 \to S$} (accept)
+          (t0) edge node {$\trans{\spc}{\spc}{S}$} (t1)
+          (t1) edge [bend left] node {kelaa nauha loppuun} (u0)
+
+          (u0) edge node [swap] {$\trans{0}{\spc}{L}$} (u1)
+          (u0) edge [bend left] node {$\trans{1}{\spc}{L}$} (u2)
+          (u1) edge [bend right] node [swap] {$\trans{1}{0}{L}$} (u2)
+          (u1) edge [loop above] node {$\trans{0}{0}{L}$} (u1)
+          (u2) edge [bend right] node [swap] {$\trans{0}{1}{L}$} (u1)
+          (u2) edge [loop below] node {$\trans{1}{1}{L}$} (u2)
+
+          (u1) edge node {$\trans{\spc}{0}{S}$} (accept)
+          (u2) edge [bend left=50] node {$\trans{\spc}{1}{S}$} (accept)
+          ;
+      \end{centerautomata}
+
+      Lamatonttu toivottaa hyvää joulua. \smiley
+
+    \end{enumerate}
+  \item
+    Esitä tilakaaviona Turing-kone, mikä vähentää yhdellä syötteenään
+    saamaansa binäärilukua.
+
+    Vähiten merkitsevä bitti vasemmalla.
+
+    \begin{centerautomata}
+        \node[initial,state]   (start)                   {$q_{\text{start}}$};
+        \node[state]           (q0)     [right of=start] {$q_0$};
+        \node[state]           (q1)     [right of=q0]    {$q_1$};
+        \node[state,accepting] (accept) [right of=q1]    {$q_{\text{accept}}$};
+
+        \path
+        (start) edge [loop above] node {$\trans{0}{1}{R}$}    (start)
+        (start) edge              node {$\trans{1}{0}{R}$}    (q0)
+        (q0)    edge [loop above] node {$0,1 \to R$}          (q0)
+        (q0)    edge              node {$\spc \to L$}         (q1)
+        (q1)    edge [loop above] node {$\trans{0}{\spc}{L}$} (q1)
+        (q1)    edge              node {$1,\spc \to S$}       (accept);
+    \end{centerautomata}
+
+  \item
+    Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
+    ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee
+    kolmannelle nauhalle syötelukujen summan.
+
+    Tehdään ensin a- ja b-kohtia käyttäen kaksinauhainen Turingin kone, joka
+    laskee summan ensimmäiselle nauhalle. Idea on seuraava:
+    \begin{enumerate}[label=\arabic*)]
+        \item Jos toisella nauhalla on 0, lopeta. Muuten toista seuraavaa:
+        \item Vähennä toisen nauhan lukua yhdellä ja kasvata ensimmäisen nauhan
+            lukue yhdellä.
+    \end{enumerate}
+
+%
+    \begin{centerautomata}
+        \node[initial right,state] (start) {$q_{\text{start}}$};
+        \node[state] (q1) [above right of=start] {$q_1$};
+        \node[state] (q2) [below right of=q1]    {$q_2$};
+        \node[state] (q3) [below right of=start] {$q_3$};
+        \node[state,accepting] (accept) [left=4cm of start] {$q_{\text{accept}}$};
+
+        \path
+        (start) edge
+                node [swap]
+                {\doubletranss{0,1,\spc \to S}{\spc \to S}} (accept)
+        (start) edge [bend left]
+                node
+                {\doubletranss{0,1,\spc \to S}{0,1 \to S}} (q1)
+        (q1) edge [bend left, text width=4cm]
+             node
+             {kasvata ensimmäisen nauhan lukua yhdellä} (q2)
+        (q2) edge [bend left, text width=4cm]
+             node
+             {vähennä toisen nauhan luvusta 1} (q3)
+        (q3) edge [bend left, text width=4cm]
+             node
+             {kelaa nauhat alkuun} (start);
+    \end{centerautomata}
+
+    Vaihtoehtoisesti tämän voi tehdä kolmella nauhalla tavallisella allekainlaskumenetelmällä.
+
+    \begin{centerautomata}[1.2]
+        \node[initial above,state] (q0) {$q_0$};
+        \node[state] (q1) [right=2.5cm of q0] {$q_1$};
+        \node[state,accepting] (accept) [below right=4.5cm and 0.95cm of q0] {$q_{\text{accept}}$};
+
+        \path
+        (q0) edge [loop left]  node {\begin{tabular}{rl}
+                                       \tripletrans{0, \spc \to R}
+                                                   {0, \to R}
+                                                   {\trans{\spc}{0}{R}} &
+                                       \tripletrans{0 \to R}
+                                                   {\spc, \to R}
+                                                   {\trans{\spc}{0}{R}} \\
+                                       \tripletrans{1 \to R}
+                                                   {0,\spc \to R}
+                                                   {\trans{\spc}{1}{R}} &
+                                       \tripletrans{0,\spc \to R}
+                                                   {1 \to R}
+                                                   {\trans{\spc}{1}{R}}
+                                     \end{tabular}} (q0)
+        (q0) edge [bend right] node [swap] {\tripletrans{1 \to R}
+                                                        {1 \to R}
+                                                        {\trans{\spc}{0}{R}}} (q1)
+        (q1) edge [bend right] node [swap] {\begin{tabular}{c}
+                                              \tripletrans{0,\spc \to R}
+                                                          {0 \to R}
+                                                          {\trans{\spc}{0}{R}} \\
+                                              \tripletrans{\spc \to R}
+                                                          {0 \to R}
+                                                          {\trans{\spc}{0}{R}}
+                                            \end{tabular}} (q0)
+        (q1) edge [loop right] node {\begin{tabular}{c}
+                                       \tripletrans{1 \to R}
+                                                   {1 \to R}
+                                                   {\trans{\spc}{1}{R}} \\
+                                       \tripletrans{1 \to R}
+                                                   {0,\spc \to R}
+                                                   {\trans{\spc}{0}{R}} \\
+                                       \tripletrans{0,\spc \to R}
+                                                   {1 \to R}
+                                                   {\trans{\spc}{0}{R}}
+                                     \end{tabular}} (q1)
+        (q0) edge [bend right, near end] node [swap] {\tripletrans{\spc \to S}
+                                                     {\spc \to S}
+                                                     {\spc \to S}} (accept)
+        (q1) edge [bend left, near end] node {\tripletrans{\spc \to S}
+                                                          {\spc \to S}
+                                                          {\trans{\spc}{1}{S}}} (accept)
+        ;
+    \end{centerautomata}
+
+    Tilassa $q_1$ summassa on ylivuotobittinä 1 ja tilassa $q_0$ ylivuotobittinä on 0.
+  \end{enumerate}
+
+\item 
+  Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa yhdellä nauhalla
+  syötteenä binääriluvun ja kirjoittaa toiselle nauhalle binäärilukua
+  vastaavan määrän kirjainta $a$. Kolmatta nauhaa voit käyttää jos tarvitset.
+
+  \begin{centerautomata}[5]
+    \node[state]           (q1) [right of=q0] {$q_1$};
+    \node[initial,state]   (q0) [above left=1cm and 4cm of q1] {$q_0$};
+    \node[state]           (q2) [above right=4cm and 2cm of q1] {$q_2$};
+    \node[state]           (q3) [above left=2cm and 2cm of q2] {$q_3$};
+    \node[state]           (q4) [above right=2cm and 2cm of q2] {$q_4$};
+    \node[state]           (q5) [right=5cm of q1] {$q_5$};
+    \node[state]           (q6) [below right=4cm and 2cm of q1] {$q_6$};
+    \node[accepting,state] (a)  [below=2cm of q0] {$q_{accept}$};
+
+    \path
+    (q0) edge [bend right=15,very near start]
+         node
+         {\tripletrans{\spc \to S}
+                      {\spc \to S}
+                      {\trans{\spc}{a}{S}}} (q1)
+    (q1) edge [loop above]
+         node
+         {\tripletrans{1 \to S}
+                      {\trans{\spc}{a}{R}}
+                      {a \to R}} (q1)
+    (q1) edge [loop below]
+         node
+         {\tripletrans{0 \to S}
+                      {\spc \to S}
+                      {a \to R}} (q1)
+    (q1) edge [bend right=20]
+         node [swap]
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\spc \to L}} (q2)
+    (q2) edge [bend left=20]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {a \to R}} (q3)
+    (q3) edge [loop above]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\bar{a},x \to R}} (q3)
+    (q3) edge
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\trans{\spc}{x}{L}}} (q4)
+    (q4) edge [loop above]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\bar{a},x \to L}} (q4)
+    (q4) edge [bend left=20]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\trans{a}{\bar{a}}{L}}} (q2)
+    (q2) edge [bend left=20,near end]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\bar{a} \to R}} (q5)
+    (q5) edge [loop right]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\bar{a},x \to R}} (q5)
+    (q5) edge [bend left=20,near start]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\spc \to L}} (q6)
+    (q6) edge [loop below]
+         node
+         {\tripletrans{0,1 \to S}
+                      {\spc \to S}
+                      {\trans{\bar{a},x}{a}{L}}} (q6)
+    (q6) edge [bend right=20]
+         node [swap]
+         {\tripletrans{0,1 \to R}
+                      {\spc \to S}
+                      {a \to L}} (q1)
+    (q1) edge [bend right=15,very near end]
+         node
+         {\tripletrans{\spc \to S}
+                      {\spc \to S}
+                      {a \to S}} (a);
+  \end{centerautomata}
+
+  Tämä Turing-kone pitää nauhalla 3 kirjaa kulloinkin käsittelyssä olevaa
+  bittiä vastaavasta kahden potenssista. Aluks nauhalla 3 on siis vain yksi
+  $a$, ja jokaisen käsitellyn bitin jälkeen nauhan sisältö käydään
+  kaksinkertaistamassa.
+
+  Nyt bittien käsittely on helppoa. Jos bitti on $1$, kopioidaan nauhan 3
+  sisältö nauhalle 2 ja kaksinkertaistetaan nauhan 3 sisältö. Jos bitti on
+  $0$, ei kopioida mitään, mutta muistetaan kuitenkin käydä
+  kaksinkertaistamassa nauhan 3 sisältö.
+
+  Nauhan 3 sisällön kaksinkertaistaminen tehdään niin, että merkitään jokainen
+  jo kaksinkertaistettu $a$ viivalla, ja kirjoitetaan uudet merkit aluksi
+  merkkeinä $x$. Näin voidaan erottaa mitkä merkit ovat vanhoja, ja mitkä
+  uusia. Lopuksi poistetaan kaikki merkinnät ja korvataan $x$ merkit $a$
+  merkeillä.
+
+  Toinen tapa ratkaista ongelma on käyttää aikaisemmin toteutettua yhdellä
+  vähentämistä. Kirjoitetaan nauhalle 2 merkki $a$ joka kerta kun vähennämme
+  nauhan 1 lukua yhdellä. Tätä jatketaan kunnes nauhan 1 luku on vähentynyt
+  nollaan.
+
+  \begin{centerautomata}
+    \node[initial, state]   (qstart)                    {$q_{\text{start}}$};
+    \node[accepting, state] (qaccept) [right=of qstart] {$q_{\text{accept}}$};
+
+      \path
+      (qstart) edge [loop above] node {\doubletranss{\text{vähennä luvusta 1}}
+                                       {\spc \to a, R}} (qstart)
+      (qstart) edge node {\doubletranss{\spc \to S}
+                                       {\spc \to S}} (qaccept);
+  \end{centerautomata}
+
+  Tehtävän 5, kohdan b\) Turing-kone teki yhdellä vähentämisen site, että
+  nauha tyhjenee kun luku vähenee nollaan. Näin ollen voimme helposti
+  tarkistaa milloin luku on nolla vain katsomalla onko nauha 1 tyhjä. Oletamme
+  lisäksi, että syötteenä saadussa luvussa nollan ainut laillinen esitysmuoto
+  on tyhjä nauha.
+
+\item
+  Esitä tilakaaviona kolminauhainen Turing-kone, mikä saa kahdellä
+  ensimmäisellä nauhalla yhden binääriluvun kullakin, ja joka laskee kolmannen
+  nauhan avulla syötelukujen kertolaskun (onkohan tää liian vaikea...).
+
+  Muistutetaan ensin mieleen miten allekkain kertominen toimii. Kerrottavaa
+  kerrotaan jokaisella kertojan numerolla. Saadut välitulokset taulukoidaan
+  siten, että oikea reuna on tasattu sen numeron kohdalle jolla kerrottaessa
+  tulos saatiin. Lopuksi välitulokset lasketaan yhteen.
+
+  \begin{center}
+    \begin{tabular}{cccccc}
+      &&       &1&0&1 \\
+      &&$\cdot$&1&1&0 \\
+      \hline 
+      &&       &0&0&0 \\
+      &&      1&0&1&  \\
+      +&    1&0&1&&   \\
+      \hline
+      &    1&1&1&1&0
+    \end{tabular}
+  \end{center}
+
+  Huomataan, että yhteenlaskua voi suorittaa myös juoksevasti, siis laskemalla
+  välituloksia yhteen sitä mukaan kun niitä lasketaan. Lisäksi yhdellä bitillä
+  kertominen on helppoa: $1 \cdot a = a$ ja $0 \cdot a = 0$. Tärkein huomio on
+  kuitenkin se, että oikeanlaisen tasauksen saa aikaan myös lisäämällä luvun
+  alkuun nollia.
+
+  Oletetaan, että luvut ovat nauhoilla vähiten merkitsevä bitti vasemassa
+  reunassa, ja suoritetaan allekkain kertominen.
+
+  \begin{centerautomata}
+    \node[initial, state]   (qstart)                    {$q_{\text{start}}$};
+    \node[state]            (q1)      [right=14em of qstart.mid] {$q_1$};
+    \node[state]            (q0)      [above= of qstart.mid] {$q_0$};
+    \node[accepting, state] (qaccept) [below=of qstart] {$q_{\text{accept}}$};
+
+    \path
+    (qstart) edge [bend right] node [swap] {\tripletrans{0,1, \spc \to S}
+                                    {0 \to R}
+                                    {0,1,\spc \to S}} (q0)
+    (qstart) edge node [swap] {\tripletrans{0,1, \spc \to S}
+                                    {1 \to R}
+                                    {0,1,\spc \to S}} (q1)
+    (q1)     edge [bend right,text width=12em]
+             node [swap]
+             {laske yhteen nauhojen 1 ja 3 luvut nauhalle 3}
+             (q0)
+    (q0)     edge [bend right,text width=12em]
+             node [swap]
+             {siirrä nauhan 1 sisältöä oikealle ja lisää nauhan alkuun 0}
+             (qstart)
+    (qstart) edge node [swap] {\tripletrans{0,1,\spc \to S}
+                                    {\spc \to S}
+                                    {0,1,\spc \to S}} (qaccept);
+  \end{centerautomata}
+
+  Automaatti käy läpi nauhalla 2 olevaa kertojaa bitti kerrallaan. Jos bitti
+  on 1, lisätään nauhan 1 sisältö nauhalla 3 pidettävään tulokseen. Jos bitti
+  on 0, ei tehdä lisäystä. Siirrytään kertojassa seuraavaan bittiin. Tämän
+  jälkeen käydään siirtämässä nauhalla 1 olevaa kerrottavaa yksi askel
+  oikealle, ja lisätään luvun alkuun jääneeseen tyhjään paikkaan 0. Tämä
+  vastaa allekkainkertomisessa seuraavan välituloksen tasaamista pykälää
+  vasemmalle. Toistetaan edellä kuvattua kunnes kaikki kertojan bitit on käyty
+  läpi.
+\end{enumerate}
+
+\end{document}
