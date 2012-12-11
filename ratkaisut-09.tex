@@ -129,9 +129,56 @@ $\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
 %
   \begin{enumerate}
   \item
-    2-PDA pystyy tunnistamaan kieliä, joita 1-PDA ei pysty,
+    \begin{claim}
+      2-PDA pystyy tunnistamaan kieliä, joita 1-PDA ei pysty,
+    \end{claim}
+
+    2-PDA:lla voidaan tunnistaa kieliä, joita pinoautomaatilla ei, sillä 2-PDA
+    on Turing täy\-del\-li\-nen. 2-PDA:lla voidaan siis tunnistaa esimerkiksi
+    kieli $\set{a^nb^nc^n \mid n \in \Nat}$ jota pinoautomaatilla ei voida
+    tunnistaa.
+
+    2-PDA:n Turing täydellisyys voidaan osoittaa simuloimalla Turingin konetta
+    2-PDA:lla:
+
+    \begin{itemize}
+    \item
+      Simulaatiossa pinon 2 päälimmäinen alkio kuvaa Turigin koneen lukupään
+      alla olevaa kohtaa. Jos pinossa 2 ei ole alkioita, on lukupään alla
+      tyhjä merkki $\spc$.
+
+    \item
+      Merkin korvaaminen tapahtuu ottamalla alkio pinosta 2 ja laittamalla
+      korvaava merkki tilalle.
+
+    \item
+      Lukupään liikuttaminen vasemmalle tapahtuu ottamalla alkio pinosta 1 ja
+      siirtämällä se pinoon 2. Jos pinossa 1 ei ole alkioita, on lukupää
+      nauhan alussa, eikä tehdä mitään.
+
+    \item
+      Lukupään liikuttaminen oikealle tapahtuu ottamalla alkio pinosta 2 ja
+      laittamalla se pinoon 1. Jos pinossa 2 ei ole alkioita, on lukupää
+      siirtynyt nauhalla syötteen ohi. Laitetaan tällöin pinoon 1 tyhjä merkki
+      $\spc$.
+    \end{itemize}
+
+    Simulaatio alkaa lukemalla koko syöte pinoon 1, ja siirtämällä sitten
+    lukupäätä vasemalle, kunnes se on syötteen alussa.
+
   \item
-    mutta minkä tahansa 3-PDA:n tunnistama kieli voidaan tunnistaa 2-PDA:lla.
+    \begin{claim}
+      mutta minkä tahansa 3-PDA:n tunnistama kieli voidaan tunnistaa
+      2-PDA:lla.
+    \end{claim}
+
+    3-PDA:ta voidaan simuloida nelinauhaisella Turingin koneella. Kolmea
+    nauhaa käytetään pinoautomaatin kolmen pinon simulointiin, ja neljännellä
+    nauhalla suoritetaan pinoautomaation siirtymiä. Tiedämmä myös, että
+    nelinauhaista Turingin konetta voidaan simuloida yksinauhaisella Turigin
+    koneella. Yllä olemme osoittaneet, että Turigin konetta voidaan simuloida
+    2-PDA:lla. Tämän ketjun kautta voimme siis simuloida 3-PDA:ta 2-PDA:lla.
+
   \end{enumerate}
 %
   \emph{Vihje:} Simuloi Turingin koneen nauhaa kahdella pinolla. Esitä
@@ -150,7 +197,7 @@ $\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
     \textsc{Dequeue} poistaa jonon ensimmäisen merkin ja palauttaa sen
     arvonaan.
   \end{itemize}
-%
+
   Pinoautomaatin tapaan syöte on luettavissa merkki kerrallaan. Sovitaan, että
   syötteessä on aina loppumerkkinä (mutta ei muualla) tyhjämerkki $\spc$.
   Turingin koneen tapaan pinoautomaatti hyväksyy syötteen siirtymällä
@@ -160,6 +207,112 @@ $\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
   deterministisellä jonoautomaatilla. Perusteluksi riittää esittää sopivan
   tasoisena pseudokoodina, miten Turingin konetta voidaan simuloida jonoa
   käyttäen.
+
+  Simulaatiossa haluaisimme esittää Turgin koneen tilan
+%
+  \begin{align*}
+    w_1 \dots w_n q u_1 \dots u_n
+    \intertext{jonolla}
+    u_1 \dots u_n \$ w_1 \dots w_n
+  \end{align*}
+
+  Jonossa merkki $\$$ kuvaa nauhan vasenta reunaa. Lisäksi jos $\$$ merkki on
+  jonon ensimmäisenä, tulkitaan se tyhjäksi merkiksi $\spc$.
+
+  Lukupään siirtämiseksi vasemalle tarvitsemme kahden muuttujan verran
+  apumuistia. Koska nauha-aakkosto on äärellinen, voidaan nämä apumuuttujat
+  koodata jonoautomaatin tiloihin asettamalla tilojen joukoksi $\Gamma \times
+  \Gamma \times Q$. Annetaan muuttujille nimet \textsc{head} ja \textsc{tail}
+  ja pidetään näissä muuttujissa jonon ensimmäistä ja viimeistä merkkiä.
+%
+  \begin{align*}
+    \intertext{Jono}
+    u_1 \dots u_n \$ w_1 \dots w_n
+    \intertext{kuvataan nyt siis jonolla ja muuttujien arvoilla}
+    \textsc{head} = u_1 \\
+    u_2 \dots u_n \$ w_1 \dots w_{n-1} \\
+    \textsc{tail} = w_n
+  \end{align*}
+
+  Lukupään alla oleva merkki on siis muuttujassa \textsc{head}.
+
+\begin{itemize}
+\item
+  Lukupään siirtäminen oikealle toimii nyt seuraavasti:
+  \begin{enumerate}[label=\arabic*.]
+  \item
+    Jos $\textsc{head} \neq \$$:
+    \begin{enumerate}[label=\arabic*.]
+    \item
+      $\textsc{enqueue}(\textsc{tail})$
+    \item
+      $\textsc{tail} = \textsc{head}$
+    \item
+      $\textsc{head} = \textsc{dequeue}$
+    \end{enumerate}
+  \item
+    Muuten:
+    \begin{enumerate}[label=\arabic*.]
+    \item
+      $\textsc{enqueue}\left(\textsc{tail}\right)$
+    \item
+      $\textsc{tail} = \spc$
+    \end{enumerate}
+  \end{enumerate}
+%
+  \begin{align*}
+    \textsc{head} = u_1 &&&& \textsc{head} = u_2 \\
+    u_2 \dots u_n \$ w_1 \dots w_{n-1} && \to && u_3 \dots u_n \$ w_1 \dots w_n \\
+    \textsc{tail} = w_n &&&& \textsc{tail} = u_1
+  \end{align*}
+%
+  Jos lukupää on siirtynyt syötteen ohi, syötämme vain jonoon tyhjän merkin:
+%
+  \begin{align*}
+    \textsc{head} = \$ &&&& \textsc{head} = \$ \\
+    w_1 \dots w_nu_1 \dots u_{n-1} && \to && w_1 \dots w_nu_1 \dots u_n \\
+    \textsc{tail} = u_n &&&& \textsc{tail} = \spc
+  \end{align*}
+
+\item
+  Kun lukupäätä siirretään vasemmalle, merkkaamme jonon viimeisenä olevan
+  merkin. Sitten pyö\-ri\-täm\-me jonoa kunnes merkattu merkki on siirtynyt
+  jonon alkuun. Silloin jono on oikeassa asennossa ja voimme poistaa
+  merkinnän.
+%
+  \begin{enumerate}[label=\arabic*.]
+  \item
+    Jos $\textsc{tail} \neq \$$:
+    \begin{enumerate}[label=\arabic*.]
+    \item
+      Merkkaa muuttujassa \textsc{tail} oleva merkki.
+    \item
+      Kunnes merkattu merkki on muuttujassa \textsc{head}
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        $\textsc{enqueue}(\textsc{tail})$
+      \item
+        $\textsc{tail} = \textsc{head}$
+      \item
+        $\textsc{head} = \textsc{dequeue}$
+      \end{enumerate}
+    \item
+      Poista muuttujassa \textsc{head} olevan merkin merkkaus.
+    \end{enumerate}
+  \end{enumerate}
+
+  Jos lukupää on nauhan vasemmassa reunassa, on jono tilassa
+%
+  \begin{align*}
+    \textsc{head} = w_1 \\
+    w_2 \dots w_nu_1 \dots u_n \\
+    \textsc{tail} = \$
+  \end{align*}
+%
+  eikä jonoa tarvitse siis käsitellä mitenkään siirrettäessä lukupäätä
+  vasemmalle. Tämä on myös tila josta simulaatio alkaa, kun koko syöte on
+  ensin luettu jonon.
+\end{itemize}
 
 \item
   {[Sipser Problem 3.15]} Näytä että ratkeavien kielten joukko on suljettu
