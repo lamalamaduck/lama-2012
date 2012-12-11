@@ -129,10 +129,9 @@ $\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
 %
   \begin{enumerate}
   \item
-    2-PDA pystyy tunnistamaan kieliä, joita 1-PDA ei pysty mutta
+    2-PDA pystyy tunnistamaan kieliä, joita 1-PDA ei pysty,
   \item
-    minkä tahansa 3-PDA:n tunnistama kieli voidaan tunnistaa
-    2-PDA:lla.
+    mutta minkä tahansa 3-PDA:n tunnistama kieli voidaan tunnistaa 2-PDA:lla.
   \end{enumerate}
 %
   \emph{Vihje:} Simuloi Turingin koneen nauhaa kahdella pinolla. Esitä
@@ -166,23 +165,141 @@ $\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}$%
   {[Sipser Problem 3.15]} Näytä että ratkeavien kielten joukko on suljettu
   seuraavien operaatioiden suhteen.
 %
+  Olkoon $A$ ja $B$ kieliä ja $TM_A$ ja $TM_B$ ne ratkaisevat Turingin koneet.
   \begin{enumerate}
   \item Yhdiste
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Aja $TM_A$ ja $TM_B$ syötteellä $w$.
+      \item
+        Jos jompi kumpi Turingin koneista hyväksyy, hyväksy. Muuten hylkää.
+      \end{enumerate}
+    \end{itemize}
   \item Ketjutus
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Jaa merkkijono $w$ epädeterministisesti kahteen osaan $w = w_1w_2$.
+      \item
+        Aja $TM_A$ syötteellä $w_1$ ja $TM_B$ syötteellä $w_2$.
+      \item
+        Jos molemmat Turingin koneet hyväksyvät hyväksy. Muuten hylkää.
+      \end{enumerate}
+    \end{itemize}
   \item Tähti
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Jaa merkkijono $w$ epädeterministisesti $n$ osaan $w = w_1 \cdots
+        w_n$.
+      \item
+        Aja $TM_A$ jokaisella osalla $w_i, i \in \set{1, \dots, n}$.
+      \item
+        Jos jokainen ajo hyväksyy, hyväksy. Muuten hylkää.
+      \end{enumerate}
+    \end{itemize}
   \item Komplementti
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Aja $TM_A$ syötteellä $w$.
+      \item
+        Jos ajo hyväksyy, hylkää, jos ajo hylkää, hyväksy.
+      \end{enumerate}
+    \end{itemize}
   \item Leikkaus
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Aja $TM_A$ ja $TM_B$ syötteellä $w$.
+      \item
+        Jos molemmat Turingin koneista hyväksyvät, hyväksy. Muuten hylkää.
+      \end{enumerate}
+    \end{itemize}
   \end{enumerate}
 
 \item
   {[Sipser Problem 3.16]} Näytä että Turin-tunnistettavien kielten joukko on
   suljettu seuraavien operaatioiden suhteen.
+
+  Tunnistaminen eroaa näiden operaatioiden osalta vain yhdisteen tapauksessa.
 %
   \begin{enumerate}
   \item Yhdiste
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Aja $TM_A$ ja $TM_B$ syötteellä $w$ siten, että molempia Turingin
+        koneita suoritetaan yksi tilasiirtymä kerrallaan.
+      \item
+        Jos jompi kumpi Turingin koneista hyväksyy, hyväksy.
+      \end{enumerate}
+    \end{itemize}
+
+    Toinen vaihtoehto on käyttää epädeterministisyyttä.
+
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Valitse epädeterministisesti toinen Turingin koneista $TM_A$ ja
+        $TM_B$. Aja valittua konetta syötteellä $w$.
+      \item
+        Jos ajettava Turingin kone hyväksyy, hyväksy.
+      \end{enumerate}
+    \end{itemize}
   \item Ketjutus
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Jaa merkkijono $w$ epädeterministisesti kahteen osaan $w = w_1w_2$.
+      \item
+        Aja $TM_A$ syötteellä $w_1$ ja $TM_B$ syötteellä $w_2$.
+      \item
+        Jos molemmat Turingin koneet hyväksyvät hyväksy.
+      \end{enumerate}
+    \end{itemize}
   \item Tähti
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Jaa merkkijono $w$ epädeterministisesti $n$ osaan $w = w_1 \cdots
+        w_n$.
+      \item
+        Aja $TM_A$ jokaisella osalla $w_i, i \in \set{1, \dots, n}$.
+      \item
+        Jos jokainen ajo hyväksyy, hyväksy.
+      \end{enumerate}
+    \end{itemize}
   \item Leikkaus
+    \begin{itemize}
+    \item
+      Syötteellä $w$:
+      \begin{enumerate}[label=\arabic*.]
+      \item
+        Aja $TM_A$ ja $TM_B$ syötteellä $w$.
+      \item
+        Jos molemmat Turingin koneista hyväksyvät, hyväksy.
+      \end{enumerate}
+    \end{itemize}
   \end{enumerate}
 \end{enumerate}
 
